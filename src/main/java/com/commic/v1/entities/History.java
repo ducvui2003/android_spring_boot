@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
-@Table(name = "notifications")
+@Table(name = "histories")
 @Data
 @NoArgsConstructor
 public class History {

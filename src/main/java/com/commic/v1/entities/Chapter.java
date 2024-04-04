@@ -16,6 +16,7 @@ public class Chapter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
     private String name;
     @Column(name = "publish_date")
@@ -30,4 +31,5 @@ public class Chapter {
     private Set<Rating> ratings;
     @OneToMany(mappedBy = "chapter")
     private Set<History> histories;
+
 }

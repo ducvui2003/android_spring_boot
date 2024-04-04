@@ -23,6 +23,6 @@ public class Book {
     private String thumbnail;
     private String state;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private Set<Chapter> chapters;
 }

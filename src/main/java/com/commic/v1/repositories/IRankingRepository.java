@@ -12,6 +12,4 @@ import java.util.List;
 public interface IRankingRepository extends JpaRepository<Rating, Long> {
     @Query("SELECT r.chapter FROM Rating r")
     List<RankVoteResponseDTO> getRankingVote(String order);
-
-//    List<RankVoteResponseDTO> getRankingView(String order);
 }

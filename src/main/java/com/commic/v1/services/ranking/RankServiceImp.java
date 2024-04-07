@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RankImplement implements IRankService {
+public class RankServiceImp implements IRankService {
     @Autowired
     private IRankingRepository rankingRepository;
     @Autowired

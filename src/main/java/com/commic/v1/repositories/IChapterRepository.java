@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface IChapterRepository extends JpaRepository<Chapter, Long> {
     List<Chapter> findAllByBookId(Integer id);
-
+    long countByBookId(Integer id);
     @Query("SELECT AVG(rating.star) FROM Chapter chapter JOIN chapter.ratings rating WHERE chapter.book.id = :id")
     Double countStarAvgByBookId(Integer id);
 }

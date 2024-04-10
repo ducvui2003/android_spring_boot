@@ -20,9 +20,15 @@ public class Book {
 
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories;
+
     private String thumbnail;
     private String state;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private Set<Chapter> chapters;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private Set<Statistical> statisticals;
+
+
 }

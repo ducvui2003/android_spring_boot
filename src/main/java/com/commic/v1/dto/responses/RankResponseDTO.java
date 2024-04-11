@@ -8,4 +8,5 @@ import lombok.Data;
 public abstract class RankResponseDTO {
     private Integer id;
     private String name;
+    private String thumbnail;
 }

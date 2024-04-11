@@ -17,8 +17,6 @@ import java.util.List;
 @Service
 public class RankServiceImp implements IRankService {
     @Autowired
-    private IRankingRepository rankingRepository;
-    @Autowired
     private IBookRepository bookRepository;
     @Autowired
     private IChapterRepository chapterRepository;
@@ -33,8 +31,9 @@ public class RankServiceImp implements IRankService {
                 for (Book book : books) {
                     Integer id = book.getId();
                     String name = book.getName();
+                    String thumbnail = book.getThumbnail();
                     Double starAvg = chapterRepository.countStarAvgByBookId(book.getId());
-                    RankVoteResponseDTO rankResponseDTO = new RankVoteResponseDTO(id, name, starAvg);
+                    RankVoteResponseDTO rankResponseDTO = new RankVoteResponseDTO(id, name, thumbnail, starAvg);
                     rankVote.add(rankResponseDTO);
                 }
                 result.addAll(rankVote);
@@ -45,9 +44,10 @@ public class RankServiceImp implements IRankService {
                 for (Book book : books) {
                     Integer id = book.getId();
                     String name = book.getName();
+                    String thumbnail = book.getThumbnail();
                     List<Chapter> chapters = chapterRepository.findAllByBookId(book.getId());
                     Integer star = chapters.stream().mapToInt(chapter -> chapter.getView()).sum();
-                    RankViewResponseDTO rankViewResponseDTO = new RankViewResponseDTO(id, name, star);
+                    RankViewResponseDTO rankViewResponseDTO = new RankViewResponseDTO(id, name, thumbnail, star);
                     rankView.add(rankViewResponseDTO);
                 }
                 result.addAll(rankView);

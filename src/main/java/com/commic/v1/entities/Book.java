@@ -29,6 +29,4 @@ public class Book {
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private Set<Statistical> statisticals;
-
-
 }

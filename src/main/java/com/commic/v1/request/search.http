@@ -1,2 +1,8 @@
 ### Tìm kiếm truyện dựa theo tên và category
-GET http://localhost:8081/api/v1/book/search?keyword=MASHLE
+GET http://localhost:8081/api/v1/book/search?keyword=t&sortField_name=desc&categoryId=1
+
+### Lấy thông tin 10 truện có lượt đọc cao nhất
+GET http://localhost:8081/api/v1/book/rank?type=view
+
+### Lấy thông tin 10 truện có lượt đánh gía cao nhất
+GET http://localhost:8081/api/v1/book/rank?type=rating

@@ -27,9 +27,9 @@ public class Book {
     private String thumbnail;
     private String state;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book")
     private Set<Statistical> statisticals;
 }

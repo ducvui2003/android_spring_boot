@@ -17,8 +17,8 @@ import java.util.Set;
 public class BookResponseDTO {
     String id;
     String name;
-    private String author;
-    Set<Category> categories;
+    String author;
+    String description;
     Integer view;
     Double rating;
     String thumbnail;

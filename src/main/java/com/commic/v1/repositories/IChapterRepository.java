@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IChapterRepository extends JpaRepository<Chapter, Long> {
+public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
     Integer countByBookId(Integer id);
 
 //Lấy ra số sao trung bình theo id book
@@ -18,4 +18,6 @@ public interface IChapterRepository extends JpaRepository<Chapter, Long> {
 //    Lấy ra tổng số lượt xem theo id book
     @Query("SELECT SUM(chapter.view) FROM Chapter chapter WHERE chapter.book.id = :bookId")
     Integer countViewByBookId(Integer bookId);
+
+    boolean existsChapterById(Integer id);
 }

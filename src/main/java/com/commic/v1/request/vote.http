@@ -1,7 +1,0 @@
-# Lấy danh sách truyện kèm rating dựa trên view
-GET http://localhost:8081/api/v1/manga/ranking?sort=view
-###
-# Lấy danh sách truyện kèm rating dựa trên vote
-GET http://localhost:8081/api/v1/manga/ranking?sort=vote
-###
-GET http://localhost:8081/api/v1/manga/greating

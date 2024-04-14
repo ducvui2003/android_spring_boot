@@ -1,0 +1,12 @@
+### Tạo comment cho một chapter
+POST http://localhost:8081/api/v1/comment
+Content-Type: application/json
+
+{
+      "chapterId": 35,
+        "userId": 1,
+        "content": "Good chapter! asdasdasdasd",
+        "star": 5
+}
+
+

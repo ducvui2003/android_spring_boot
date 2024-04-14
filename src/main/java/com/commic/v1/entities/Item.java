@@ -4,20 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "reward_points")
-public class RewardPoint {
+@Table(name = "items")
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    private Integer point;
-    private Date date;
-    private Integer thu;
+    private String name;
+    private int point;
+    private String image;
 }

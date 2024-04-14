@@ -4,23 +4,21 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "redeem_reward")
-public class RedeemReward {
+@Table(name = "statisticals")
+public class Statistical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
-    private Item item;
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    private Date date;
+    private Integer views;
+
+    @Column(name = "avg_rate")
+    private Float avgRate;
 }

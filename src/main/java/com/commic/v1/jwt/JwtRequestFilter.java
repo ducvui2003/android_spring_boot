@@ -1,6 +1,6 @@
 package com.commic.v1.jwt;
 
-import com.commic.v1.services.user.UserDetailService;
+import com.commic.v1.services.user.UserDetailServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ class gets executed. It checks if the request has a valid JWT token. If it has a
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserDetailService userDetailService;
+    private UserDetailServiceImpl userDetailService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;

@@ -1,6 +1,8 @@
 package com.commic.v1.config;
 
-import com.commic.v1.services.user.UserDetailService;
+import com.commic.v1.jwt.JwtAuthenticationEntryPoint;
+import com.commic.v1.jwt.JwtRequestFilter;
+import com.commic.v1.services.user.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,13 +31,13 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
-    private UserDetailService userDetails;
-//    @Autowired
-//    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    @Autowired
-//    private JwtRequestFilter jwtRequestFilter;
+    private UserDetailServiceImpl userDetails;
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
-    private static final String[] PUBLIC_ENDPOINS = { "/auth/**", };
+    private static final String[] PUBLIC_ENDPOINS = { "/api/v1/auth/**", "/api/v1/hello"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -43,8 +46,8 @@ public class SecurityConfig {
                 config.requestMatchers(PUBLIC_ENDPOINS).permitAll().anyRequest().authenticated();
         });
 
-//        httpSecurity.exceptionHandling(exp -> exp.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.exceptionHandling(exp -> exp.authenticationEntryPoint(jwtAuthenticationEntryPoint));
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.httpBasic(Customizer.withDefaults());
         httpSecurity.csrf(AbstractHttpConfigurer::disable);

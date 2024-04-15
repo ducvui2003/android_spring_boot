@@ -12,19 +12,17 @@ import java.util.List;
 
 @Repository
 public interface IBookRepository extends JpaRepository<Book, Long> {
-    //    @Query("SELECT book.id as id, book.name as name, SUM (chapter.view) as view " +
-//            "FROM Book book JOIN book.chapters chapter " +
-//            "group by book.id")
-//    List<RankViewResponseDTO> getRankingView(String order);
     List<Book> findAll();
 
-    @Query("SELECT b FROM Book b JOIN b.categories c WHERE b.name = :name AND (c.id = :categoryId OR :categoryId IS NULL)")
-    List<Book> findByNameAndCategoryId(@Param("name") String name, @Param("categoryId") Integer categoryId);
+    Page<Book> findAll(Pageable pageable);
 
-    @Query("SELECT b FROM Book b JOIN b.categories c WHERE b.name = :name AND (c.id = :categoryId OR :categoryId IS NULL)")
-    Page<Book> findByNameAndCategoryId(@Param("name") String name, @Param("categoryId") Integer categoryId, Pageable pageable);
+    Page<Book> findByNameContaining(String name, Pageable pageable);
 
-    List<Book> findByNameContaining(String keyword);
+    Page<Book> findByNameContainingAndCategoriesId(@Param("name") String name, @Param("categoryId") Integer categoryId, Pageable pageable);
 
-    Page<Book> findByNameContaining(String keyword, Pageable pageable);
+    @Query("SELECT book FROM Book book JOIN book.chapters chapter GROUP BY book.id ORDER BY SUM(chapter.view) DESC")
+    Page<Book> findAllOrderByView(Pageable pageable);
+
+    @Query("SELECT book FROM Book book JOIN book.chapters chapter GROUP BY book.id ORDER BY AVG(chapter.rating) DESC")
+    Page<Book> findAllOrderByRating(Pageable pageable);
 }

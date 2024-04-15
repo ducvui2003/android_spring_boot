@@ -8,9 +8,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IChapterRepository extends JpaRepository<Chapter, Long> {
-    List<Chapter> findAllByBookId(Integer id);
-    long countByBookId(Integer id);
-    @Query("SELECT AVG(rating.star) FROM Chapter chapter JOIN chapter.ratings rating WHERE chapter.book.id = :id")
-    Double countStarAvgByBookId(Integer id);
+public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
+    Integer countByBookId(Integer id);
+
+//Lấy ra số sao trung bình theo id book
+    @Query("SELECT AVG(rating.star) FROM Chapter chapter JOIN chapter.ratings rating WHERE chapter.book.id = :bookId")
+    Double countStarAvgByBookId(Integer bookId);
+
+//    Lấy ra tổng số lượt xem theo id book
+    @Query("SELECT SUM(chapter.view) FROM Chapter chapter WHERE chapter.book.id = :bookId")
+    Integer countViewByBookId(Integer bookId);
+
+    boolean existsChapterById(Integer id);
 }

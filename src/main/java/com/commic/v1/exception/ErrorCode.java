@@ -1,6 +1,7 @@
 package com.commic.v1.exception;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 
@@ -13,8 +14,9 @@ public enum ErrorCode {
     CHAPTER_NOT_FOUND(204,"Chapter not found"),
     VALIDATION_ERROR(400, "Validation error"),
     PARAMETER_MISSING(400, "Parameter missing"),
-    CREATE_SUCCESS(200, "Create success"),;
-
+    CREATE_SUCCESS(200, "Create success"),
+    UNAUTHENTICATED(HttpStatus.UNAUTHORIZED.value(), "Unauthenticated"),
+    UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission");
     ErrorCode(int code, String message) {
         this.code = code;
         this.message = message;

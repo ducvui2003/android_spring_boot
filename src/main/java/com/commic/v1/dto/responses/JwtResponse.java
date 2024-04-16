@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,9 +14,11 @@ import lombok.NoArgsConstructor;
 public class JwtResponse {
     private String token;
     private String type;
+    private Date expiredTime;
 
-    public JwtResponse(String token) {
+    public JwtResponse(String token, Date expiredTime) {
         this.token = token;
+        this.expiredTime = expiredTime;
         this.type = "jwt";
     }
 }

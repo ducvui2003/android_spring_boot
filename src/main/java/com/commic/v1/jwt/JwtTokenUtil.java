@@ -30,7 +30,7 @@ It makes use of the io.jsonwebtoken.Jwts for achieving this.
 public class JwtTokenUtil implements Serializable {
     @Autowired
     private InvalidatedTokenRepository tokenRepository;
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60 * 1000;
 
     @Value("${jwt.secret-key}")
     private String SECRET_KEY;
@@ -72,7 +72,7 @@ public class JwtTokenUtil implements Serializable {
     private String createToken(Map<String, Object> claims, String username) {
         claims.put("jwtID", UUID.randomUUID().toString()); // Đặt ID vào payload
         return Jwts.builder().setHeaderParam("type", "JWT").setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
                 .signWith(getSigningKey(SECRET_KEY), SignatureAlgorithm.HS256).compact();
     }
 

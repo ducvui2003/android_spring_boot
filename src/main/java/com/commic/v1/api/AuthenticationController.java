@@ -1,6 +1,7 @@
 package com.commic.v1.api;
 
 import com.commic.v1.dto.requests.AuthenticationRequest;
+import com.commic.v1.dto.requests.LogoutRequest;
 import com.commic.v1.dto.responses.JwtResponse;
 import com.commic.v1.services.authentication.IAuthenticationService;
 import lombok.AccessLevel;
@@ -26,6 +27,12 @@ public class AuthenticationController {
     public ResponseEntity<JwtResponse> authenticate(@RequestBody AuthenticationRequest request){
         JwtResponse jwtObj = authenticationService.login(request);
         return ResponseEntity.ok(jwtObj);
+    }
+
+    @PostMapping("/logout")
+    ResponseEntity<String> logout(@RequestBody LogoutRequest request){
+        authenticationService.logout(request);
+        return ResponseEntity.ok("logout");
     }
 
     //admin

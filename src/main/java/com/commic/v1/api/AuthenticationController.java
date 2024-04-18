@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,9 +32,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    ResponseEntity<String> logout(@RequestBody LogoutRequest request){
+    public ResponseEntity<Void> logout(@RequestBody LogoutRequest request){
         authenticationService.logout(request);
-        return ResponseEntity.ok("logout");
+        return ResponseEntity.noContent().build();
     }
 
     //admin

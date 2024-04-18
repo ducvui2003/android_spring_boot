@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-
 public enum ErrorCode {
     INVALID_REQUEST(400, "Invalid request"),
     BOOK_EXIST(200, "Book already exist"),

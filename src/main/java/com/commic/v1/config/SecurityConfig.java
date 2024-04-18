@@ -37,7 +37,8 @@ public class SecurityConfig {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    private static final String[] PUBLIC_ENDPOINS = { "/api/v1/auth/**", "/api/v1/hello"};
+    private static final String[] PUBLIC_ENDPOINS = { "/api/v1/auth/**", "/api/v1/users/forgot-password",
+            "/api/v1/users/change-password"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

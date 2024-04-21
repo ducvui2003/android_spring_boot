@@ -1,10 +1,10 @@
 package com.commic.v1.exception;
 
 import com.commic.v1.dto.responses.APIResponse;
+import org.springframework.http.ResponseEntity;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -18,6 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String username;
     private String email;
     private String password;
     @Column(name = "full_name")
@@ -26,6 +27,7 @@ public class User {
     private Integer point;
     private String role;
     private String avatar;
+    private String otp;
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
     @OneToMany(mappedBy = "user")

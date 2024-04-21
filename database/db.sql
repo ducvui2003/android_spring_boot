@@ -19,7 +19,6 @@ CREATE DATABASE IF NOT EXISTS `doctruyen` /*!40100 DEFAULT CHARACTER SET utf8mb4
 USE `doctruyen`;
 
 -- Dumping structure for table doctruyen.books
-DROP TABLE IF EXISTS `books`;
 CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` varchar(255) DEFAULT NULL,
@@ -56,7 +55,6 @@ INSERT INTO `books` (`id`, `author`, `description`, `name`, `state`, `thumbnail`
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.book_category
-DROP TABLE IF EXISTS `book_category`;
 CREATE TABLE IF NOT EXISTS `book_category` (
   `category_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
@@ -92,7 +90,6 @@ INSERT INTO `book_category` (`category_id`, `book_id`) VALUES
 /*!40000 ALTER TABLE `book_category` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.categories
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(255) DEFAULT NULL,
@@ -116,7 +113,6 @@ INSERT INTO `categories` (`id`, `description`, `name`) VALUES
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.chapters
-DROP TABLE IF EXISTS `chapters`;
 CREATE TABLE IF NOT EXISTS `chapters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -194,7 +190,6 @@ INSERT INTO `chapters` (`id`, `name`, `publish_date`, `rating`, `view`, `book_id
 /*!40000 ALTER TABLE `chapters` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.chapter_contents
-DROP TABLE IF EXISTS `chapter_contents`;
 CREATE TABLE IF NOT EXISTS `chapter_contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `link_image` varchar(255) DEFAULT NULL,
@@ -2207,7 +2202,6 @@ INSERT INTO `chapter_contents` (`id`, `link_image`, `chapter_id`) VALUES
 /*!40000 ALTER TABLE `chapter_contents` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.comments
-DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) DEFAULT NULL,
@@ -2234,7 +2228,6 @@ INSERT INTO `comments` (`id`, `content`, `created_at`, `state`, `chapter_id`, `u
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.histories
-DROP TABLE IF EXISTS `histories`;
 CREATE TABLE IF NOT EXISTS `histories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `chapter_id` int(11) DEFAULT NULL,
@@ -2253,8 +2246,18 @@ INSERT INTO `histories` (`id`, `chapter_id`, `user_id`) VALUES
 	(2, 35, 2);
 /*!40000 ALTER TABLE `histories` ENABLE KEYS */;
 
+-- Dumping structure for table doctruyen.invalidated_tokens
+CREATE TABLE IF NOT EXISTS `invalidated_tokens` (
+  `token_id` varchar(255) NOT NULL,
+  `expired` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`token_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table doctruyen.invalidated_tokens: ~0 rows (approximately)
+/*!40000 ALTER TABLE `invalidated_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invalidated_tokens` ENABLE KEYS */;
+
 -- Dumping structure for table doctruyen.items
-DROP TABLE IF EXISTS `items`;
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) DEFAULT NULL,
@@ -2280,7 +2283,6 @@ INSERT INTO `items` (`id`, `image`, `name`, `point`) VALUES
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.notifications
-DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) DEFAULT NULL,
@@ -2297,7 +2299,6 @@ INSERT INTO `notifications` (`id`, `content`, `date`, `title`) VALUES
 /*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.ratings
-DROP TABLE IF EXISTS `ratings`;
 CREATE TABLE IF NOT EXISTS `ratings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` date DEFAULT NULL,
@@ -2324,7 +2325,6 @@ INSERT INTO `ratings` (`id`, `created_at`, `star`, `chapter_id`, `user_id`) VALU
 /*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.redeem_reward
-DROP TABLE IF EXISTS `redeem_reward`;
 CREATE TABLE IF NOT EXISTS `redeem_reward` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date DEFAULT NULL,
@@ -2345,7 +2345,6 @@ INSERT INTO `redeem_reward` (`id`, `date`, `item_id`, `user_id`) VALUES
 /*!40000 ALTER TABLE `redeem_reward` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.reward_points
-DROP TABLE IF EXISTS `reward_points`;
 CREATE TABLE IF NOT EXISTS `reward_points` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date DEFAULT NULL,
@@ -2368,7 +2367,6 @@ INSERT INTO `reward_points` (`id`, `date`, `point`, `thu`, `user_id`) VALUES
 /*!40000 ALTER TABLE `reward_points` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.statisticals
-DROP TABLE IF EXISTS `statisticals`;
 CREATE TABLE IF NOT EXISTS `statisticals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `avg_rate` float DEFAULT NULL,
@@ -2405,13 +2403,13 @@ INSERT INTO `statisticals` (`id`, `avg_rate`, `views`, `book_id`) VALUES
 /*!40000 ALTER TABLE `statisticals` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `full_name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `point` int(11) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
@@ -2420,11 +2418,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table doctruyen.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `avatar`, `email`, `full_name`, `password`, `phone`, `point`, `role`) VALUES
-	(1, NULL, 'admin@gmail.com', 'Quản trị viên', 'admin@123', '0392382167', NULL, '1'),
-	(2, 'https://vi.pngtree.com//freepng/gray-cartoon-cat-cat-cartoon-animals-gray_3925392.html ', 'vutruong@gmail.com', 'Quản trị viên', 'vu@123', '0392382167', NULL, '1'),
-	(3, NULL, 'user1@gmail.com', 'Người dùng 2', 'user1@123', NULL, NULL, '0'),
-	(4, NULL, 'user2@gmail.com', 'Người dùng 3', 'user2@123', NULL, NULL, '0');
+INSERT INTO `users` (`id`, `username`, `password`, `avatar`, `email`, `full_name`, `phone`, `point`, `role`) VALUES
+	(1, 'admin', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'admin@gmail.com', 'Quản trị viên', '0392382167', NULL, 'ADMIN'),
+	(2, 'user1', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', 'https://vi.pngtree.com//freepng/gray-cartoon-cat-cat-cartoon-animals-gray_3925392.html ', 'vutruong@gmail.com', 'Người dùng 1', '0392382167', NULL, 'USER'),
+	(3, 'user2', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'user1@gmail.com', 'Người dùng 2', NULL, NULL, 'USER'),
+	(4, 'user3', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'user2@gmail.com', 'Người dùng 3', NULL, NULL, 'USER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

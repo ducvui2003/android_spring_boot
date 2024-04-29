@@ -10,7 +10,7 @@ public enum ErrorCode {
     BOOK_EMPTY(204, "Book not found"),
     PARAMETER_NOT_VALID(400, "Parameter not valid"),
     USER_NOT_FOUND(204, "User not found"),
-    CHAPTER_NOT_FOUND(204, "Chapter not found"),
+    CHAPTER_NOT_FOUND(204,"Chapter not found"),
     VALIDATION_ERROR(400, "Validation error"),
     PARAMETER_MISSING(400, "Parameter missing"),
     CREATE_SUCCESS(200, "Create success"),
@@ -27,4 +27,4 @@ public enum ErrorCode {
     private int code;
     private String message;
 
-}
+    }

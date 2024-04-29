@@ -3,6 +3,7 @@ package com.commic.v1.api;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
+import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.search.ISearchServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,24 +27,29 @@ public class BookController {
 
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-                                                                 @RequestParam(name = "categoryId", required = false) Integer categoryId,
+                                                                 @RequestParam(name = "categoryId", required = false) String categoryId,
                                                                  @RequestParam(name = "page", defaultValue = "0") int page,
                                                                  @RequestParam(name = "size", defaultValue = "10") int size,
                                                                  @RequestParam Map<String, String> mapSort) {
         Pageable pageable;
         Sort sort = exportSort(mapSort);
+        Integer categoryIdNumber;
+        try {
+            categoryIdNumber = Integer.parseInt(categoryId);
+        } catch (NumberFormatException e) {
+            categoryIdNumber = null;
+        }
         if (sort.isEmpty())
             pageable = PageRequest.of(page, size);
         else
             pageable = PageRequest.of(page, size, sort);
-        DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryId, pageable);
+        DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryIdNumber, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
         apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
         apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
         apiResponse.setResult(items);
         return apiResponse;
     }
-
 
 
     @GetMapping("/rank")
@@ -71,5 +78,14 @@ public class BookController {
                 .toArray(Sort.Order[]::new);
 
         return Sort.by(orders);
+    }
+
+    @GetMapping("/category")
+    public APIResponse<List<CategoryResponseDTO>> getCategory() {
+        APIResponse<List<CategoryResponseDTO>> apiResponse = new APIResponse<>();
+        apiResponse.setCode(200);
+        apiResponse.setMessage("Success");
+        apiResponse.setResult(searchServices.getCategory());
+        return apiResponse;
     }
 }

@@ -1,13 +1,13 @@
 package com.commic.v1.dto.responses;
 
-import com.commic.v1.entities.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
+import java.sql.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,8 +19,10 @@ public class BookResponseDTO {
     String name;
     String author;
     String description;
+    Date publishDate;
     Integer view;
     Double rating;
     String thumbnail;
     Integer quantityChapter;
+    List<String> categoryNames;
 }

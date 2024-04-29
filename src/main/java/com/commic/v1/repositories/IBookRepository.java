@@ -16,13 +16,16 @@ public interface IBookRepository extends JpaRepository<Book, Long> {
 
     Page<Book> findAll(Pageable pageable);
 
-    Page<Book> findByNameContaining(String name, Pageable pageable);
+    Page<Book> findByNameContaining(@Param("name") String name, Pageable pageable);
 
     Page<Book> findByNameContainingAndCategoriesId(@Param("name") String name, @Param("categoryId") Integer categoryId, Pageable pageable);
 
     @Query("SELECT book FROM Book book JOIN book.chapters chapter GROUP BY book.id ORDER BY SUM(chapter.view) DESC")
-    Page<Book> findAllOrderByView(Pageable pageable);
+    Page<Book> findAllOrderByViewDesc(Pageable pageable);
 
     @Query("SELECT book FROM Book book JOIN book.chapters chapter GROUP BY book.id ORDER BY AVG(chapter.rating) DESC")
-    Page<Book> findAllOrderByRating(Pageable pageable);
+    Page<Book> findAllOrderByRatingDesc(Pageable pageable);
+
+    @Query("SELECT DISTINCT c.name FROM Book b JOIN b.categories c WHERE b.id = :bookId")
+    List<String> findCategoryNamesByBookId(Integer bookId);
 }

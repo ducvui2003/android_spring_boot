@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -20,4 +21,7 @@ public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
     Integer countViewByBookId(Integer bookId);
 
     boolean existsChapterById(Integer id);
+
+    @Query("SELECT MIN(c.publishDate) FROM Chapter c WHERE c.book.id = :bookId")
+    Date findFirstPublishDateByBookId(Integer bookId);
 }

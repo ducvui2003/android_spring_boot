@@ -19,5 +19,4 @@ public class RewardPoint {
     private User user;
     private Integer point;
     private Date date;
-    private Integer thu;
 }

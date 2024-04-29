@@ -43,7 +43,7 @@ public class AuthenticationService implements IAuthenticationService {
     UserDetailServiceImpl userDetailsService;
 
     @Override
-    public JwtResponse login(AuthenticationRequest request) {
+        public JwtResponse login(AuthenticationRequest request) {
         Authentication authentication = authenticate(request.getUsername(), request.getPassword());
 
         UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());

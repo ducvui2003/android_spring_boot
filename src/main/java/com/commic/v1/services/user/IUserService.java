@@ -2,6 +2,7 @@ package com.commic.v1.services.user;
 
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.responses.APIResponse;
+import com.commic.v1.dto.responses.UserResponse;
 
 public interface IUserService {
     /**
@@ -12,4 +13,6 @@ public interface IUserService {
      */
     APIResponse<Void> forgotPassword(String email);
     APIResponse<Void> changePassword(ChangePasswordRequest passwordRequest);
+
+    UserResponse getUserInfo(String username);
 }

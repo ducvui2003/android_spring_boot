@@ -2,7 +2,9 @@ package com.commic.v1.services.user;
 
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.responses.APIResponse;
+import com.commic.v1.dto.responses.UserResponse;
 import com.commic.v1.entities.User;
+import com.commic.v1.mapper.UserMapper;
 import com.commic.v1.repositories.IUserRepository;
 import com.commic.v1.services.mail.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class UserService implements IUserService {
     private IEmailService emailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    @Autowired
+    UserMapper userMapper;
     @Override
     public APIResponse<Void> forgotPassword(String email) {
         // Generate OTP
@@ -85,6 +88,15 @@ public class UserService implements IUserService {
         return response;
     }
 
+    @Override
+    public UserResponse getUserInfo(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        return userMapper.toDTO(user);
+
+    }
 
 
     private String generateOTP() {

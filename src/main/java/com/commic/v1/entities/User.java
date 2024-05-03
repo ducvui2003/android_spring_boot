@@ -33,6 +33,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Rating> ratings;
     @OneToMany(mappedBy = "user")
+    private Set<RewardPoint> rewardPoints;
+    @OneToMany(mappedBy = "user")
     private Set<RedeemReward> redeemRewards;
     @OneToMany(mappedBy = "user")
     private Set<History> histories;

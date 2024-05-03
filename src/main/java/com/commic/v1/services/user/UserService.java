@@ -1,13 +1,14 @@
 package com.commic.v1.services.user;
 
 import com.commic.v1.dto.requests.ChangePasswordRequest;
+import com.commic.v1.dto.requests.UserRequest;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.UserResponse;
-import com.commic.v1.entities.RewardPoint;
 import com.commic.v1.entities.User;
 import com.commic.v1.mapper.UserMapper;
 import com.commic.v1.repositories.*;
 import com.commic.v1.services.mail.IEmailService;
+import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -122,6 +123,27 @@ public class UserService implements IUserService {
 
         // Return the result
         return result;
+    }
+
+    @Override
+    public boolean updateInfo(UserRequest userRequest) {
+        // Retrieve the currently authenticated user using the SecurityUtils helper class
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+
+        // If the user is not found (i.e., not authenticated), return false
+        if (user == null) {
+            return false;
+        }
+
+        // Update the user's phone number and full name with the information from the request
+        user.setPhone(userRequest.getPhone());
+        user.setFullName(userRequest.getFullName());
+
+        // Save the updated user information in the repository
+        userRepository.save(user);
+
+        // If the operation reaches this point without any exceptions, return true indicating success
+        return true;
     }
 
 

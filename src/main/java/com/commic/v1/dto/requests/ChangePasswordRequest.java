@@ -13,12 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangePasswordRequest {
-    @NotBlank(message = "PARAMETER_MISSING")
     private String email;
-    @NotBlank(message = "PARAMETER_MISSING")
     private String otp;
-    @NotBlank(message = "PARAMETER_MISSING")
     private String password;
     @NotBlank(message = "PARAMETER_MISSING")
     private String confirmPassword;
+    @NotBlank(message = "PARAMETER_MISSING")
+    private String newPassword;
 }

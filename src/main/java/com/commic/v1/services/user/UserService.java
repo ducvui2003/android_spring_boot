@@ -63,39 +63,52 @@ public class UserService implements IUserService {
         return response;
     }
 
+    /**
+     * Changes the password of a user. The method supports two scenarios:
+     * 1. Changing password with an OTP: In this case, the OTP and email are used to identify the user.
+     * 2. Changing password without an OTP: In this case, the current password is used for authentication.
+     *
+     * @param passwordRequest The request containing the new password, OTP (if available), and other necessary information.
+     * @return An APIResponse<Void> indicating the result of the operation.
+     */
     @Override
     public APIResponse<Void> changePassword(ChangePasswordRequest passwordRequest) {
         APIResponse<Void> response = new APIResponse<>();
-        String email = passwordRequest.getEmail();
-        String password = passwordRequest.getPassword();
         String otp = passwordRequest.getOtp();
+        String newPassword = passwordRequest.getNewPassword();
 
-        // Kiểm tra xem mật khẩu có khớp với mật khẩu xác nhận hay không
-        if (!password.equals(passwordRequest.getConfirmPassword())) {
+        // Check if the new password matches the confirmed password
+        if (!newPassword.equals(passwordRequest.getConfirmPassword())) {
             response.setMessage("Password is not equal confirm password");
             response.setCode(HttpStatus.BAD_REQUEST.value());
             return response;
         }
-        User usera = userRepository.findByOtp("133170").orElse(null);
 
-        // Tìm người dùng theo email và mã OTP (nếu có)
-        User user = StringUtils.hasText(otp) ? userRepository.findByEmailAndOtp(email, otp).orElse(null) :
-                userRepository.findByEmail(email).orElse(null);
-
-        // Kiểm tra xem người dùng có tồn tại không
-        if (user == null) {
-            response.setMessage("User not found");
-            response.setCode(HttpStatus.NOT_FOUND.value());
-            return response;
+        User user;
+        if (!StringUtils.hasText(otp)) {
+            // If OTP is not provided, authenticate the user with the current password
+            user = SecurityUtils.getUserFromPrincipal(userRepository);
+            if (user == null || !passwordEncoder.matches(passwordRequest.getPassword(), user.getPassword())) {
+                response.setMessage(user == null ? "User not found" : "Password is incorrect");
+                response.setCode(HttpStatus.BAD_REQUEST.value());
+                return response;
+            }
+        } else {
+            // If OTP is provided, find the user by email and OTP
+            user = userRepository.findByEmailAndOtp(passwordRequest.getEmail(), otp).orElse(null);
+            if (user == null) {
+                response.setMessage("User not found");
+                response.setCode(HttpStatus.NOT_FOUND.value());
+                return response;
+            }
         }
 
-        // Mã hóa mật khẩu mới và lưu lại
-        user.setPassword(passwordEncoder.encode(password));
+        // At this point, the user is authenticated. Proceed to change the password.
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
         response.setMessage("Password changed successfully");
         response.setCode(HttpStatus.OK.value());
-
         return response;
     }
 

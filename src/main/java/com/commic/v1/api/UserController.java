@@ -36,13 +36,13 @@ public class UserController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
     @PostMapping("/update-info")
-    public ResponseEntity<Void> updateInfo(@RequestBody @Validated UserRequest userRequest) {
+    public ResponseEntity<Void> updateInfo(@RequestBody @Valid UserRequest userRequest) {
         boolean isUpdated =  userService.updateInfo(userRequest);
         return ResponseEntity.status(isUpdated ? HttpStatus.OK: HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<APIResponse<Void>> changePassword(@RequestBody @Validated ChangePasswordRequest passwordRequest) {
+    public ResponseEntity<APIResponse<Void>> changePassword(@RequestBody @Valid ChangePasswordRequest passwordRequest) {
         APIResponse<Void> response = userService.changePassword(passwordRequest);
         return ResponseEntity.status(response.getCode()).body(response);
     }

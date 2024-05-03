@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.security.Key;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +107,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpriration(token).before(new Date());
+        return extractExpriration(token).before(new Timestamp(System.currentTimeMillis()));
     }
 
     private boolean isExists(String token) {
@@ -121,5 +122,13 @@ public class JwtTokenUtil implements Serializable {
 
     public boolean validateToken(String token) {
         return !isTokenExpired(token) && !isExists(token);
+    }
+
+    public static void main(String[] args) {
+        long a = System.currentTimeMillis() + JwtTokenUtil.JWT_TOKEN_VALIDITY;
+        System.out.println(a);
+        Timestamp timestamp = new Timestamp(a);
+        System.out.println(timestamp);
+        System.out.println(timestamp.getTime());
     }
 }

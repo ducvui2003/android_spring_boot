@@ -1,7 +1,9 @@
 package com.commic.v1.repositories;
 
 import com.commic.v1.entities.Comment;
+import com.commic.v1.entities.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

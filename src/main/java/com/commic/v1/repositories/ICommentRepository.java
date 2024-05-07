@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICommentRepository extends JpaRepository<Comment, Integer> {
-
     Page<Comment> findAllByStateOrderByCreatedAtDesc(String value, Pageable pageable);
+
 }

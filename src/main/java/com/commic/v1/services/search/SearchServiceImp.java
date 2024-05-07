@@ -2,11 +2,14 @@ package com.commic.v1.services.search;
 
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
+import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.entities.Book;
+import com.commic.v1.entities.Category;
 import com.commic.v1.exception.AppException;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.BookMapper;
 import com.commic.v1.repositories.IBookRepository;
+import com.commic.v1.repositories.ICategoryRepository;
 import com.commic.v1.repositories.IChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +28,8 @@ public class SearchServiceImp implements ISearchServices {
     private IChapterRepository chapterRepository;
     @Autowired
     private BookMapper bookMapper;
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
     @Override
     public DataListResponse<BookResponseDTO> getBook(Pageable pageable) {
@@ -56,7 +61,11 @@ public class SearchServiceImp implements ISearchServices {
     @Override
     public DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
+        Page<Book> page;
+        if (categoryId == null)
+            page = bookRepository.findByNameContaining(containName, pageable);
+        else
+            page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
         if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
@@ -76,6 +85,9 @@ public class SearchServiceImp implements ISearchServices {
             bookResponseDTO.setRating(starAvg);
             bookResponseDTO.setView(views);
             bookResponseDTO.setQuantityChapter(quantityChapter);
+            bookResponseDTO.setPublishDate(chapterRepository.findFirstPublishDateByBookId(book.getId()));
+            List<String> categories = bookRepository.findCategoryNamesByBookId(book.getId());
+            bookResponseDTO.setCategoryNames(categories);
             result.add(bookResponseDTO);
         }
         return result;
@@ -86,9 +98,9 @@ public class SearchServiceImp implements ISearchServices {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
         switch (type.toUpperCase()) {
-            case "RATING" -> page = bookRepository.findAllOrderByRating(pageable);
+            case "RATING" -> page = bookRepository.findAllOrderByRatingDesc(pageable);
 
-            case "VIEW" -> page = bookRepository.findAllOrderByView(pageable);
+            case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(pageable);
 
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
@@ -101,4 +113,17 @@ public class SearchServiceImp implements ISearchServices {
         return result;
     }
 
+    @Override
+    public List<CategoryResponseDTO> getCategory() {
+        List<Category> categories = categoryRepository.findAll();
+        List<CategoryResponseDTO> categoryResponseDTOS = new ArrayList<>();
+        if (categories.isEmpty()) throw new AppException(ErrorCode.CATEGORY_EMPTY);
+        for (Category category : categories) {
+            CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
+            categoryResponseDTO.setId(category.getId());
+            categoryResponseDTO.setName(category.getName());
+            categoryResponseDTOS.add(categoryResponseDTO);
+        }
+        return categoryResponseDTOS;
+    }
 }

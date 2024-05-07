@@ -22,7 +22,6 @@ public class Chapter {
     @Column(name = "publish_date")
     private Date publishDate;
     private Integer view;
-    private Float rating;
     @OneToMany(mappedBy = "chapter")
     private Set<ChapterContent> chapterContent;
     @OneToMany(mappedBy = "chapter")
@@ -31,5 +30,4 @@ public class Chapter {
     private Set<Rating> ratings;
     @OneToMany(mappedBy = "chapter")
     private Set<History> histories;
-
 }

@@ -7,3 +7,6 @@ Content-Type: application/json
   "content": "Good chapter! asdasdasdasd",
   "star": 5
 }
+
+###
+GET http://localhost:8081/api/v1/admin/comment?page=1&size=10&state=1

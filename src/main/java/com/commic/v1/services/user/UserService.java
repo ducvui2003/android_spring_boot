@@ -31,6 +31,7 @@ public class UserService implements IUserService {
     private IEmailService emailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private UserMapper userMapper;
     @Autowired
     private IRewardPointRepository rewardPointRepository;

@@ -8,7 +8,7 @@ GET http://localhost:8081/api/v1/book/search?keyword=t&sortField_name=desc
 GET http://localhost:8081/api/v1/book/rank?type=view
 
 ### Lấy thông tin 10 truện có lượt đánh gía cao nhất
-GET http://localhost:8081/api/v1/book/rank?type=ratingz
+GET http://localhost:8081/api/v1/book/rank?type=rating
 
 ### Lấy danh sách category
 GET http://localhost:8081/api/v1/book/category

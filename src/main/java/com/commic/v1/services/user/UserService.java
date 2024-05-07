@@ -9,7 +9,7 @@ import com.commic.v1.entities.User;
 
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.UserMapper;
-import com.commic.v1.repositories.IUserRepository;
+import com.commic.v1.repositories.*;
 
 import com.commic.v1.services.mail.IEmailService;
 import com.commic.v1.util.SecurityUtils;
@@ -31,7 +31,6 @@ public class UserService implements IUserService {
     private IEmailService emailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowire
     private UserMapper userMapper;
     @Autowired
     private IRewardPointRepository rewardPointRepository;
@@ -40,7 +39,7 @@ public class UserService implements IUserService {
     @Autowired
     private IHistoryRepository historyRepository;
     @Autowired
-
+    private IRatingRepository ratingRepository;
 
     @Override
     public APIResponse<Void> forgotPassword(String email) {

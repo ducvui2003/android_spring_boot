@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+
     @PostMapping("/forgot-password")
     public ResponseEntity<APIResponse<Void>> forgotPassword(@RequestBody @Validated ForgotPasswordRequest passwordRequest) {
         APIResponse<Void> response = userService.forgotPassword(passwordRequest.getEmail());

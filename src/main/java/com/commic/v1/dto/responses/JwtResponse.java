@@ -21,4 +21,5 @@ public class JwtResponse {
         this.expiredTime = expiredTime;
         this.type = "jwt";
     }
+
 }

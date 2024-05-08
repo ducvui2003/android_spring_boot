@@ -54,7 +54,7 @@ public class AuthenticationService implements IAuthenticationService {
         boolean isAuthenticated = authentication.isAuthenticated();
         String token = isAuthenticated ? jwtTokenUtil.generateToken(user) : null;
 
-        return new JwtResponse(token, new Date(System.currentTimeMillis() + JwtTokenUtil.JWT_TOKEN_VALIDITY));
+        return new JwtResponse(token, System.currentTimeMillis() + JwtTokenUtil.JWT_TOKEN_VALIDITY);
     }
 
     private Authentication authenticate(String username, String password) {

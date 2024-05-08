@@ -14,9 +14,9 @@ import java.util.Date;
 public class JwtResponse {
     private String token;
     private String type;
-    private Date expiredTime;
+    private long expiredTime;
 
-    public JwtResponse(String token, Date expiredTime) {
+    public JwtResponse(String token, long expiredTime) {
         this.token = token;
         this.expiredTime = expiredTime;
         this.type = "jwt";

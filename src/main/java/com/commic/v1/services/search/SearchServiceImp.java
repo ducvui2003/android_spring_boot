@@ -128,6 +128,26 @@ public class SearchServiceImp implements ISearchServices {
     }
 
     @Override
+    public DataListResponse<BookResponseDTO> getRankBy(String type, Integer categoryId, Pageable pageable) {
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        Page<Book> page;
+        switch (type.toUpperCase()) {
+            case "RATING" -> page = bookRepository.findAllOrderByRatingDesc(categoryId, pageable);
+
+            case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(categoryId, pageable);
+
+            default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
+        }
+        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        List<Book> books = page.getContent();
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;
+    }
+
+    @Override
     public DataListResponse<BookResponseDTO> getBookLatest(Pageable pageable) {
         Page<Book> page = bookRepository.findBooksOrderByLatestChapterPublishDate(pageable);
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();

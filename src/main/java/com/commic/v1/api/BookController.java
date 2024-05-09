@@ -55,11 +55,15 @@ public class BookController {
     @GetMapping("/rank")
     public APIResponse<DataListResponse<BookResponseDTO>> rank(@RequestParam(name = "page", defaultValue = "0") int page,
                                                                @RequestParam(name = "size", defaultValue = "10") int size,
-                                                               @RequestParam(name = "type", defaultValue = "") String type) {
+                                                               @RequestParam(name = "type", defaultValue = "") String type,
+                                                               @RequestParam(name = "categoryId", required = false) Integer categoryId) {
 
         Pageable pageable;
         pageable = PageRequest.of(page, size);
-        DataListResponse<BookResponseDTO> items = searchServices.getRankBy(type, pageable);
+        DataListResponse<BookResponseDTO> items;
+        if (categoryId == null)
+            items = searchServices.getRankBy(type, pageable);
+        else items = searchServices.getRankBy(type, categoryId, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
         apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
         apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());

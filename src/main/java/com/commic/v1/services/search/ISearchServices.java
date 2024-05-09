@@ -17,5 +17,7 @@ public interface ISearchServices {
 
     DataListResponse<BookResponseDTO> getRankBy(String type, Pageable pageable);
 
+    DataListResponse<BookResponseDTO> getRankBy(String type, Integer categoryId, Pageable pageable);
+
     List<CategoryResponseDTO> getCategory();
 }

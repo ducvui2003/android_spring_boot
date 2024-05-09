@@ -1,5 +1,6 @@
 package com.commic.v1.api;
 
+import com.commic.v1.dto.UserDTO;
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.requests.ForgotPasswordRequest;
 import com.commic.v1.dto.requests.UserRequest;
@@ -46,5 +47,11 @@ public class UserController {
     public ResponseEntity<APIResponse<Void>> changePassword(@RequestBody @Valid ChangePasswordRequest passwordRequest) {
         APIResponse<Void> response = userService.changePassword(passwordRequest);
         return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
+            userService.register(userDTO);
+        return ResponseEntity.ok("Success");
     }
 }

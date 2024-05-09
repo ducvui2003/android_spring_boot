@@ -1,7 +1,7 @@
-package com.commic.v1.exception;
+    package com.commic.v1.exception;
 
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
+    import lombok.Getter;
+    import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
@@ -19,12 +19,12 @@ public enum ErrorCode {
     UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission"),
     CATEGORY_EMPTY(204, "Category empty");
 
-    ErrorCode(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+        ErrorCode(int code, String message) {
+            this.code = code;
+            this.message = message;
+        }
 
-    private int code;
-    private String message;
+        private int code;
+        private String message;
 
     }

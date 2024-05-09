@@ -1,14 +1,11 @@
 package com.commic.v1.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "comments")
 public class Comment {

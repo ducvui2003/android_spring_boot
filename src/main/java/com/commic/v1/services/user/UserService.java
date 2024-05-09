@@ -1,12 +1,16 @@
 package com.commic.v1.services.user;
 
+import com.commic.v1.dto.UserDTO;
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.requests.UserRequest;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.UserResponse;
 import com.commic.v1.entities.User;
+
+import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.UserMapper;
 import com.commic.v1.repositories.*;
+
 import com.commic.v1.services.mail.IEmailService;
 import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -27,7 +32,7 @@ public class UserService implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
     @Autowired
     private IRewardPointRepository rewardPointRepository;
     @Autowired
@@ -113,6 +118,33 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public APIResponse<Void> register(UserDTO userDTO) {
+        APIResponse<Void> response = new APIResponse<>();
+        try {
+            /*Kiểm tra xem có tên người dùng hoặc email đã có người đăng ký hay chưa
+            * Nếu chưa có thì mới cho phép đăng ký
+            * */
+            Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
+            Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
+            if (userByName.isEmpty() && userByEmail.isEmpty()) {
+                userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                User user = userMapper.toUserResponseEntity(userDTO);
+                userRepository.save(user);
+                response.setMessage("Register success");
+                response.setCode(HttpStatus.OK.value());
+                return response;
+            } else {
+                response.setMessage("Username or Email already exists");
+                response.setCode(ErrorCode.CREATE_FAILED.getCode());
+                return response;
+            }
+        } catch(Exception ex){
+            response.setMessage("Register failed, check your registration information again");
+            response.setCode(ErrorCode.CREATE_FAILED.getCode());
+            return response;
+        }
+    }
+
     public UserResponse getUserInfo(String username) {
         // Find the user by username. If the user is not found, return null.
         User user = userRepository.findByUsername(username).orElse(null);

@@ -1,5 +1,6 @@
 package com.commic.v1.services.comment;
 
+import com.commic.v1.dto.CommentDTO;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
 import com.commic.v1.entities.Comment;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 public class CommentServiceImp implements ICommentServices {
@@ -37,5 +39,11 @@ public class CommentServiceImp implements ICommentServices {
         comment.setCreatedAt(new Date(System.currentTimeMillis()));
         CommentCreationResponseDTO responseDTO = commentMapper.toCommentCreationRequestDTO(commentRepository.save(comment));
         return responseDTO;
+    }
+
+    @Override
+    public List<CommentDTO> getComment(Integer idChapter) {
+        List<Comment> comments = commentRepository.findAllByChapterId(idChapter);
+        return commentMapper.toCommentDTOs(comments);
     }
 }

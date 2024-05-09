@@ -4,10 +4,10 @@ GET http://localhost:8081/api/v1/book/search?keyword=t&sortField_name=desc&categ
 ### Tìm kiếm truyện dựa theo tên
 GET http://localhost:8081/api/v1/book/search?keyword=t&sortField_name=desc
 
-### Lấy thông tin 10 truện có lượt đọc cao nhất
+### Lấy thông tin 10 truyện có lượt đọc cao nhất
 GET http://localhost:8081/api/v1/book/rank?type=view
 
-### Lấy thông tin 10 truện có lượt đánh gía cao nhất
+### Lấy thông tin 10 truyện có lượt đánh gía cao nhất
 GET http://localhost:8081/api/v1/book/rank?type=rating
 
 ### Lấy danh sách category
@@ -15,3 +15,6 @@ GET http://localhost:8081/api/v1/book/category
 
 ### Lấy danh sách truyen rong
 GET http://localhost:8081/api/v1/book/search?keyword=main&categoryId=null
+
+### Lấy danh sách truyện có ngày đăng mới nhất
+GET http://localhost:8081/api/v1/book/latestdate

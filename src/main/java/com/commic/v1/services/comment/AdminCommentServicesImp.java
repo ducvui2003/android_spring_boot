@@ -23,10 +23,10 @@ public class AdminCommentServicesImp implements IAdminCommentServices {
     public DataListResponse<CommentDTOResponse> get(CommentConst state, Pageable pageable) {
         DataListResponse<CommentDTOResponse> result = new DataListResponse<>();
         Page<Comment> page = commentRepository.findAllByStateOrderByCreatedAtDesc(state.getValue(), pageable);
-        List<CommentDTOResponse> data = page.getContent().stream().map(item -> commentMapper.toAdminCommentDtoResponse(item)).toList();
+//        List<CommentDTOResponse> data = page.getContent().stream().map(item -> commentMapper.toAdminCommentDtoResponse(item)).toList();
         result.setCurrentPage(pageable.getPageNumber());
         result.setTotalPages(page.getTotalPages());
-        result.setData(data);
+//        result.setData(data);
         return result;
     }
 }

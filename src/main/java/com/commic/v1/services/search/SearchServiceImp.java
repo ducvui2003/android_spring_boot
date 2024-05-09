@@ -126,4 +126,16 @@ public class SearchServiceImp implements ISearchServices {
         }
         return categoryResponseDTOS;
     }
+
+    @Override
+    public DataListResponse<BookResponseDTO> getBookLatest(Pageable pageable) {
+        Page<Book> page = bookRepository.findBooksOrderByLatestChapterPublishDate(pageable);
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        List<Book> books = page.getContent();
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;
+    }
 }

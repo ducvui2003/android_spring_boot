@@ -18,4 +18,6 @@ public interface ISearchServices {
     DataListResponse<BookResponseDTO> getRankBy(String type, Pageable pageable);
 
     List<CategoryResponseDTO> getCategory();
+
+    DataListResponse<BookResponseDTO> getBookLatest(Pageable pageable);
 }

@@ -22,6 +22,6 @@ public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
 
     boolean existsChapterById(Integer id);
 
-    @Query("SELECT MIN(c.publishDate) FROM Chapter c WHERE c.book.id = :bookId")
+    @Query("SELECT MAX(c.publishDate) FROM Chapter c WHERE c.book.id = :bookId")
     Date findFirstPublishDateByBookId(Integer bookId);
 }

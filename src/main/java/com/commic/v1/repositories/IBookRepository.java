@@ -28,4 +28,7 @@ public interface IBookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT DISTINCT c.name FROM Book b JOIN b.categories c WHERE b.id = :bookId")
     List<String> findCategoryNamesByBookId(Integer bookId);
+
+    @Query("SELECT b FROM Chapter c JOIN c.book b GROUP BY c.book.id ORDER BY MAX(c.publishDate) DESC")
+    Page<Book> findBooksOrderByLatestChapterPublishDate(Pageable pageable);
 }

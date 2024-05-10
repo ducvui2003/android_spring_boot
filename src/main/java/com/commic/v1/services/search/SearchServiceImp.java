@@ -146,4 +146,18 @@ public class SearchServiceImp implements ISearchServices {
         result.setData(data);
         return result;
     }
+
+    @Override
+    public DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable) {
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        Page<Book> page;
+        page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        List<Book> books = page.getContent();
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;
+    }
 }

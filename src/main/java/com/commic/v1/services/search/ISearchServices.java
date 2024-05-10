@@ -20,4 +20,6 @@ public interface ISearchServices {
     DataListResponse<BookResponseDTO> getRankBy(String type, Integer categoryId, Pageable pageable);
 
     List<CategoryResponseDTO> getCategory();
+
+    DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable);
 }

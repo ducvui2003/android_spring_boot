@@ -23,8 +23,14 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT book FROM Book book JOIN book.chapters chapter GROUP BY book.id ORDER BY SUM(chapter.view) DESC")
     Page<Book> findAllOrderByViewDesc(Pageable pageable);
 
+    @Query("SELECT book FROM Book book JOIN book.categories category JOIN book.chapters chapter WHERE category.id = :categoryId GROUP BY book.id ORDER BY SUM(chapter.view) DESC ")
+    Page<Book> findAllOrderByViewDesc( Integer categoryId, Pageable pageable);
+
     @Query("SELECT book FROM Book book JOIN book.chapters chapter JOIN chapter.ratings rating GROUP BY book.id ORDER BY AVG(rating.star) DESC")
     Page<Book> findAllOrderByRatingDesc(Pageable pageable);
+
+    @Query("SELECT book FROM Book book JOIN book.categories category JOIN book.chapters chapter JOIN chapter.ratings rating WHERE category.id= :categoryId GROUP BY book.id ORDER BY AVG(rating.star) DESC ")
+    Page<Book> findAllOrderByRatingDesc(Integer categoryId, Pageable pageable);
 
     @Query("SELECT DISTINCT c.name FROM Book b JOIN b.categories c WHERE b.id = :bookId")
     List<String> findCategoryNamesByBookId(Integer bookId);

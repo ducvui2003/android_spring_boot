@@ -16,10 +16,10 @@ import java.util.Optional;
 
 @Repository
 public interface ICommentRepository extends JpaRepository<Comment, Integer> {
-    Page<Comment> findAllByStateOrderByCreatedAtDesc(String value, Pageable pageable);
+    Page<Comment> findAll(Pageable pageable);
 
     @Query("SELECT c FROM Comment c WHERE c.chapter.id = :idChapter")
     List<Comment> findAllByChapterId(Integer idChapter);
-  
+
     Optional<Integer> countByUser(User user);
 }

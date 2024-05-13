@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IBookRepository extends JpaRepository<Book, Integer> {
@@ -37,4 +38,5 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT DISTINCT b FROM Book b JOIN FETCH b.chapters c ORDER BY c.publishDate DESC")
     Page<Book> findByPublishDateOrderByNearestDate(Pageable pageable);
+    Optional<Book> findById(Integer id);
 }

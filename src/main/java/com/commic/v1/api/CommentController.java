@@ -30,8 +30,14 @@ public class CommentController {
     }
 
     @GetMapping("/chapter/{idChapter}")
-    public List<CommentDTO> getComment(@PathVariable("idChapter") Integer idChapter) {
-        return commentServices.getComment(idChapter);
+    public APIResponse<List<CommentDTO>> getComment(@PathVariable("idChapter") Integer idChapter) {
+        APIResponse<List<CommentDTO>> apiResponse = new APIResponse<>();
+        List<CommentDTO> comments = commentServices.getComment(idChapter);
+        apiResponse.setCode(ErrorCode.FOUND.getCode());
+        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        apiResponse.setResult(comments);
+        return apiResponse;
     }
+
 
 }

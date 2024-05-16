@@ -11,8 +11,8 @@ import java.util.Date;
 @Data
 public class CommentDTO {
     private Integer id;
-    private User user;
-    private Chapter chapter;
+    private Integer userId;
+    private Integer chapterId;
     private String content;
     private Date createdAt;
     private Integer state;

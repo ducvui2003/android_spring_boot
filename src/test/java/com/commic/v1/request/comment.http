@@ -8,6 +8,6 @@ Content-Type: application/json
   "star": 5
 }
 ###
-GET http://localhost:8081/api/v1/comment/chapter/35
+GET http://localhost:8081/api/v1/comment/chapter/36
 
 

@@ -5,15 +5,13 @@ import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.exception.ErrorCode;
+import com.commic.v1.services.book.BookService;
 import com.commic.v1.services.search.ISearchServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +22,8 @@ import java.util.Map;
 public class BookController {
     @Autowired
     ISearchServices searchServices;
+    @Autowired
+    private BookService bookService;
 
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
@@ -103,6 +103,16 @@ public class BookController {
         apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
         apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
         apiResponse.setResult(items);
+        return apiResponse;
+    }
+
+    @GetMapping(value ="/description/{idBook}")
+    public APIResponse<BookResponseDTO> getDescription(@PathVariable("idBook") Integer id){
+            APIResponse<BookResponseDTO> apiResponse  = new APIResponse<>();
+            BookResponseDTO bookResponseDTO = bookService.getDescription(id);
+            apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
+            apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
+            apiResponse.setResult(bookResponseDTO);
         return apiResponse;
     }
 }

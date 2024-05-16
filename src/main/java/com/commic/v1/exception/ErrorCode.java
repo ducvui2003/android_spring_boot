@@ -17,7 +17,9 @@ public enum ErrorCode {
     CREATE_FAILED(400, "Create failed"),
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED.value(), "Unauthenticated"),
     UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission"),
-    CATEGORY_EMPTY(204, "Category empty");
+    CATEGORY_EMPTY(204, "Category empty"),
+    FOUND(200, "Found"),
+    NOT_FOUND(400, "Not found");
 
         ErrorCode(int code, String message) {
             this.code = code;

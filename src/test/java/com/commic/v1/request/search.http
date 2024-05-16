@@ -30,3 +30,10 @@ GET http://localhost:8081/api/v1/book/rank?type=view&size=5
 
 ### Lấy thông tin truyện mới nhất
 GET http://localhost:8081/api/v1/book/newComic?size=5
+
+### Lấy thông tin một truyện bất kỳ
+GET http://localhost:8081/api/v1/book/description/2
+
+### Lấy thông tin chương truyện
+GET http://localhost:8081/api/v1/chapter-7
+

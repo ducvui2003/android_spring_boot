@@ -37,3 +37,5 @@ GET http://localhost:8081/api/v1/book/description/2
 ### Lấy thông tin chương truyện
 GET http://localhost:8081/api/v1/chapter-7
 
+### Lấy ra truyện có nhiều chaptee nhất xếp theo trạng thái
+GET localhost:8081/api/v1/book/search?sortField_state=desc

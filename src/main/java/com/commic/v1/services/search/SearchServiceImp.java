@@ -61,7 +61,11 @@ public class SearchServiceImp implements ISearchServices {
     @Override
     public DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
+        Page<Book> page;
+        if (categoryId == null)
+            page = bookRepository.findByNameContaining(containName, pageable);
+        else
+            page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
         if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
@@ -81,6 +85,9 @@ public class SearchServiceImp implements ISearchServices {
             bookResponseDTO.setRating(starAvg);
             bookResponseDTO.setView(views);
             bookResponseDTO.setQuantityChapter(quantityChapter);
+            bookResponseDTO.setPublishDate(chapterRepository.findFirstPublishDateByBookId(book.getId()));
+            List<String> categories = bookRepository.findCategoryNamesByBookId(book.getId());
+            bookResponseDTO.setCategoryNames(categories);
             result.add(bookResponseDTO);
         }
         return result;

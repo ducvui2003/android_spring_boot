@@ -28,7 +28,7 @@ public class BookController {
 
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-                                                                 @RequestParam(name = "categoryId", required = false) Integer categoryId,
+                                                                 @RequestParam(name = "categoryId", required = false) String categoryId,
                                                                  @RequestParam(name = "page", defaultValue = "0") int page,
                                                                  @RequestParam(name = "size", defaultValue = "10") int size,
                                                                  @RequestParam Map<String, String> mapSort) {
@@ -44,7 +44,7 @@ public class BookController {
             pageable = PageRequest.of(page, size);
         else
             pageable = PageRequest.of(page, size, sort);
-        DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryId, pageable);
+        DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryIdNumber, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
         apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
         apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
@@ -53,15 +53,15 @@ public class BookController {
     }
 
 
-
     @GetMapping("/rank")
     public APIResponse<DataListResponse<BookResponseDTO>> rank(@RequestParam(name = "page", defaultValue = "0") int page,
                                                                @RequestParam(name = "size", defaultValue = "10") int size,
-                                                               @RequestParam(name = "type", defaultValue = "") String type) {
+                                                               @RequestParam(name = "type", defaultValue = "") String type,
+                                                               @RequestParam(name = "categoryId", required = false) Integer categoryId) {
 
         Pageable pageable;
         pageable = PageRequest.of(page, size);
-        DataListResponse<BookResponseDTO> items;
+        DataListResponse<BookResponseDTO> items = searchServices.getRankBy(type, pageable);
         if (categoryId == null)
             items = searchServices.getRankBy(type, pageable);
         else items = searchServices.getRankBy(type, categoryId, pageable);
@@ -96,7 +96,7 @@ public class BookController {
 
     @GetMapping("/newComic")
     public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                                                        @RequestParam(name = "size", defaultValue = "10") int size){
+                                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
         Pageable pageable;
         pageable = PageRequest.of(page, size);
         DataListResponse<BookResponseDTO> items = searchServices.getComicByPublishDate(pageable);
@@ -107,13 +107,13 @@ public class BookController {
         return apiResponse;
     }
 
-    @GetMapping(value ="/description/{idBook}")
-    public APIResponse<BookResponseDTO> getDescription(@PathVariable("idBook") Integer id){
-            APIResponse<BookResponseDTO> apiResponse  = new APIResponse<>();
-            BookResponseDTO bookResponseDTO = bookService.getDescription(id);
-            apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
-            apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
-            apiResponse.setResult(bookResponseDTO);
+    @GetMapping(value = "/description/{idBook}")
+    public APIResponse<BookResponseDTO> getDescription(@PathVariable("idBook") Integer id) {
+        APIResponse<BookResponseDTO> apiResponse = new APIResponse<>();
+        BookResponseDTO bookResponseDTO = bookService.getDescription(id);
+        apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
+        apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
+        apiResponse.setResult(bookResponseDTO);
         return apiResponse;
     }
 }

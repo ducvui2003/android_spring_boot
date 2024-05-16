@@ -41,7 +41,4 @@ public interface IBookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findById(Integer id);
 
-    @Query("SELECT book FROM Book book JOIN book.chapters chapter JOIN chapter.ratings rating GROUP BY book.id ORDER BY AVG(rating.star) DESC")
-    Page<Book> findAllOrderByRatingDesc(Pageable pageable);
-
 }

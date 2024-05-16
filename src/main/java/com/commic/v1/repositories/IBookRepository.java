@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IBookRepository extends JpaRepository<Book, Long> {
+public interface IBookRepository extends JpaRepository<Book, Integer> {
     List<Book> findAll();
 
     Page<Book> findAll(Pageable pageable);
@@ -35,6 +35,6 @@ public interface IBookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT DISTINCT c.name FROM Book b JOIN b.categories c WHERE b.id = :bookId")
     List<String> findCategoryNamesByBookId(Integer bookId);
 
-    @Query("SELECT b FROM Chapter c JOIN c.book b GROUP BY c.book.id ORDER BY MAX(c.publishDate) DESC")
-    Page<Book> findBooksOrderByLatestChapterPublishDate(Pageable pageable);
+    @Query("SELECT DISTINCT b FROM Book b JOIN FETCH b.chapters c ORDER BY c.publishDate DESC")
+    Page<Book> findByPublishDateOrderByNearestDate(Pageable pageable);
 }

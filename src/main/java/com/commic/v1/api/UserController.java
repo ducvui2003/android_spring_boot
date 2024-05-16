@@ -31,6 +31,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+
     @PostMapping("/forgot-password")
     public ResponseEntity<APIResponse<Void>> forgotPassword(@RequestBody @Valid ForgotPasswordRequest passwordRequest) {
         APIResponse<Void> response = userService.forgotPassword(passwordRequest.getEmail());

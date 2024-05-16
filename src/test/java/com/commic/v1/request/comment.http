@@ -10,3 +10,8 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8081/api/v1/admin/comment?page=1&size=10&state=1
+
+###
+GET http://localhost:8081/api/v1/comment/chapter/36
+
+

@@ -61,11 +61,7 @@ public class SearchServiceImp implements ISearchServices {
     @Override
     public DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page;
-        if (categoryId == null)
-            page = bookRepository.findByNameContaining(containName, pageable);
-        else
-            page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
+        Page<Book> page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
         if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
@@ -85,9 +81,6 @@ public class SearchServiceImp implements ISearchServices {
             bookResponseDTO.setRating(starAvg);
             bookResponseDTO.setView(views);
             bookResponseDTO.setQuantityChapter(quantityChapter);
-            bookResponseDTO.setPublishDate(chapterRepository.findFirstPublishDateByBookId(book.getId()));
-            List<String> categories = bookRepository.findCategoryNamesByBookId(book.getId());
-            bookResponseDTO.setCategoryNames(categories);
             result.add(bookResponseDTO);
         }
         return result;
@@ -125,5 +118,39 @@ public class SearchServiceImp implements ISearchServices {
             categoryResponseDTOS.add(categoryResponseDTO);
         }
         return categoryResponseDTOS;
+    }
+
+    @Override
+    public DataListResponse<BookResponseDTO> getRankBy(String type, Integer categoryId, Pageable pageable) {
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        Page<Book> page;
+        switch (type.toUpperCase()) {
+            case "RATING" -> page = bookRepository.findAllOrderByRatingDesc(categoryId, pageable);
+
+            case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(categoryId, pageable);
+
+            default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
+        }
+        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        List<Book> books = page.getContent();
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;
+    }
+
+    @Override
+    public DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable) {
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        Page<Book> page;
+        page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        List<Book> books = page.getContent();
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;
     }
 }

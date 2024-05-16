@@ -22,4 +22,6 @@ public interface ISearchServices {
     List<CategoryResponseDTO> getCategory();
 
     DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable);
+
+    DataListResponse<BookResponseDTO> getComicByPublishDate(Integer categoryId, Pageable pageable);
 }

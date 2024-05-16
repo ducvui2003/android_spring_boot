@@ -86,6 +86,7 @@ public class SearchServiceImp implements ISearchServices {
             bookResponseDTO.setView(views);
             bookResponseDTO.setQuantityChapter(quantityChapter);
             bookResponseDTO.setPublishDate(chapterRepository.findFirstPublishDateByBookId(book.getId()));
+            bookResponseDTO.setNearestDate(bookRepository.findLatestChapterDateByBookId(book.getId()));
             List<String> categories = bookRepository.findCategoryNamesByBookId(book.getId());
             bookResponseDTO.setCategoryNames(categories);
             result.add(bookResponseDTO);
@@ -150,14 +151,33 @@ public class SearchServiceImp implements ISearchServices {
     @Override
     public DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page;
-        page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+        Page<Book>
+            page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+
         if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
-        return result;
-    }
+        return result;        }
+
+    @Override
+    public DataListResponse<BookResponseDTO> getComicByPublishDate(Integer categoryId, Pageable pageable) {
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        Page<Book> page;
+        if (categoryId == null)
+            page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+        else
+            page = bookRepository.findByPublishDateOrderByNearestDate(categoryId, pageable);
+
+        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        List<Book> books = page.getContent();
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;    }
+
+
 }

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -37,4 +38,16 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT DISTINCT b FROM Book b JOIN FETCH b.chapters c ORDER BY c.publishDate DESC")
     Page<Book> findByPublishDateOrderByNearestDate(Pageable pageable);
+
+    @Query("SELECT DISTINCT b FROM Book b JOIN b.chapters c JOIN b.categories a WHERE a.id = :categoryId ORDER BY c.publishDate DESC")
+    Page<Book> findByPublishDateOrderByNearestDate(Integer categoryId,Pageable pageable);
+
+    @Query(value = "SELECT MAX(c.publish_date) OVER(PARTITION BY b.id) AS latest_chapter_date " +
+            "FROM books b " +
+            "JOIN chapters c ON c.book_id = b.id " +
+            "WHERE b.id = :bookId " +
+            "ORDER BY latest_chapter_date DESC " +
+            "LIMIT 1", nativeQuery = true)
+    Date findLatestChapterDateByBookId(@Param("bookId") Integer bookId);
+
 }

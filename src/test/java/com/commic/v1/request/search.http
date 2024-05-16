@@ -30,3 +30,6 @@ GET http://localhost:8081/api/v1/book/rank?type=view&size=5
 
 ### Lấy thông tin truyện mới nhất
 GET http://localhost:8081/api/v1/book/newComic?size=5
+
+###
+GET http://localhost:8081/api/v1/book/newComic?categoryId=19

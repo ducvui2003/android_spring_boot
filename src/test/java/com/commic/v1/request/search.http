@@ -36,4 +36,3 @@ GET http://localhost:8081/api/v1/book/description/2
 
 ### Lấy thông tin chương truyện
 GET http://localhost:8081/api/v1/chapter-7
-

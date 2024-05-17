@@ -18,6 +18,7 @@ public enum ErrorCode {
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED.value(), "Unauthenticated"),
     UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission"),
     CATEGORY_EMPTY(204, "Category empty"),
+    NOTIFICATION_EMPTY(204, "Notification empty"),
     FOUND(200, "Found"),
     NOT_FOUND(400, "Not found");
 

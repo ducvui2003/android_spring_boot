@@ -24,34 +24,34 @@ CREATE TABLE IF NOT EXISTS `books` (
   `author` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `state` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `thumbnail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table doctruyen.books: ~20 rows (approximately)
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` (`id`, `author`, `description`, `name`, `state`, `thumbnail`) VALUES
-	(1, 'Đang cập nhật', 'Truyện tranh Thần Hồn Võ Đế được cập nhật nhanh và đầy đủ nhất tại Argon Comic. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ Argon Comic ra các chương mới nhất của truyện Thần Hồn Võ Đế.', 'THẦN HỒN VÕ ĐẾ', '0', 'https://st.nhattruyenmin.com/data/comics/132/hoang-tu-bach-tuyet-da-bi-hoang-hau-bat-714.jpg'),
-	(2, 'Đang cập nhật', 'Shiina Kazuya, đã chết trong cố gắng bảo vệ một người bạn thời thơ ấu. Cậu đã được tái sinh thành Kain Von Shilford, con trai thứ 3 trong một gia đình quý tộc. Cuộc phiêu lưu của cậu bắt đầu trong thế giới kiếm và ma thuật bắt đầu...', 'Biên Niên Sử Quý Tộc Tái Sinh Ở Thế Giới Khác', '0', 'https://cdn.myanimelist.net/images/anime/1071/135255.jpg'),
-	(3, 'Đang cập nhật', 'Tôi là một cậu trai ước mơ làm "chúa tể bóng tối", chèo lái câu chuyện trong bóng tối, bí mật phô bày năng lực, tên là Shido. Vừa mới hớn hở vì được chuyển sinh đến thế giới khác và quyết định "mình sẽ là chúa tể bóng đêm, ngấm ngầm loại bỏ giáo phái đen ', 'TA MUỐN TRỞ THÀNH CHÚA TỂ BÓNG TỐI!', '0', 'https://cdn.myanimelist.net/images/anime/1874/121869.jpg'),
-	(4, 'Đang cập nhật', 'Có một thế giới nơi phép thuật có thể chi phối mọi thứ nhưng sâu trong rừng có một thanh niên dành thời gian để luyện tập cơ bắp. Mặc dù không thể sử dụng phép thuật, nhưng cậu ta có một cuộc sống yên bình với cha mình...', 'MASHLE: MUSCLES AND MAGIC', '0', 'https://m.media-amazon.com/images/M/MV5BM2M1Yzc5OTMtNWQxYS00NTg5LThiYjQtODRhZGMwODVkNjAyXkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg'),
-	(5, 'Đang cập nhật', 'Ta tên Mạnh Xuyên, năm nay mười lăm tuổi, là Đông Ninh phủ "Kính Hồ đạo viện" đương đại đại sư huynh.', 'THƯƠNG NGUYÊN ĐỒ', '0', 'https://1.bp.blogspot.com/-SLCDUcM1Dms/XkE5Z-qDeVI/AAAAAAAAamw/IO9FQarYDeMirdRuw3-NP3FScbBe7CqSACLcBGAsYHQ/s0/Thuong-Nguyen-Do-Chapter-3-P-7.jpg'),
-	(6, 'Đang cập nhật', 'Truyện tranh Lăng Thiên Thần Đế được cập nhật nhanh và đầy đủ nhất tại NetTruyen. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ NetTruyen ra các chương mới nhất của truyện Lăng Thiên Thần Đế.', 'LĂNG THIÊN THẦN ĐẾ', '0', 'https://st.nettruyento.com/data/comics/179/xam-nhap-vao-truong-trung-hoc-tai-phiet.jpg'),
-	(7, 'Đang cập nhật', 'Truyện tranh Tu La Kiếm Tôn được cập nhật nhanh và đầy đủ nhất tại NetTruyen. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ NetTruyen ra các chương mới nhất của truyện Tu La Kiếm Tôn.', 'TU LA KIẾM TÔN', '0', 'https://truyentiki.com/a/img/str/src/51292.jpg'),
-	(8, 'Đang cập nhật', 'Vốn là học bá IQ cao thời hiện đại, bậc thầy chế tạo thủ công, bởi vì thức đêm làm việc quá sức mà chết, xuyên không đến thế giới tu tiên huyền nguyên đại lục nhập vào thân thể một tên phú nhị đại trong một gia tộc nghèo Tô Cảnh Nghiêu dựa vào tri thức hi', 'KHOA KỸ ĐẠI TIÊN TÔNG', '0', 'https://hitruyen.vip/wp-content/uploads/2021/09/khoa-ky-dai-tien-tong-hitruyenvip.jpg'),
-	(9, 'Đang cập nhật', 'Thiên Vũ đại lục nhất đại truyền kỳ Tần Trần, bởi vì bạn tốt phản bội bất ngờ ngã xuống Võ vực. 300 năm sau, hắn chuyển sinh ở một cái nhận hết ức hiếp vương phủ con riêng trên người, lợi dụng kiếp trước trình độ, ngưng thần công, luyện thần đan, đi n', 'VÕ THẦN CHÚA TỂ', '0', 'https://file.hstatic.net/200000122283/file/demon_slayer_kimetsu_no_yaiba__thanh_guom_diet_quy__853198b1021746c99324b768ff4542f8_grande.jpg'),
-	(10, 'Đang cập nhật', 'Thần đồng tên giang mới có bảy tuổi sinh trưởng quá nhanh nên bị đoản mệnh, vì là khôi phục cuộc sống bình thường, mang theo ký ức trong cơ thể một vị đại thần tiên xông vào Tiên giới, từ đây đi tới trở thành bá chủ Tiên giới mở ra con đường truyền kỳ...', 'TA LÀ ĐẠI THẦN TIÊN', '0', 'https://yanlemon.com/wp-content/uploads/2022/11/truyen-tranh-ngon-tinh-nguoc-17.jpg'),
-	(11, 'Đang cập nhật', 'Mất đi trí nhớ của mình sau khi chuyển sinh, tấm màn trong câu chuyện của Kelvin trong thế giới mới được hé mở.', 'TRIỆU HỒI SƯ ÁO ĐEN', '1', 'https://upload.motgame.vn/photos/motgame-vn/2022/09/hinh_1_24.jpg'),
-	(12, 'Đang cập nhật', 'Nữ chính của chúng ta, Ninh Đóa Đóa, sau khi chuyển trường từ thành phố S về thành phố Q ven biển, ngày đầu tiên đi học, đã phát hiện ra một anh học bá trâu nhất trường, cũng là đệ nhất soái cơ, đang trốn một góc khóc hu hu do cô lạc đường khi tới trường,', 'THANH NINH CHI HẠ ', '1', 'https://truyentranhdammyy.com/wp-content/uploads/2021/12/quan-he.jpg'),
-	(13, 'Đang cập nhật', 'Yu Ijin - người duy nhất sống sót sau một vụ tai nạn máy bay thảm khốc khi anh còn nhỏ. Sau quãng thời gian 10 năm trở thành lính đánh thuê để hoàn thành giao kèo với người đã cứu mình, cậu đã trở về với gia đình ở quê hương. Một cuộc sống mới và cả sóng ', 'BẠN HỌC CỦA TÔI LÀ LÍNH ĐÁNH THUÊ', '0', 'https://img.baotangtruyenvip.com/Upload02/AvatarStory/20230506/20230506213927_109.png'),
-	(14, 'Đang cập nhật', 'Trong chín năm, tôi luôn ở vị trí đầu tiên trong suốt cuộc đời học sinh của mình. Tôi nghĩ rằng một khi tôi vào cao trung, mọi thứ sẽ vẫn như cũ. Nhưng, tên khốn nào đó đã chiếm vi trí của tôi! nhưng không, tôi không muốn từ bỏ vị trí của mình!!!!', 'TÌNH YÊU TUỔI TRẺ', '0', 'https://mangadex.org/covers/f664ae8a-7c44-4548-a60b-5cb6f00dd142/280887f7-3724-4b18-87fa-3cc6b7fec236.png.512.jpg'),
-	(15, 'Đang cập nhật', 'Phách lối không phải là sai, cuồng vọng không phải tội, ta bản mạnh nhất, không cần để ý! Giáo hoa, người mẫu, ngự tỷ, ta đã thích, mang tới liền!', 'HỌC VIỆN CAO THỦ', '0', 'http://alotruyentranh.com/ImageComicBig/hoc-vien-cao-thu-17424.jpg'),
-	(16, 'Trọng Sinh Chi Ngược Tra Nữ Vương', 'Động tác tiêu chuẩn sau khi trọng sinh là gì? Tay trái đảo lộn cả nhà tra nam, tay trái ôm chặt đùi bá tổng. Cô vợ nhỏ:’’Chồng, em bị cấp trên tiền mãn kinh mắng là chó, làm sao đây?’’. Bá tổng: ‘’Đã sắp xếp xong, cho nữ vương đại nhân thăng chức để cấp t', 'SỰ TRẢ THÙ CỦA NỮ VƯƠNG', '0', 'https://i1.wp.com/s2.anhvip.xyz/comics/su-tra-thu-cua-nu-vuong-1627360136.jpg'),
-	(17, 'Đang cập nhật', 'Một cuộc giao dịch đã bắt cô ấy phải hiến thân cho người đàn ông tôn kính nhất, đáng sợ nhất ở thành phố Đông Lăng. Ban ngày, cô ấy là một người con gái bình thường như bao cô gái khác nhưng ban đêm cô lại trở thành món đồ chơi của anh ta… Hai tay cô bị é', 'DANH MÔN CHÍ ÁI', '0', 'http://alotruyentranh.com/ImageComicBig/danh-mon-chi-ai-15688.jpg'),
-	(18, 'Đang cập nhật', 'Mọi người dường như không nhận ra được sự tồn tại của tôi nhưng mà tại sao Kubo-san lại...!!', 'KUBO WONT LET ME BE INVISIBLE', '1', 'https://cdn.myanimelist.net/images/anime/1818/132330.jpg'),
-	(19, 'Đang cập nhật', 'Một học sinh lười biếng và một giáo viên nghiêm túc. Thoạt nhìn, có vẻ như họ đang ở trong tình trạng tồi tệ, nhưng mọi thứ trở nên khác biệt sau giờ học ...', 'THE TEACHER CAN NOT TELL ME LOVE', '1', 'https://cdn.mangaclash.com/manga_5fdf114caf71c/f19f8e897023dc7e7159893c49b9be75/1.jpg'),
-	(20, 'Đang cập nhật', 'Vào một ngày đẹp trời, tôi thức dậy và đột nhiên trở thành Quỷ vương, người mang trách nhiệm bảo vệ dungeon. Ở một thế giới tràn ngập bởi bạo lực. Những con quái khổng lồ ở khắp nơi, đấu tranh hằng ngày để sinh tồn. Tôi không còn lựa chọn nào khác ngoài t', 'MAOU NI NATTE NODE, DUNGEON TSUKUTTE JINGAI MUSUME TO HONOBONO SURU', '0', 'https://st.nettruyenplus.com/data/comics/249/maou-ni-natte-node-dungeon-tsukutte-jing-7696.jpg');
+INSERT INTO `books` (`id`, `author`, `description`, `name`, `status`, `thumbnail`) VALUES
+	(1, 'Đang cập nhật', 'Truyện tranh Thần Hồn Võ Đế được cập nhật nhanh và đầy đủ nhất tại Argon Comic. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ Argon Comic ra các chương mới nhất của truyện Thần Hồn Võ Đế.', 'THẦN HỒN VÕ ĐẾ', 'UPDATING', 'https://img.dtruyen.com/public/images/large/hondevothanu4S7xag.jpg'),
+	(2, 'Đang cập nhật', 'Shiina Kazuya, đã chết trong cố gắng bảo vệ một người bạn thời thơ ấu. Cậu đã được tái sinh thành Kain Von Shilford, con trai thứ 3 trong một gia đình quý tộc. Cuộc phiêu lưu của cậu bắt đầu trong thế giới kiếm và ma thuật bắt đầu...', 'Biên Niên Sử Quý Tộc Tái Sinh Ở Thế Giới Khác', 'UPDATING', 'https://cdn.myanimelist.net/images/anime/1071/135255.jpg'),
+	(3, 'Đang cập nhật', 'Tôi là một cậu trai ước mơ làm "chúa tể bóng tối", chèo lái câu chuyện trong bóng tối, bí mật phô bày năng lực, tên là Shido. Vừa mới hớn hở vì được chuyển sinh đến thế giới khác và quyết định "mình sẽ là chúa tể bóng đêm, ngấm ngầm loại bỏ giáo phái đen ', 'TA MUỐN TRỞ THÀNH CHÚA TỂ BÓNG TỐI!', 'UPDATING', 'https://cdn.myanimelist.net/images/anime/1874/121869.jpg'),
+	(4, 'Đang cập nhật', 'Có một thế giới nơi phép thuật có thể chi phối mọi thứ nhưng sâu trong rừng có một thanh niên dành thời gian để luyện tập cơ bắp. Mặc dù không thể sử dụng phép thuật, nhưng cậu ta có một cuộc sống yên bình với cha mình...', 'MASHLE: MUSCLES AND MAGIC', 'UPDATING', 'https://m.media-amazon.com/images/M/MV5BM2M1Yzc5OTMtNWQxYS00NTg5LThiYjQtODRhZGMwODVkNjAyXkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg'),
+	(5, 'Đang cập nhật', 'Ta tên Mạnh Xuyên, năm nay mười lăm tuổi, là Đông Ninh phủ "Kính Hồ đạo viện" đương đại đại sư huynh.', 'THƯƠNG NGUYÊN ĐỒ', 'UPDATING', 'https://nae.vn/ttv/ttv/public/images/story/069a21a830ea41a1ddc9d2e603947f9de83cf912d335d388fcc26b48f4796304.jpg'),
+	(6, 'Đang cập nhật', 'Truyện tranh Lăng Thiên Thần Đế được cập nhật nhanh và đầy đủ nhất tại NetTruyen. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ NetTruyen ra các chương mới nhất của truyện Lăng Thiên Thần Đế.', 'LĂNG THIÊN THẦN ĐẾ', 'UPDATING', 'https://i7.bumcheo.info/manga/24/24878/00.thumb_500x.jpg'),
+	(7, 'Đang cập nhật', 'Truyện tranh Tu La Kiếm Tôn được cập nhật nhanh và đầy đủ nhất tại NetTruyen. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ NetTruyen ra các chương mới nhất của truyện Tu La Kiếm Tôn.', 'TU LA KIẾM TÔN', 'UPDATING', 'https://lh6.googleusercontent.com/proxy/7_8ydJCZ_q3WU6nYuDe2JlY7C3W9WlMRWNOZGdXH0kYJCOnI7W5WPyQp_LYjqaAH8mSNKCZU-deEfp8kajEL5SDyQD1en_LZ5PTEBDm9Hyfp_jA1MEplmU8BtllzUtdUJMYrP0g'),
+	(8, 'Đang cập nhật', 'Vốn là học bá IQ cao thời hiện đại, bậc thầy chế tạo thủ công, bởi vì thức đêm làm việc quá sức mà chết, xuyên không đến thế giới tu tiên huyền nguyên đại lục nhập vào thân thể một tên phú nhị đại trong một gia tộc nghèo Tô Cảnh Nghiêu dựa vào tri thức hi', 'KHOA KỸ ĐẠI TIÊN TÔNG', 'UPDATING', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVp7X2QVd8OIFpvpBqXcFBCr08ULnWVxSiOtTkpoauXA&s'),
+	(9, 'Đang cập nhật', 'Thiên Vũ đại lục nhất đại truyền kỳ Tần Trần, bởi vì bạn tốt phản bội bất ngờ ngã xuống Võ vực. 300 năm sau, hắn chuyển sinh ở một cái nhận hết ức hiếp vương phủ con riêng trên người, lợi dụng kiếp trước trình độ, ngưng thần công, luyện thần đan, đi n', 'VÕ THẦN CHÚA TỂ', 'UPDATING', 'https://file.hstatic.net/200000122283/file/demon_slayer_kimetsu_no_yaiba__thanh_guom_diet_quy__853198b1021746c99324b768ff4542f8_grande.jpg'),
+	(10, 'Đang cập nhật', 'Thần đồng tên giang mới có bảy tuổi sinh trưởng quá nhanh nên bị đoản mệnh, vì là khôi phục cuộc sống bình thường, mang theo ký ức trong cơ thể một vị đại thần tiên xông vào Tiên giới, từ đây đi tới trở thành bá chủ Tiên giới mở ra con đường truyền kỳ...', 'TA LÀ ĐẠI THẦN TIÊN', 'UPDATING', 'https://img.nettruyenfull.com/story/22516/avatar.png'),
+	(11, 'Đang cập nhật', 'Mất đi trí nhớ của mình sau khi chuyển sinh, tấm màn trong câu chuyện của Kelvin trong thế giới mới được hé mở.', 'TRIỆU HỒI SƯ ÁO ĐEN', 'UPDATING', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnxQLSdSxqwQjki5Mg6b4xsLwBPbmA7BtFZ17gHUP7jQ&s'),
+	(12, 'Đang cập nhật', 'Nữ chính của chúng ta, Ninh Đóa Đóa, sau khi chuyển trường từ thành phố S về thành phố Q ven biển, ngày đầu tiên đi học, đã phát hiện ra một anh học bá trâu nhất trường, cũng là đệ nhất soái cơ, đang trốn một góc khóc hu hu do cô lạc đường khi tới trường,', 'THANH NINH CHI HẠ ', 'UPDATING', 'https://photo2.tinhte.vn/data/attachment-files/2022/04/5948817_61.jpg'),
+	(13, 'Đang cập nhật', 'Yu Ijin - người duy nhất sống sót sau một vụ tai nạn máy bay thảm khốc khi anh còn nhỏ. Sau quãng thời gian 10 năm trở thành lính đánh thuê để hoàn thành giao kèo với người đã cứu mình, cậu đã trở về với gia đình ở quê hương. Một cuộc sống mới và cả sóng ', 'BẠN HỌC CỦA TÔI LÀ LÍNH ĐÁNH THUÊ', 'UPDATING', 'https://s1.fastscans.net/ban-hoc-cua-toi-la-linh-danh-thue/thumbnail/bhctlldt.png'),
+	(14, 'Đang cập nhật', 'Trong chín năm, tôi luôn ở vị trí đầu tiên trong suốt cuộc đời học sinh của mình. Tôi nghĩ rằng một khi tôi vào cao trung, mọi thứ sẽ vẫn như cũ. Nhưng, tên khốn nào đó đã chiếm vi trí của tôi! nhưng không, tôi không muốn từ bỏ vị trí của mình!!!!', 'TÌNH YÊU TUỔI TRẺ', 'UPDATING', 'https://mangadex.org/covers/f664ae8a-7c44-4548-a60b-5cb6f00dd142/280887f7-3724-4b18-87fa-3cc6b7fec236.png.512.jpg'),
+	(15, 'Đang cập nhật', 'Phách lối không phải là sai, cuồng vọng không phải tội, ta bản mạnh nhất, không cần để ý! Giáo hoa, người mẫu, ngự tỷ, ta đã thích, mang tới liền!', 'HỌC VIỆN CAO THỦ', 'UPDATING', 'http://alotruyentranh.com/ImageComicBig/hoc-vien-cao-thu-17424.jpg'),
+	(16, 'Trọng Sinh Chi Ngược Tra Nữ Vương', 'Động tác tiêu chuẩn sau khi trọng sinh là gì? Tay trái đảo lộn cả nhà tra nam, tay trái ôm chặt đùi bá tổng. Cô vợ nhỏ:’’Chồng, em bị cấp trên tiền mãn kinh mắng là chó, làm sao đây?’’. Bá tổng: ‘’Đã sắp xếp xong, cho nữ vương đại nhân thăng chức để cấp t', 'SỰ TRẢ THÙ CỦA NỮ VƯƠNG', 'UPDATING', 'https://i1.wp.com/s2.anhvip.xyz/comics/su-tra-thu-cua-nu-vuong-1627360136.jpg'),
+	(17, 'Đang cập nhật', 'Một cuộc giao dịch đã bắt cô ấy phải hiến thân cho người đàn ông tôn kính nhất, đáng sợ nhất ở thành phố Đông Lăng. Ban ngày, cô ấy là một người con gái bình thường như bao cô gái khác nhưng ban đêm cô lại trở thành món đồ chơi của anh ta… Hai tay cô bị é', 'DANH MÔN CHÍ ÁI', 'UPDATING', 'http://alotruyentranh.com/ImageComicBig/danh-mon-chi-ai-15688.jpg'),
+	(18, 'Đang cập nhật', 'Mọi người dường như không nhận ra được sự tồn tại của tôi nhưng mà tại sao Kubo-san lại...!!', 'KUBO WONT LET ME BE INVISIBLE', 'UPDATING', 'https://cdn.myanimelist.net/images/anime/1818/132330.jpg'),
+	(19, 'Đang cập nhật', 'Một học sinh lười biếng và một giáo viên nghiêm túc. Thoạt nhìn, có vẻ như họ đang ở trong tình trạng tồi tệ, nhưng mọi thứ trở nên khác biệt sau giờ học ...', 'THE TEACHER CAN NOT TELL ME LOVE', 'UPDATING', 'https://cdn.mangaclash.com/manga_5fdf114caf71c/f19f8e897023dc7e7159893c49b9be75/1.jpg'),
+	(20, 'Đang cập nhật', 'Vào một ngày đẹp trời, tôi thức dậy và đột nhiên trở thành Quỷ vương, người mang trách nhiệm bảo vệ dungeon. Ở một thế giới tràn ngập bởi bạo lực. Những con quái khổng lồ ở khắp nơi, đấu tranh hằng ngày để sinh tồn. Tôi không còn lựa chọn nào khác ngoài t', 'MAOU NI NATTE NODE, DUNGEON TSUKUTTE JINGAI MUSUME TO HONOBONO SURU', 'UPDATING', 'https://static.wikia.nocookie.net/maou-ni-natta-node/images/0/01/LN_V13-01.jpg/revision/latest?cb=20220414213635');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.book_category
@@ -100,16 +100,16 @@ CREATE TABLE IF NOT EXISTS `categories` (
 -- Dumping data for table doctruyen.categories: ~10 rows (approximately)
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` (`id`, `description`, `name`) VALUES
-	(1, 'Books with imaginative or fanciful themes, usually involving magic, supernatural events, or mythical creatures.', 'Fantasy'),
-	(2, 'Books that explore speculative concepts such as futuristic science and technology, space exploration, time travel, and extraterrestrial life.', 'Science Fiction'),
-	(3, 'Books focused on romantic love relationships, typically featuring passionate attraction and emotional attachment between characters.', 'Romance'),
-	(4, 'Books involving a mysterious event or crime that needs to be solved by the protagonist.', 'Mystery'),
-	(5, 'Books that create excitement, tension, and anticipation in the reader, often involving danger, suspense, and unexpected twists.', 'Thriller'),
-	(6, 'Books designed to evoke fear, dread, and terror in readers, often featuring supernatural elements, monsters, or psychological suspense.', 'Horror'),
-	(7, 'Books set in the past that blend fictional characters and events with historical settings and contexts.', 'Historical Fiction'),
-	(8, 'Books based on real events, facts, and information, typically covering topics such as history, biography, science, self-help, and memoirs.', 'Non-Fiction'),
-	(9, 'Books that narrate the life story of a real person, providing insights into their achievements, experiences, and contributions.', 'Biography'),
-	(10, 'Books aimed at helping individuals improve themselves, overcome challenges, and achieve personal growth and success.', 'Self-Help');
+	(1, 'Books with imaginative or fanciful themes, usually involving magic, supernatural events, or mythical creatures.', 'Tưởng tượng'),
+	(2, 'Books that explore speculative concepts such as futuristic science and technology, space exploration, time travel, and extraterrestrial life.', 'Khoa học viễn tưởng'),
+	(3, 'Books focused on romantic love relationships, typically featuring passionate attraction and emotional attachment between characters.', 'Lãng mạn'),
+	(4, 'Books involving a mysterious event or crime that needs to be solved by the protagonist.', 'Bí ẩn'),
+	(5, 'Books that create excitement, tension, and anticipation in the reader, often involving danger, suspense, and unexpected twists.', 'Kinh dị'),
+	(6, 'Books designed to evoke fear, dread, and terror in readers, often featuring supernatural elements, monsters, or psychological suspense.', 'Rùng rợn'),
+	(7, 'Books set in the past that blend fictional characters and events with historical settings and contexts.', 'Tiểu thuyết lịch sử'),
+	(8, 'Books based on real events, facts, and information, typically covering topics such as history, biography, science, self-help, and memoirs.', 'Phi hư cấu'),
+	(9, 'Books that narrate the life story of a real person, providing insights into their achievements, experiences, and contributions.', 'Tiểu sử'),
+	(10, 'Books aimed at helping individuals improve themselves, overcome challenges, and achieve personal growth and success.', 'Tự lực');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.chapters
@@ -2219,12 +2219,12 @@ CREATE TABLE IF NOT EXISTS `comments` (
 -- Dumping data for table doctruyen.comments: ~6 rows (approximately)
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 INSERT INTO `comments` (`id`, `content`, `created_at`, `state`, `chapter_id`, `user_id`) VALUES
-	(1, 'truyện hay quá bạn ơi!', '2021-11-21 00:00:00.000000', 1, 35, 2),
-	(2, 'tuyệt vời!', '2021-11-21 00:00:00.000000', 1, 35, 2),
-	(3, 'tuyệt vời!', '2021-11-21 00:00:00.000000', 1, 35, 2),
-	(4, 'tuyệt vời!', '2021-11-21 00:00:00.000000', 1, 35, 2),
-	(5, 'a', '2021-11-21 00:00:00.000000', 1, 35, 2),
-	(6, 'b', '2021-11-21 00:00:00.000000', 1, 35, 2);
+	(1, 'truyện hay quá bạn ơi!', '2021-11-21 00:00:00.000000', 1, 35, 1),
+	(2, 'tuyệt vời!', '2021-11-21 00:00:00.000000', 1, 35, 1),
+	(3, 'tuyệt vời!', '2021-11-21 00:00:00.000000', 1, 35, 1),
+	(4, 'tuyệt vời!', '2021-11-21 00:00:00.000000', 1, 35, 1),
+	(5, 'a', '2021-11-21 00:00:00.000000', 1, 35, 1),
+	(6, 'b', '2021-11-21 00:00:00.000000', 1, 35, 1);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.histories
@@ -2242,8 +2242,8 @@ CREATE TABLE IF NOT EXISTS `histories` (
 -- Dumping data for table doctruyen.histories: ~2 rows (approximately)
 /*!40000 ALTER TABLE `histories` DISABLE KEYS */;
 INSERT INTO `histories` (`id`, `chapter_id`, `user_id`) VALUES
-	(1, 9, 2),
-	(2, 35, 2);
+	(1, 9, 1),
+	(2, 35, 1);
 /*!40000 ALTER TABLE `histories` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.invalidated_tokens
@@ -2253,8 +2253,14 @@ CREATE TABLE IF NOT EXISTS `invalidated_tokens` (
   PRIMARY KEY (`token_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table doctruyen.invalidated_tokens: ~0 rows (approximately)
+-- Dumping data for table doctruyen.invalidated_tokens: ~4 rows (approximately)
 /*!40000 ALTER TABLE `invalidated_tokens` DISABLE KEYS */;
+INSERT INTO `invalidated_tokens` (`token_id`, `expired`) VALUES
+	('5a0c83af-8357-45ed-ab98-71ca4fdbc992', '2024-05-03 19:34:24.000000'),
+	('5f2a4a1b-a0e5-4848-8e12-3ffdb6b86f8c', '2024-05-18 03:54:07.000000'),
+	('764cb9e7-9870-4b3f-a075-e2ca92759577', '2024-04-17 04:24:56.000000'),
+	('ab9ec2f6-29a2-4480-aaf4-0109e77f70bd', '2024-05-03 21:54:30.000000'),
+	('fb137ed1-aa37-4aeb-909a-e2e56335763a', '2024-05-04 01:14:22.000000');
 /*!40000 ALTER TABLE `invalidated_tokens` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.items
@@ -2315,12 +2321,12 @@ CREATE TABLE IF NOT EXISTS `ratings` (
 -- Dumping data for table doctruyen.ratings: ~7 rows (approximately)
 /*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
 INSERT INTO `ratings` (`id`, `created_at`, `star`, `chapter_id`, `user_id`) VALUES
-	(1, '2021-11-21', 5, 35, 2),
-	(2, '2021-11-21', 2.5, 1, 3),
-	(3, '2021-11-21', 4, 1, 4),
+	(1, '2021-11-21', 5, 35, 1),
+	(2, '2021-11-21', 2.5, 1, 1),
+	(3, '2021-11-21', 4, 1, 1),
 	(4, '2021-11-21', 4, 12, 1),
-	(5, '2021-11-21', 3.5, 12, 2),
-	(6, '2021-11-21', 3, 4, 3),
+	(5, '2021-11-21', 3.5, 12, 1),
+	(6, '2021-11-21', 3, 4, 1),
 	(7, '2021-11-21', 4, 35, 1);
 /*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
 
@@ -2340,8 +2346,8 @@ CREATE TABLE IF NOT EXISTS `redeem_reward` (
 -- Dumping data for table doctruyen.redeem_reward: ~2 rows (approximately)
 /*!40000 ALTER TABLE `redeem_reward` DISABLE KEYS */;
 INSERT INTO `redeem_reward` (`id`, `date`, `item_id`, `user_id`) VALUES
-	(1, '2021-11-20', 6, 2),
-	(2, '2021-11-20', 1, 2);
+	(1, '2021-11-20', 6, 1),
+	(2, '2021-11-20', 1, 1);
 /*!40000 ALTER TABLE `redeem_reward` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.reward_points
@@ -2359,11 +2365,11 @@ CREATE TABLE IF NOT EXISTS `reward_points` (
 -- Dumping data for table doctruyen.reward_points: ~5 rows (approximately)
 /*!40000 ALTER TABLE `reward_points` DISABLE KEYS */;
 INSERT INTO `reward_points` (`id`, `date`, `point`, `thu`, `user_id`) VALUES
-	(1, '2021-11-20', 5, 1, 2),
-	(2, '2021-11-20', 5, 1, 2),
-	(3, '2021-11-20', 5, 1, 2),
-	(4, '2021-11-24', 5, 1, 2),
-	(5, '2021-11-25', 5, 2, 2);
+	(1, '2021-11-20', 5, 1, 1),
+	(2, '2021-11-20', 5, 1, 1),
+	(3, '2021-11-20', 5, 1, 1),
+	(4, '2021-11-24', 5, 1, 1),
+	(5, '2021-11-25', 5, 2, 1);
 /*!40000 ALTER TABLE `reward_points` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.statisticals
@@ -2413,16 +2419,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `phone` varchar(255) DEFAULT NULL,
   `point` int(11) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
+  `otp` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table doctruyen.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `password`, `avatar`, `email`, `full_name`, `phone`, `point`, `role`) VALUES
-	(1, 'admin', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'admin@gmail.com', 'Quản trị viên', '0392382167', NULL, 'ADMIN'),
-	(2, 'user1', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', 'https://vi.pngtree.com//freepng/gray-cartoon-cat-cat-cartoon-animals-gray_3925392.html ', 'vutruong@gmail.com', 'Người dùng 1', '0392382167', NULL, 'USER'),
-	(3, 'user2', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'user1@gmail.com', 'Người dùng 2', NULL, NULL, 'USER'),
-	(4, 'user3', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'user2@gmail.com', 'Người dùng 3', NULL, NULL, 'USER');
+INSERT INTO `users` (`id`, `username`, `password`, `avatar`, `email`, `full_name`, `phone`, `point`, `role`, `otp`) VALUES
+	(1, 'admin', '$2a$10$M.4fN6iLM8KP3sfL6BfEHOHce4ec315SFtODxYkOarndwpXS1Z4hS', NULL, 'vophihoang252003@gmail.com', 'võ Phi Hoàng', '1236466', NULL, 'ADMIN', '480835'),
+	(2, 'user1', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', 'https://vi.pngtree.com//freepng/gray-cartoon-cat-cat-cartoon-animals-gray_3925392.html ', 'vutruong@gmail.com', 'Người dùng 1', '0392382167', NULL, 'USER', NULL),
+	(3, 'user2', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'user1@gmail.com', 'Người dùng 2', NULL, NULL, 'USER', '293163'),
+	(4, 'user3', '$2a$12$21HJaS0umcU7c/S4aReVFuB.pp1W1/qESS42RMT3U7ZhCNLCuEOe2', NULL, 'user2@gmail.com', 'Người dùng 3', NULL, NULL, 'USER', NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

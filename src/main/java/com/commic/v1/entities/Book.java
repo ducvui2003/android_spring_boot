@@ -21,12 +21,12 @@ public class Book {
     private String name;
     private String author;
     private String description;
+    private String status;
 
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories;
 
     private String thumbnail;
-    private String state;
 
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters;

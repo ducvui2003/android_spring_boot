@@ -2,6 +2,7 @@ package com.commic.v1.services.comment;
 
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.CommentDTOResponse;
+import com.commic.v1.dto.responses.CommentResponseDTO;
 import com.commic.v1.entities.Comment;
 import com.commic.v1.mapper.CommentMapper;
 import com.commic.v1.repositories.ICommentRepository;
@@ -28,5 +29,10 @@ public class AdminCommentServicesImp implements IAdminCommentServices {
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
         return result;
+    }
+
+    @Override
+    public DataListResponse<CommentResponseDTO> get(Pageable pageable) {
+        return null;
     }
 }

@@ -4,7 +4,6 @@ import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.dto.responses.CategoryResponseDTO;
-import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.book.IBookService;
 import com.commic.v1.services.search.ISearchServices;
@@ -111,7 +110,7 @@ public class BookController {
 
     @GetMapping("/newComic")
     public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
+                                                                                        @RequestParam(name = "size", defaultValue = "10") int size){
         Pageable pageable;
         pageable = PageRequest.of(page, size);
         DataListResponse<BookResponseDTO> items = searchServices.getComicByPublishDate(pageable);

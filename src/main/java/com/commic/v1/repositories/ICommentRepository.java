@@ -20,5 +20,8 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
 
     List<Comment> findByChapterId(Integer id);
   
+    @Query("SELECT c FROM Comment c WHERE c.chapter.id = :idChapter")
+    List<Comment> findAllByChapterId(Integer idChapter);
+
     Optional<Integer> countByUser(User user);
 }

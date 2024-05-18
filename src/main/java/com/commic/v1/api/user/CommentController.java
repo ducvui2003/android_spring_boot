@@ -47,26 +47,4 @@ public class CommentController {
         apiResponse.setResult(comments);
         return apiResponse;
     }
-
-    @GetMapping("/get")
-    public APIResponse<DataListResponse<CommentDTOResponse>> getListComment(
-            @RequestParam(name = "page") Integer page,
-            @RequestParam(name = "size") Integer size,
-            @RequestParam(name = "state") String state
-    ) {
-        APIResponse<DataListResponse<CommentDTOResponse>> response = new APIResponse<>();
-        Pageable pageable = PageRequest.of(page, size);
-        CommentConst commentConst;
-        try {
-            commentConst = CommentConst.valueOf(state);
-        } catch (IllegalArgumentException e) {
-            response.setCode(400);
-            response.setMessage("State not found");
-            return response;
-        }
-        DataListResponse<CommentDTOResponse> result = commentAdminServices.get(commentConst, pageable);
-        response.setResult(result);
-        return response;
-    }
-
 }

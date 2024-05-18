@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IBookRepository extends JpaRepository<Book, Long> {
+public interface IBookRepository extends JpaRepository<Book, Integer> {
     List<Book> findAll();
 
     Page<Book> findAll(Pageable pageable);
@@ -25,7 +25,7 @@ public interface IBookRepository extends JpaRepository<Book, Long> {
     Page<Book> findAllOrderByViewDesc(Pageable pageable);
 
     @Query("SELECT book FROM Book book JOIN book.categories category JOIN book.chapters chapter WHERE category.id = :categoryId GROUP BY book.id ORDER BY SUM(chapter.view) DESC ")
-    Page<Book> findAllOrderByViewDesc(Integer categoryId, Pageable pageable);
+    Page<Book> findAllOrderByViewDesc( Integer categoryId, Pageable pageable);
 
     @Query("SELECT book FROM Book book JOIN book.chapters chapter JOIN chapter.ratings rating GROUP BY book.id ORDER BY AVG(rating.star) DESC")
     Page<Book> findAllOrderByRatingDesc(Pageable pageable);

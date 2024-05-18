@@ -25,4 +25,5 @@ public class BookResponseDTO {
     String thumbnail;
     Integer quantityChapter;
     List<String> categoryNames;
+    String status;
 }

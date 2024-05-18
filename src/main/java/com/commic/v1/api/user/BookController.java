@@ -1,4 +1,4 @@
-package com.commic.v1.api;
+package com.commic.v1.api.user;
 
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.APIResponse;
@@ -6,12 +6,13 @@ import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.exception.ErrorCode;
-import com.commic.v1.services.book.BookService;
+import com.commic.v1.services.book.IBookService;
 import com.commic.v1.services.search.ISearchServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,26 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/v1/book")
+@RequestMapping("/api/v1/books")
 public class BookController {
     @Autowired
     ISearchServices searchServices;
     @Autowired
-    private BookService bookService;
+    private IBookService bookService;
+
+    @GetMapping()
+    public ResponseEntity<List<BookResponseDTO>> getAllBook() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+
+
+        List<BookResponseDTO> books = searchServices.getAllBook(sort);
+        return ResponseEntity.ok(books);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable(value = "id", required = true) Integer id) {
+        BookResponseDTO book = searchServices.getBookById(id);
+        return ResponseEntity.ok(book);
+    }
 
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,

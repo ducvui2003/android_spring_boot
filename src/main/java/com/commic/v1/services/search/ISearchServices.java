@@ -3,6 +3,7 @@ package com.commic.v1.services.search;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.dto.responses.CategoryResponseDTO;
+import com.commic.v1.entities.Category;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -22,4 +23,7 @@ public interface ISearchServices {
 
     DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable);
 
+    List<BookResponseDTO> getAllBook(Sort pageable);
+
+    BookResponseDTO getBookById(Integer id);
 }

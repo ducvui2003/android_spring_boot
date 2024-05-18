@@ -14,6 +14,7 @@ import com.commic.v1.repositories.IChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -159,5 +160,18 @@ public class SearchServiceImp implements ISearchServices {
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
         return result;
+    }
+
+    @Override
+    public List<BookResponseDTO> getAllBook(Sort sort) {
+        List<Book> books = bookRepository.findAll(sort);
+        if (books.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        return bookToResponseDTO(books);
+    }
+
+    @Override
+    public BookResponseDTO getBookById(Integer id) {
+        Optional<Book> book = bookRepository.findById(id);
+        return book.map(value -> bookMapper.toBookResponseDTO(value)).orElse(null);
     }
 }

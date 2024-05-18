@@ -1,4 +1,4 @@
-package com.commic.v1.api;
+package com.commic.v1.api.user;
 
 import com.commic.v1.dto.UserDTO;
 import com.commic.v1.dto.requests.ChangePasswordRequest;

@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 public interface ICommentRepository extends JpaRepository<Comment, Integer> {
-    Page<Comment> findAllByStateOrderByCreatedAtDesc(String value, Pageable pageable);
+    Page<Comment> findAllByStateOrderByCreatedAtDesc(Integer state, Pageable pageable);
 
     List<Comment> findByChapterId(Integer id);
   

@@ -9,15 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api/v1/admin/comment")
+@RestController()
+@RequestMapping("/api/v1/admin/comment")
 public class AdminCommentController {
     @Autowired
     IAdminCommentServices commentAdminServices;
 
-    @GetMapping
+    @GetMapping("/get")
     public APIResponse<DataListResponse<CommentDTOResponse>> getListComment(
             @RequestParam(name = "page") Integer page,
             @RequestParam(name = "size") Integer size,
@@ -27,7 +29,7 @@ public class AdminCommentController {
         Pageable pageable = PageRequest.of(page, size);
         CommentConst commentConst;
         try {
-            commentConst = CommentConst.valueOf(state);
+            commentConst = CommentConst.valueOf(state.toUpperCase());
         } catch (IllegalArgumentException e) {
             response.setCode(400);
             response.setMessage("State not found");

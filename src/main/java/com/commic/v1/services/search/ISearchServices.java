@@ -5,6 +5,7 @@ import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.dto.responses.CategoryResponseDTO;
 import com.commic.v1.entities.Category;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 

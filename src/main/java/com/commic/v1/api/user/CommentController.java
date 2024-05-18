@@ -1,19 +1,14 @@
 package com.commic.v1.api.user;
 
 import com.commic.v1.dto.CommentDTO;
-import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
-import com.commic.v1.dto.responses.CommentDTOResponse;
 import com.commic.v1.exception.ErrorCode;
-import com.commic.v1.services.comment.CommentConst;
 import com.commic.v1.services.comment.IAdminCommentServices;
 import com.commic.v1.services.comment.ICommentServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.commic.v1.services.comment;
 
 import com.commic.v1.dto.DataListResponse;
-import com.commic.v1.dto.responses.CommentDTOResponse;
 import com.commic.v1.dto.responses.CommentResponseDTO;
 import com.commic.v1.entities.Comment;
 import com.commic.v1.mapper.CommentMapper;
@@ -21,10 +20,10 @@ public class AdminCommentServicesImp implements IAdminCommentServices {
     CommentMapper commentMapper;
 
     @Override
-    public DataListResponse<CommentDTOResponse> get(CommentConst state, Pageable pageable) {
-        DataListResponse<CommentDTOResponse> result = new DataListResponse<>();
+    public DataListResponse<CommentResponseDTO> get(CommentConst state, Pageable pageable) {
+        DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
         Page<Comment> page = commentRepository.findAllByStateOrderByCreatedAtDesc(state.getValue(), pageable);
-        List<CommentDTOResponse> data = page.getContent().stream().map(item -> commentMapper.toAdminCommentDtoResponse(item)).toList();
+        List<CommentResponseDTO> data = page.getContent().stream().map(item -> commentMapper.toAdminCommentDtoResponse(item)).toList();
         result.setCurrentPage(pageable.getPageNumber());
         result.setTotalPages(page.getTotalPages());
         result.setData(data);

@@ -117,33 +117,33 @@ public class UserService implements IUserService {
         return response;
     }
 
-    @Override
-    public APIResponse<Void> register(UserDTO userDTO) {
-        APIResponse<Void> response = new APIResponse<>();
-        try {
-            /*Kiểm tra xem có tên người dùng hoặc email đã có người đăng ký hay chưa
-            * Nếu chưa có thì mới cho phép đăng ký
-            * */
-            Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
-            Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
-            if (userByName.isEmpty() && userByEmail.isEmpty()) {
-                userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-                User user = userMapper.toUserResponseEntity(userDTO);
-                userRepository.save(user);
-                response.setMessage("Register success");
-                response.setCode(HttpStatus.OK.value());
-                return response;
-            } else {
-                response.setMessage("Username or Email already exists");
+        @Override
+        public APIResponse<Void> register(UserDTO userDTO) {
+            APIResponse<Void> response = new APIResponse<>();
+            try {
+                /*Kiểm tra xem có tên người dùng hoặc email đã có người đăng ký hay chưa
+                * Nếu chưa có thì mới cho phép đăng ký
+                * */
+                Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
+    //            Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
+                if (userByName.isEmpty()) {
+                    userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                    User user = userMapper.toUserResponseEntity(userDTO);
+                    userRepository.save(user);
+                    response.setMessage("Register success");
+                    response.setCode(HttpStatus.OK.value());
+                    return response;
+                } else {
+                    response.setMessage("Username or Email already exists");
+                    response.setCode(ErrorCode.CREATE_FAILED.getCode());
+                    return response;
+                }
+            } catch(Exception ex){
+                response.setMessage("Register failed, check your registration information again");
                 response.setCode(ErrorCode.CREATE_FAILED.getCode());
                 return response;
             }
-        } catch(Exception ex){
-            response.setMessage("Register failed, check your registration information again");
-            response.setCode(ErrorCode.CREATE_FAILED.getCode());
-            return response;
         }
-    }
 
     public UserResponse getUserInfo(String username) {
         // Find the user by username. If the user is not found, return null.

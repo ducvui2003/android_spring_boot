@@ -19,7 +19,8 @@ public enum ErrorCode {
     UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission"),
     CATEGORY_EMPTY(204, "Category empty"),
     FOUND(200, "Found"),
-    NOT_FOUND(400, "Not found");
+    NOT_FOUND(400, "Not found"),
+    INVALID_PASSWORD(400, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
 
         ErrorCode(int code, String message) {
             this.code = code;

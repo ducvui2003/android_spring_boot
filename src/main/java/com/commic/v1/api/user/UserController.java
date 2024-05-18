@@ -48,10 +48,9 @@ public class UserController {
         APIResponse<Void> response = userService.changePassword(passwordRequest);
         return ResponseEntity.status(response.getCode()).body(response);
     }
-
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
-            userService.register(userDTO);
-        return ResponseEntity.ok("Success");
+    public ResponseEntity<APIResponse<Void>> register(@RequestBody @Valid UserDTO userDTO) {
+        APIResponse<Void> response = userService.register(userDTO);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }

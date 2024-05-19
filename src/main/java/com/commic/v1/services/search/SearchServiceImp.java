@@ -2,7 +2,7 @@ package com.commic.v1.services.search;
 
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
-import com.commic.v1.dto.responses.CategoryResponseDTO;
+import com.commic.v1.dto.responses.CategoryResponse;
 import com.commic.v1.entities.Book;
 import com.commic.v1.entities.Category;
 import com.commic.v1.exception.AppException;
@@ -87,17 +87,17 @@ public class SearchServiceImp implements ISearchServices {
     }
 
     @Override
-    public List<CategoryResponseDTO> getCategory() {
+    public List<CategoryResponse> getCategory() {
         List<Category> categories = categoryRepository.findAll();
-        List<CategoryResponseDTO> categoryResponseDTOS = new ArrayList<>();
+        List<CategoryResponse> categoryResponses = new ArrayList<>();
         if (categories.isEmpty()) throw new AppException(ErrorCode.CATEGORY_EMPTY);
         for (Category category : categories) {
-            CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
-            categoryResponseDTO.setId(category.getId());
-            categoryResponseDTO.setName(category.getName());
-            categoryResponseDTOS.add(categoryResponseDTO);
+            CategoryResponse categoryResponse = new CategoryResponse();
+            categoryResponse.setId(category.getId());
+            categoryResponse.setName(category.getName());
+            categoryResponses.add(categoryResponse);
         }
-        return categoryResponseDTOS;
+        return categoryResponses;
     }
 
     @Override

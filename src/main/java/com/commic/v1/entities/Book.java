@@ -1,18 +1,17 @@
 package com.commic.v1.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "books")
+@EqualsAndHashCode(of = "id") // Chỉ dùng id cho equals và hashCode
 public class Book {
 
     @Id

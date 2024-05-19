@@ -3,7 +3,7 @@ package com.commic.v1.api.user;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
-import com.commic.v1.dto.responses.CategoryResponseDTO;
+import com.commic.v1.dto.responses.CategoryResponse;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.book.IBookService;
 import com.commic.v1.services.search.ISearchServices;
@@ -100,8 +100,8 @@ public class BookController {
     }
 
     @GetMapping("/category")
-    public APIResponse<List<CategoryResponseDTO>> getCategory() {
-        APIResponse<List<CategoryResponseDTO>> apiResponse = new APIResponse<>();
+    public APIResponse<List<CategoryResponse>> getCategory() {
+        APIResponse<List<CategoryResponse>> apiResponse = new APIResponse<>();
         apiResponse.setCode(200);
         apiResponse.setMessage("Success");
         apiResponse.setResult(searchServices.getCategory());

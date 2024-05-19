@@ -1,5 +1,6 @@
 package com.commic.v1.dto.requests;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,5 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LogoutRequest {
+    @NotBlank(message = "PARAMETER_MISSING")
     String token;
 }

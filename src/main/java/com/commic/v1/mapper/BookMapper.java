@@ -1,5 +1,6 @@
 package com.commic.v1.mapper;
 
+import com.commic.v1.dto.requests.BookRequest;
 import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.entities.Book;
 import com.commic.v1.entities.Category;
@@ -15,6 +16,7 @@ public interface BookMapper {
     //    BookResponseDTO toBookResponseDTO(Book book);
     @Mapping(target = "categoryNames", source = "categories")
     BookResponseDTO toBookResponseDTO(Book book);
+    Book toBook(BookRequest book);
 
     default List<String> mapCategoriesToCategoryNames(Set<Category> categories) {
         return categories.stream()

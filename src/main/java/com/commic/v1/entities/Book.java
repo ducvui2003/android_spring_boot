@@ -21,7 +21,7 @@ public class Book {
     private String name;
     private String author;
     private String description;
-    private Integer state;
+    private String status;
 
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories;

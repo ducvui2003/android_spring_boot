@@ -22,6 +22,7 @@ public class CommentController {
     @Autowired
     IAdminCommentServices commentAdminServices;
 
+//    Comment chapter của 1 truyện
     @PostMapping
     @ResponseBody
     public APIResponse<CommentCreationResponseDTO> create(@RequestBody @Valid CommentCreationRequestDTO requestDTO) {
@@ -33,6 +34,7 @@ public class CommentController {
         return apiResponse;
     }
 
+//    Lấy ra tất cả comment của 1 chapter
     @GetMapping("/chapter/{idChapter}")
     public APIResponse<List<CommentDTO>> getComment(@PathVariable("idChapter") Integer idChapter) {
         APIResponse<List<CommentDTO>> apiResponse = new APIResponse<>();

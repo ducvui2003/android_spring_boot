@@ -24,6 +24,4 @@ public interface CommentMapper {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "chapter.id", target = "chapterId")
     CommentDTO toCommentDTOs(Comment comment);
-
-    CommentResponseDTO toAdminCommentDtoResponse(Comment item);
 }

@@ -20,18 +20,14 @@ public class AdminCommentServicesImp implements IAdminCommentServices {
     CommentMapper commentMapper;
 
     @Override
-    public DataListResponse<CommentResponseDTO> get(CommentConst state, Pageable pageable) {
+    public DataListResponse<CommentResponseDTO> getComments(Pageable pageable) {
         DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
-        Page<Comment> page = commentRepository.findAllByStateOrderByCreatedAtDesc(state.getValue(), pageable);
-        List<CommentResponseDTO> data = page.getContent().stream().map(item -> commentMapper.toAdminCommentDtoResponse(item)).toList();
+        Page<Comment> page = commentRepository.findAll(pageable);
+        System.out.println(page.getContent());
+        List<CommentResponseDTO> data = page.getContent().stream().map(item -> commentMapper.toCommentResponseDTO(item)).toList();
         result.setCurrentPage(pageable.getPageNumber());
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
         return result;
-    }
-
-    @Override
-    public DataListResponse<CommentResponseDTO> get(Pageable pageable) {
-        return null;
     }
 }

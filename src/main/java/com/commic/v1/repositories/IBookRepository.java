@@ -25,7 +25,7 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
     Page<Book> findAllOrderByViewDesc(Pageable pageable);
 
     @Query("SELECT book FROM Book book JOIN book.categories category JOIN book.chapters chapter WHERE category.id = :categoryId GROUP BY book.id ORDER BY SUM(chapter.view) DESC ")
-    Page<Book> findAllOrderByViewDesc( Integer categoryId, Pageable pageable);
+    Page<Book> findAllOrderByViewDesc(Integer categoryId, Pageable pageable);
 
     @Query("SELECT book FROM Book book JOIN book.chapters chapter JOIN chapter.ratings rating GROUP BY book.id ORDER BY AVG(rating.star) DESC")
     Page<Book> findAllOrderByRatingDesc(Pageable pageable);
@@ -38,6 +38,9 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT DISTINCT b FROM Book b JOIN FETCH b.chapters c ORDER BY c.publishDate DESC")
     Page<Book> findByPublishDateOrderByNearestDate(Pageable pageable);
+
+    @Query("SELECT DISTINCT book FROM Category category JOIN category.books book JOIN book.chapters chapter WHERE category.id = :categoryId ORDER BY chapter.publishDate DESC")
+    Page<Book> findByPublishDateOrderByNearestDate(Integer categoryId, Pageable pageable);
 
     Optional<Book> findById(Integer id);
 

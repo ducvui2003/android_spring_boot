@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +41,7 @@ public class CommentServiceImp implements ICommentServices {
         }
         Comment comment = commentMapper.toComment(requestDTO);
         comment.setCreatedAt(new Date(System.currentTimeMillis()));
-        comment.setState(Integer.valueOf(CommentConst.UN_HIDE.getValue()));
+        comment.setState(CommentConst.UN_HIDE.getValue());
         comment = commentRepository.save(comment);
         CommentCreationResponseDTO responseDTO = commentMapper.toCommentCreationRequestDTO(comment);
         return responseDTO;

@@ -19,12 +19,21 @@ public class NotificationController {
 
     @Autowired
     private INotificationService notificationService;
-    @GetMapping
+    @GetMapping("/all")
     public APIResponse<ArrayList<Notification>> getAllNotifications() {
         APIResponse<ArrayList<Notification>> apiResponse = new APIResponse<>();
         apiResponse.setCode(200);
         apiResponse.setMessage("Success");
         apiResponse.setResult(notificationService.findAllByOrderByDateDesc());
+        return apiResponse;
+    }
+
+    @GetMapping("/count")
+    public APIResponse<Integer> findAllCurrentDateNotification() {
+        APIResponse<Integer> apiResponse = new APIResponse<>();
+        apiResponse.setCode(200);
+        apiResponse.setMessage("Success");
+        apiResponse.setResult(notificationService.findAllCurrentDateNotification());
         return apiResponse;
     }
 }

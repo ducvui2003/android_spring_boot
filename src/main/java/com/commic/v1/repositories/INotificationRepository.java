@@ -10,4 +10,7 @@ import java.util.ArrayList;
 public interface INotificationRepository extends JpaRepository<Notification, Long> {
     @Query("SELECT n FROM Notification n ORDER BY n.date DESC")
     ArrayList<Notification> findAllByOrderByDateDesc();
+
+    @Query("SELECT COUNT(n) FROM Notification n WHERE n.date = CURRENT_DATE")
+    Integer findAllCurrentDateNotification();
 }

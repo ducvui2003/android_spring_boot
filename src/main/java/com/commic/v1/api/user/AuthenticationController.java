@@ -1,9 +1,10 @@
-package com.commic.v1.api;
+package com.commic.v1.api.user;
 
 import com.commic.v1.dto.requests.AuthenticationRequest;
 import com.commic.v1.dto.requests.LogoutRequest;
 import com.commic.v1.dto.responses.JwtResponse;
 import com.commic.v1.services.authentication.IAuthenticationService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,13 +27,13 @@ public class AuthenticationController {
     IAuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> authenticate(@RequestBody AuthenticationRequest request){
+    public ResponseEntity<JwtResponse> authenticate(@RequestBody @Valid AuthenticationRequest request){
         JwtResponse jwtObj = authenticationService.login(request);
         return ResponseEntity.ok(jwtObj);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody LogoutRequest request){
+    public ResponseEntity<Void> logout(@RequestBody @Valid LogoutRequest request){
         authenticationService.logout(request);
         return ResponseEntity.noContent().build();
     }

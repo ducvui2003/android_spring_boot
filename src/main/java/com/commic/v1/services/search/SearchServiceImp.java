@@ -2,7 +2,7 @@ package com.commic.v1.services.search;
 
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
-import com.commic.v1.dto.responses.CategoryResponseDTO;
+import com.commic.v1.dto.responses.CategoryResponse;
 import com.commic.v1.entities.Book;
 import com.commic.v1.entities.Category;
 import com.commic.v1.exception.AppException;
@@ -14,6 +14,7 @@ import com.commic.v1.repositories.IChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -114,17 +115,17 @@ public class SearchServiceImp implements ISearchServices {
     }
 
     @Override
-    public List<CategoryResponseDTO> getCategory() {
+    public List<CategoryResponse> getCategory() {
         List<Category> categories = categoryRepository.findAll();
-        List<CategoryResponseDTO> categoryResponseDTOS = new ArrayList<>();
+        List<CategoryResponse> categoryResponses = new ArrayList<>();
         if (categories.isEmpty()) throw new AppException(ErrorCode.CATEGORY_EMPTY);
         for (Category category : categories) {
-            CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
-            categoryResponseDTO.setId(category.getId());
-            categoryResponseDTO.setName(category.getName());
-            categoryResponseDTOS.add(categoryResponseDTO);
+            CategoryResponse categoryResponse = new CategoryResponse();
+            categoryResponse.setId(category.getId());
+            categoryResponse.setName(category.getName());
+            categoryResponses.add(categoryResponse);
         }
-        return categoryResponseDTOS;
+        return categoryResponses;
     }
 
     @Override
@@ -159,5 +160,18 @@ public class SearchServiceImp implements ISearchServices {
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
         return result;
+    }
+
+    @Override
+    public List<BookResponseDTO> getAllBook(Sort sort) {
+        List<Book> books = bookRepository.findAll(sort);
+        if (books.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        return bookToResponseDTO(books);
+    }
+
+    @Override
+    public BookResponseDTO getBookById(Integer id) {
+        Optional<Book> book = bookRepository.findById(id);
+        return book.map(value -> bookMapper.toBookResponseDTO(value)).orElse(null);
     }
 }

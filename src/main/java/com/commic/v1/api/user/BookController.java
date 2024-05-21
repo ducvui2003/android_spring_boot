@@ -34,6 +34,7 @@ public class BookController {
         List<BookResponseDTO> books = searchServices.getAllBook(sort);
         return ResponseEntity.ok(books);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDTO> getBookById(@PathVariable(value = "id", required = true) Integer id) {
         BookResponseDTO book = searchServices.getBookById(id);
@@ -60,8 +61,13 @@ public class BookController {
             pageable = PageRequest.of(page, size, sort);
         DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryIdNumber, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
-        apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
-        apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
+        if (items.getData().isEmpty()) {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        } else {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        }
         apiResponse.setResult(items);
         return apiResponse;
     }
@@ -75,13 +81,18 @@ public class BookController {
 
         Pageable pageable;
         pageable = PageRequest.of(page, size);
-        DataListResponse<BookResponseDTO> items;
+        DataListResponse<BookResponseDTO> items = searchServices.getRankBy(type, pageable);
         if (categoryId == null)
             items = searchServices.getRankBy(type, pageable);
         else items = searchServices.getRankBy(type, categoryId, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
-        apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
-        apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
+        if (items.getData().isEmpty()) {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        } else {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        }
         apiResponse.setResult(items);
         return apiResponse;
     }
@@ -115,8 +126,13 @@ public class BookController {
         pageable = PageRequest.of(page, size);
         DataListResponse<BookResponseDTO> items = searchServices.getComicByPublishDate(pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
-        apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
-        apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
+        if (items.getData().isEmpty()) {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        } else {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        }
         apiResponse.setResult(items);
         return apiResponse;
     }
@@ -125,8 +141,8 @@ public class BookController {
     public APIResponse<BookResponseDTO> getDescription(@PathVariable("idBook") Integer id) {
         APIResponse<BookResponseDTO> apiResponse = new APIResponse<>();
         BookResponseDTO bookResponseDTO = bookService.getDescription(id);
-        apiResponse.setCode(ErrorCode.BOOK_EXIST.getCode());
-        apiResponse.setMessage(ErrorCode.BOOK_EXIST.getMessage());
+        apiResponse.setCode(ErrorCode.FOUND.getCode());
+        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
         apiResponse.setResult(bookResponseDTO);
         return apiResponse;
     }

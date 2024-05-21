@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     INVALID_REQUEST(400, "Invalid request"),
-    BOOK_EXIST(200, "Book already exist"),
-    BOOK_EMPTY(204, "Book not found"),
     PARAMETER_NOT_VALID(400, "Parameter not valid"),
     USER_NOT_FOUND(204, "User not found"),
     CHAPTER_NOT_FOUND(204, "Chapter not found"),
@@ -18,6 +16,7 @@ public enum ErrorCode {
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED.value(), "Unauthenticated"),
     UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission"),
     CATEGORY_EMPTY(204, "Category empty"),
+    NOTIFICATION_EMPTY(204, "Notification empty"),
     FOUND(200, "Found"),
     PARAMETER_IS_REQUIRED(400,"Parameter is required"),
     ID_MUST_BE_GREATER_THAN_ZERO(400,"Id must be greater than zero"),
@@ -31,5 +30,4 @@ public enum ErrorCode {
 
     private int code;
     private String message;
-
 }

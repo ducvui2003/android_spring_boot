@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
     //    BookResponseDTO toBookResponseDTO(Book book);
+    @Mapping(target = "status", source = "status")
     @Mapping(target = "categoryNames", source = "categories")
     BookResponseDTO toBookResponseDTO(Book book);
     Book toBook(BookRequest book);

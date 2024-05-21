@@ -1,0 +1,450 @@
+GET http://localhost:8081/api/v1/notifications/count
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T152010.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T152008.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/count
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T145429.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/count
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143737.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143735.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/count
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143546.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143529.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/count
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143421.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143419.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143201.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143159.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143120.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143045.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143042.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T143036.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T142256.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T142053.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T142050.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141858.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141647.500.json
+
+###
+
+GET http://localhost:8081/api/v1/chapter-7
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141241.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141117.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141115.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141053.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/announcement
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-20T141045.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T192456.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T181735.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T180052.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T175922.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T175600.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T175244.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T174717.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T173736.500.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T173537.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T172458.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T172238.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T171849.401.json
+
+###
+
+GET http://localhost:8081/api/v1/book/newComic?size=5
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T171840.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T171641.401.json
+
+###
+
+GET http://localhost:8081/api/v1/chapter-7
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T171304.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T171133.401.json
+
+###
+
+GET http://localhost:8081/api/v1/book/description/2
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T000300.200.json
+
+###
+
+GET http://localhost:8081/api/v1/chapter-7
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T000251.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-17T000247.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T235650.401.json
+
+###
+
+GET http://localhost:8081/api/v1/chapter-7
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T235641.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T235637.401.json
+
+###
+
+GET http://localhost:8081/api/v1/book/description/2
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T235629.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T235153.401.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T234956.401.json
+
+###
+

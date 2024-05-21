@@ -3,6 +3,7 @@ package com.commic.v1.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +18,6 @@ public class ChapterContent {
     private Chapter chapter;
     @Column(name = "link_image")
     private String linkImage;
+    @ColumnDefault("false")
+    private Boolean isDeleted = false;
 }

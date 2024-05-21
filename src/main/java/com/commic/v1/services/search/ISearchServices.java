@@ -9,7 +9,6 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public interface ISearchServices {
-    DataListResponse<BookResponseDTO> getBook(Pageable pageable);
 
     DataListResponse<BookResponseDTO> getBook(String containName, Pageable pageable);
 

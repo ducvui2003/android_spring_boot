@@ -57,4 +57,13 @@ public class CommentServiceImp implements ICommentServices {
         }
     }
 
+    @Override
+    public void deleteByChapterId(Integer id) {
+        List<Comment> comments = commentRepository.findByChapterId(id);
+        for (Comment comment : comments) {
+            comment.setIsDeleted(true);
+        }
+        commentRepository.saveAllAndFlush(comments);
+    }
+
 }

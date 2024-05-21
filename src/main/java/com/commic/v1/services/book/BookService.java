@@ -9,6 +9,9 @@ import com.commic.v1.mapper.BookMapper;
 import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.ICategoryRepository;
 import com.commic.v1.repositories.IChapterRepository;
+import com.commic.v1.services.chapter.IChapterService;
+import com.commic.v1.services.comment.ICommentServices;
+import com.commic.v1.services.history.IHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
@@ -27,9 +30,34 @@ public class BookService implements IBookService {
     @Autowired
     private BookMapper bookMapper;
     @Autowired
+    private IChapterService chapterService;
+    @Autowired
     private IChapterRepository chapterRepository;
     @Autowired
     private ICategoryRepository categoryRepository;
+
+
+    @Override
+    public APIResponse<Void> deleteBook(Integer id) {
+        // check exist book
+        if (!bookRepository.existsById(id)) {
+            return new APIResponse<>(HttpStatus.NOT_FOUND.value(), "Book not found", null);
+        }
+
+        try {
+            Book book = bookRepository.findById(id).orElse(null);
+            book.setIsDeleted(true);
+            bookRepository.save(book);
+
+            chapterService.deleteByBookId(id);
+
+            return new APIResponse<>(HttpStatus.NO_CONTENT.value(), "Delete book successfully", null);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            return new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Delete book failed", null);
+        }
+
+    }
 
     @Override
     public APIResponse<Void> addBook(BookRequest bookRequest) {
@@ -56,6 +84,7 @@ public class BookService implements IBookService {
             return new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Add book failed", null);
         }
     }
+
 
     @Override
     public BookResponseDTO getDescription(Integer id) {

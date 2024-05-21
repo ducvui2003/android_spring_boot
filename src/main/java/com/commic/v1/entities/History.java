@@ -3,6 +3,7 @@ package com.commic.v1.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Set;
 
@@ -20,4 +21,6 @@ public class History {
     @ManyToOne
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
+    @ColumnDefault("false")
+    private Boolean isDeleted = false;
 }

@@ -3,6 +3,7 @@ package com.commic.v1.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Date;
 import java.util.Set;
@@ -30,4 +31,6 @@ public class Chapter {
     private Set<Rating> ratings;
     @OneToMany(mappedBy = "chapter")
     private Set<History> histories;
+    @ColumnDefault("false")
+    private Boolean isDeleted = false;
 }

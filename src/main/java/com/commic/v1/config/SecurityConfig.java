@@ -45,7 +45,7 @@ public class SecurityConfig {
             "/api/v1/users/register",
             "/api/v1/comment/**",
             "/api/v1/admin/**",
-            "/api/v1/notifications/**"
+            "/api/v1/notifications/**",
             "/api/v1/books/**",
             "/api/v1/categories/**",
             "/api/v1/chapters/**",

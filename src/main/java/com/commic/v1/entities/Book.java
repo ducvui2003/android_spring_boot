@@ -2,6 +2,7 @@ package com.commic.v1.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Set;
 
@@ -21,7 +22,8 @@ public class Book {
     private String author;
     private String description;
     private String status;
-
+    @ColumnDefault("false")
+    private Boolean isDeleted = false;
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories;
 

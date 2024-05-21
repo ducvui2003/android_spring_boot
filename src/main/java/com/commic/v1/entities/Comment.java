@@ -2,6 +2,7 @@ package com.commic.v1.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -23,4 +24,6 @@ public class Comment {
     @Column(name = "created_at")
     private Date createdAt;
     private Integer state;
+    @ColumnDefault("false")
+    private Boolean isDeleted = false;
 }

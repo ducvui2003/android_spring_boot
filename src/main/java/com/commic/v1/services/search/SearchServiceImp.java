@@ -12,6 +12,7 @@ import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.ICategoryRepository;
 import com.commic.v1.repositories.IChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,6 +34,7 @@ public class SearchServiceImp implements ISearchServices {
     private ICategoryRepository categoryRepository;
 
     @Override
+
     public DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
@@ -135,14 +137,16 @@ public class SearchServiceImp implements ISearchServices {
 
     @Override
     public List<BookResponseDTO> getAllBook(Sort sort) {
-        List<Book> books = bookRepository.findAll(sort);
+        Example<Book> example = Example.of(Book.builder().isDeleted(false).build());
+        List<Book> books = bookRepository.findAll(example,sort);
         if (books.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         return bookToResponseDTO(books);
     }
 
     @Override
     public BookResponseDTO getBookById(Integer id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Example<Book> example = Example.of(Book.builder().id(id).isDeleted(false).build());
+        Optional<Book> book = bookRepository.findOne(example);
         return book.map(value -> bookMapper.toBookResponseDTO(value)).orElse(null);
     }
 }

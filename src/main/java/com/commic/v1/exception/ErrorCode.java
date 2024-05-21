@@ -18,7 +18,10 @@ public enum ErrorCode {
     CATEGORY_EMPTY(204, "Category empty"),
     NOTIFICATION_EMPTY(204, "Notification empty"),
     FOUND(200, "Found"),
-    NOT_FOUND(204, "Not found");
+    PARAMETER_IS_REQUIRED(400,"Parameter is required"),
+    ID_MUST_BE_GREATER_THAN_ZERO(400,"Id must be greater than zero"),
+    NOT_FOUND(400, "Not found");
+
 
     ErrorCode(int code, String message) {
         this.code = code;
@@ -27,5 +30,4 @@ public enum ErrorCode {
 
     private int code;
     private String message;
-
 }

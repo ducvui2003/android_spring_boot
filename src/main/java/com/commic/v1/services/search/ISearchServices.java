@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public interface ISearchServices {
+
     DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable);
 
     DataListResponse<BookResponseDTO> getRankBy(String type, Pageable pageable);

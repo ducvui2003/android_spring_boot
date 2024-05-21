@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController(value = "BookControllerAdmin")
@@ -24,6 +21,15 @@ public class BookController {
     @PostMapping
     public ResponseEntity<APIResponse<Void>> addBook(@RequestBody @Valid BookRequest bookRequest) {
         APIResponse<Void> response = bookService.addBook(bookRequest);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<APIResponse<Void>> deleteBook(@PathVariable(name = "id") Integer id) {
+        if (id == null) {
+            return ResponseEntity.status(400).body(new APIResponse<>(400, "Id is required", null));
+        }
+        APIResponse<Void> response = bookService.deleteBook(id);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 }

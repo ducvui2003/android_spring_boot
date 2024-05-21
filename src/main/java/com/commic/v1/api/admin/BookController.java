@@ -23,6 +23,14 @@ public class BookController {
         APIResponse<Void> response = bookService.addBook(bookRequest);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+    @PutMapping
+    public ResponseEntity<APIResponse<Void>> updateBook(@RequestBody @Valid BookRequest bookRequest) {
+        if (bookRequest.getId() == null) {
+            return ResponseEntity.status(400).body(new APIResponse<>(400, "Id is required", null));
+        }
+        APIResponse<Void> response = bookService.updateBook(bookRequest);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<APIResponse<Void>> deleteBook(@PathVariable(name = "id") Integer id) {

@@ -33,33 +33,6 @@ public class SearchServiceImp implements ISearchServices {
     private ICategoryRepository categoryRepository;
 
     @Override
-    public DataListResponse<BookResponseDTO> getBook(Pageable pageable) {
-        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page = bookRepository.findAll(pageable);
-        List<Book> books = page.getContent();
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
-        List<BookResponseDTO> data = bookToResponseDTO(books);
-        result.setCurrentPage(pageable.getPageNumber() + 1);
-        result.setTotalPages(page.getTotalPages());
-        result.setData(data);
-        return getBook(null, pageable);
-    }
-
-    @Override
-    public DataListResponse<BookResponseDTO> getBook(String containName, Pageable pageable) {
-        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page = bookRepository.findByNameContaining(containName, pageable);
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
-        List<Book> books = page.getContent();
-        List<BookResponseDTO> data = bookToResponseDTO(books);
-        result.setCurrentPage(pageable.getPageNumber() + 1);
-        result.setTotalPages(page.getTotalPages());
-        result.setData(data);
-        return result;
-    }
-
-
-    @Override
     public DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
@@ -67,7 +40,6 @@ public class SearchServiceImp implements ISearchServices {
             page = bookRepository.findByNameContaining(containName, pageable);
         else
             page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -103,9 +75,9 @@ public class SearchServiceImp implements ISearchServices {
 
             case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(pageable);
 
+            case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -137,9 +109,9 @@ public class SearchServiceImp implements ISearchServices {
 
             case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(categoryId, pageable);
 
+            case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(categoryId, pageable);
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -153,7 +125,6 @@ public class SearchServiceImp implements ISearchServices {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
         page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -165,7 +136,7 @@ public class SearchServiceImp implements ISearchServices {
     @Override
     public List<BookResponseDTO> getAllBook(Sort sort) {
         List<Book> books = bookRepository.findAll(sort);
-        if (books.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        if (books.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         return bookToResponseDTO(books);
     }
 

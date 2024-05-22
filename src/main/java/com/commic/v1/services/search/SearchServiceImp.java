@@ -149,4 +149,5 @@ public class SearchServiceImp implements ISearchServices {
         Optional<Book> book = bookRepository.findOne(example);
         return book.map(value -> bookMapper.toBookResponseDTO(value)).orElse(null);
     }
+
 }

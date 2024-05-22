@@ -24,4 +24,9 @@ public class RatingService implements IRatingService {
         list.forEach(rating -> rating.setIsDeleted(true));
         ratingRepository.saveAll(list);
     }
+
+    @Override
+    public List<Rating> findByChapterId(Integer id) {
+        return ratingRepository.findByChapterId(id);
+    }
 }

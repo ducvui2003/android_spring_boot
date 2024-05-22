@@ -14,7 +14,6 @@
 
 
 -- Dumping database structure for doctruyen
-DROP DATABASE IF EXISTS `doctruyen`;
 CREATE DATABASE IF NOT EXISTS `doctruyen` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `doctruyen`;
 
@@ -52,9 +51,9 @@ INSERT INTO `books` (`id`, `author`, `description`, `name`, `status`, `thumbnail
 	(17, 'Đang cập nhật', 'Một cuộc giao dịch đã bắt cô ấy phải hiến thân cho người đàn ông tôn kính nhất, đáng sợ nhất ở thành phố Đông Lăng. Ban ngày, cô ấy là một người con gái bình thường như bao cô gái khác nhưng ban đêm cô lại trở thành món đồ chơi của anh ta… Hai tay cô bị é', 'DANH MÔN CHÍ ÁI', 'UPDATING', 'http://alotruyentranh.com/ImageComicBig/danh-mon-chi-ai-15688.jpg', b'0'),
 	(18, 'Đang cập nhật', 'Mọi người dường như không nhận ra được sự tồn tại của tôi nhưng mà tại sao Kubo-san lại...!!', 'KUBO WONT LET ME BE INVISIBLE', 'UPDATING', 'https://cdn.myanimelist.net/images/anime/1818/132330.jpg', b'0'),
 	(19, 'Đang cập nhật', 'Một học sinh lười biếng và một giáo viên nghiêm túc. Thoạt nhìn, có vẻ như họ đang ở trong tình trạng tồi tệ, nhưng mọi thứ trở nên khác biệt sau giờ học ...', 'THE TEACHER CAN NOT TELL ME LOVE', 'UPDATING', 'https://cdn.mangaclash.com/manga_5fdf114caf71c/f19f8e897023dc7e7159893c49b9be75/1.jpg', b'0'),
-	(20, 'Đang cập nhật', 'Vào một ngày đẹp trời, tôi thức dậy và đột nhiên trở thành Quỷ vương, người mang trách nhiệm bảo vệ dungeon. Ở một thế giới tràn ngập bởi bạo lực. Những con quái khổng lồ ở khắp nơi, đấu tranh hằng ngày để sinh tồn. Tôi không còn lựa chọn nào khác ngoài t', 'MAOU NI NATTE NODE, DUNGEON TSUKUTTE JINGAI MUSUME TO HONOBONO SURU', 'UPDATING', 'https://static.wikia.nocookie.net/maou-ni-natta-node/images/0/01/LN_V13-01.jpg/revision/latest?cb=20220414213635', b'0'),
-	(31, 'q', 'q', 'q', 'UPDATING', 'https://firebasestorage.googleapis.com/v0/b/comic-c7562.appspot.com/o/images%2Fc3cea109-51ad-4731-8593-0c55393f2687?alt=media&token=19b04173-de5c-4fe7-b7e7-92873efa548f', b'0'),
-	(32, 'w', 'w', 'w', 'UPDATING', 'https://firebasestorage.googleapis.com/v0/b/comic-c7562.appspot.com/o/images%2Fa89bc568-c975-4ae5-bf7a-68e3305cc559?alt=media&token=90db24d5-5631-43f4-94f7-3e3e404448b5', b'0');
+	(20, 'Nguyễn Văn A', 'Vào một ngày đẹp trời, tôi thức dậy và đột nhiên trở thành Quỷ vương, người mang trách nhiệm bảo vệ dungeon. Ở một thế giới tràn ngập bởi bạo lực. Những con quái khổng lồ ở khắp nơi, đấu tranh hằng ngày để sinh tồn. Tôi không còn lựa chọn nào khác ngoài t', 'MAOU NI NATTE NODE, DUNGEON TSUKUTTE JINGAI MUSUME TO HONOBONO SURU', 'FULL', 'https://static.wikia.nocookie.net/maou-ni-natta-node/images/0/01/LN_V13-01.jpg/revision/latest?cb=20220414213635', b'0'),
+	(31, 'q', 'q', 'q', 'UPDATING', 'https://firebasestorage.googleapis.com/v0/b/comic-c7562.appspot.com/o/images%2Fc3cea109-51ad-4731-8593-0c55393f2687?alt=media&token=19b04173-de5c-4fe7-b7e7-92873efa548f', b'1'),
+	(32, 'w', 'w', 'w', 'UPDATING', 'https://firebasestorage.googleapis.com/v0/b/comic-c7562.appspot.com/o/images%2Fa89bc568-c975-4ae5-bf7a-68e3305cc559?alt=media&token=90db24d5-5631-43f4-94f7-3e3e404448b5', b'1');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.book_category
@@ -67,17 +66,20 @@ CREATE TABLE IF NOT EXISTS `book_category` (
   CONSTRAINT `FKiwvwb2bwuvg0017hh8kg5e8g1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table doctruyen.book_category: ~30 rows (approximately)
+-- Dumping data for table doctruyen.book_category: ~32 rows (approximately)
 /*!40000 ALTER TABLE `book_category` DISABLE KEYS */;
 INSERT INTO `book_category` (`category_id`, `book_id`) VALUES
 	(1, 1),
 	(1, 11),
+	(1, 20),
 	(1, 31),
 	(2, 2),
 	(2, 12),
+	(2, 20),
 	(2, 31),
 	(3, 3),
 	(3, 13),
+	(3, 20),
 	(3, 31),
 	(4, 4),
 	(4, 14),
@@ -100,7 +102,6 @@ INSERT INTO `book_category` (`category_id`, `book_id`) VALUES
 	(9, 19),
 	(9, 31),
 	(10, 10),
-	(10, 20),
 	(10, 31);
 /*!40000 ALTER TABLE `book_category` ENABLE KEYS */;
 
@@ -132,7 +133,6 @@ CREATE TABLE IF NOT EXISTS `chapters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `publish_date` date DEFAULT NULL,
-  `rating` float DEFAULT NULL,
   `view` int(11) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
   `is_deleted` bit(1) DEFAULT b'0',
@@ -143,66 +143,66 @@ CREATE TABLE IF NOT EXISTS `chapters` (
 
 -- Dumping data for table doctruyen.chapters: ~59 rows (approximately)
 /*!40000 ALTER TABLE `chapters` DISABLE KEYS */;
-INSERT INTO `chapters` (`id`, `name`, `publish_date`, `rating`, `view`, `book_id`, `is_deleted`) VALUES
-	(1, 'Chapter 1', '2023-01-31', 0, 25, 1, b'0'),
-	(2, 'Chapter 2', '2023-02-09', 0, 13, 1, b'0'),
-	(3, 'Chapter 3', '2023-02-11', 0, 10, 1, b'0'),
-	(4, 'Chapter 1', '2023-03-02', 0, 5, 2, b'0'),
-	(5, 'Chapter 2', '2023-03-03', 0, 4, 2, b'0'),
-	(6, 'Chapter 3', '2023-03-03', 0, 3, 2, b'0'),
-	(7, 'Chapter 1', '2023-03-24', 0, 8, 3, b'0'),
-	(8, 'Chapter 2', '2023-03-24', 0, 9, 3, b'0'),
-	(9, 'Chapter 3', '2023-03-25', 0, 8, 3, b'0'),
-	(10, 'Chapter 1', '2023-03-28', 0, 3, 4, b'0'),
-	(11, 'Chapter 2', '2023-03-28', 0, 0, 4, b'0'),
-	(12, 'Chapter 3', '2023-04-04', 0, 0, 4, b'0'),
-	(13, 'Chapter 1', '2023-02-06', 0, 1, 5, b'0'),
-	(14, 'Chapter 2', '2023-02-06', 0, 0, 5, b'0'),
-	(15, 'Chapter 3', '2023-02-10', 0, 0, 5, b'0'),
-	(16, 'Chapter 1', '2023-01-13', 0, 0, 6, b'0'),
-	(17, 'Chapter 2', '2023-01-13', 0, 1, 6, b'0'),
-	(18, 'Chapter 3', '2023-02-13', 0, 0, 6, b'0'),
-	(19, 'Chapter 1', '2023-01-21', 0, 0, 7, b'0'),
-	(20, 'Chapter 2', '2023-01-21', 0, 0, 7, b'0'),
-	(21, 'Chapter 3', '2023-01-21', 0, 0, 7, b'0'),
-	(22, 'Chapter 1', '2023-01-19', 0, 0, 8, b'0'),
-	(23, 'Chapter 2', '2023-01-19', 0, 0, 8, b'0'),
-	(24, 'Chapter 3', '2023-01-19', 0, 0, 8, b'0'),
-	(25, 'Chapter 1', '2023-02-12', 0, 0, 9, b'0'),
-	(26, 'Chapter 2', '2023-02-12', 0, 0, 9, b'0'),
-	(27, 'Chapter 3', '2023-02-12', 0, 0, 9, b'0'),
-	(28, 'Chapter 1', '2023-03-30', 0, 0, 10, b'0'),
-	(29, 'Chapter 2', '2023-03-30', 0, 0, 10, b'0'),
-	(30, 'Chapter 3', '2023-04-01', 0, 0, 10, b'0'),
-	(31, 'Chapter 1', '2023-01-21', 0, 0, 11, b'0'),
-	(32, 'Chapter 2', '2023-01-28', 0, 0, 11, b'0'),
-	(33, 'Chapter 3', '2023-01-28', 0, 0, 11, b'0'),
-	(34, 'Chapter 1', '2023-03-03', 0, 8, 12, b'0'),
-	(35, 'Chapter 2', '2023-03-04', 0, 16, 12, b'0'),
-	(36, 'Chapter 1', '2023-03-23', 0, 0, 13, b'0'),
-	(37, 'Chapter 2', '2023-03-24', 0, 0, 13, b'0'),
-	(38, 'Chapter 3', '2023-03-26', 0, 0, 13, b'0'),
-	(39, 'Chapter 1', '2023-01-09', 0, 0, 14, b'0'),
-	(40, 'Chapter 2', '2023-01-09', 0, 0, 14, b'0'),
-	(41, 'Chapter 3', '2023-01-11', 0, 0, 14, b'0'),
-	(42, 'Chapter 1', '2023-03-16', 0, 0, 15, b'0'),
-	(43, 'Chapter 2', '2023-03-24', 0, 0, 15, b'0'),
-	(44, 'Chapter 3', '2023-03-24', 0, 0, 15, b'0'),
-	(45, 'Chapter 1', '2023-03-09', 0, 0, 16, b'0'),
-	(46, 'Chapter 2', '2023-03-09', 0, 0, 16, b'0'),
-	(47, 'Chapter 3', '2023-03-09', 0, 0, 16, b'0'),
-	(48, 'Chapter 1', '2023-01-23', 0, 0, 17, b'0'),
-	(49, 'Chapter 2', '2023-01-23', 0, 0, 17, b'0'),
-	(50, 'Chapter 3', '2023-01-23', 0, 0, 17, b'0'),
-	(51, 'Chapter 1', '2023-02-17', 0, 0, 18, b'0'),
-	(52, 'Chapter 2', '2023-02-19', 0, 0, 18, b'0'),
-	(53, 'Chapter 3', '2023-02-19', 0, 0, 18, b'0'),
-	(54, 'Chapter 1', '2023-04-29', 0, 0, 19, b'0'),
-	(55, 'Chapter 2', '2023-04-30', 0, 0, 19, b'0'),
-	(56, 'Chapter 3', '2023-05-01', 0, 0, 19, b'0'),
-	(57, 'Chapter 1', '2023-05-03', 0, 0, 20, b'0'),
-	(58, 'Chapter 2', '2023-05-03', 0, 0, 20, b'0'),
-	(59, 'Chapter 3', '2023-05-03', 0, 0, 20, b'0');
+INSERT INTO `chapters` (`id`, `name`, `publish_date`, `view`, `book_id`, `is_deleted`) VALUES
+	(1, 'Chapter 1', '2023-01-31', 25, 1, b'0'),
+	(2, 'Chapter 2', '2023-02-09', 13, 1, b'0'),
+	(3, 'Chapter 3', '2023-02-11', 10, 1, b'0'),
+	(4, 'Chapter 1', '2023-03-02', 5, 2, b'0'),
+	(5, 'Chapter 2', '2023-03-03', 4, 2, b'0'),
+	(6, 'Chapter 3', '2023-03-03', 3, 2, b'0'),
+	(7, 'Chapter 1', '2023-03-24', 8, 3, b'0'),
+	(8, 'Chapter 2', '2023-03-24', 9, 3, b'0'),
+	(9, 'Chapter 3', '2023-03-25', 8, 3, b'0'),
+	(10, 'Chapter 1', '2023-03-28', 3, 4, b'0'),
+	(11, 'Chapter 2', '2023-03-28', 0, 4, b'0'),
+	(12, 'Chapter 3', '2023-04-04', 0, 4, b'0'),
+	(13, 'Chapter 1', '2023-02-06', 1, 5, b'0'),
+	(14, 'Chapter 2', '2023-02-06', 0, 5, b'0'),
+	(15, 'Chapter 3', '2023-02-10', 0, 5, b'0'),
+	(16, 'Chapter 1', '2023-01-13', 0, 6, b'0'),
+	(17, 'Chapter 2', '2023-01-13', 1, 6, b'0'),
+	(18, 'Chapter 3', '2023-02-13', 0, 6, b'0'),
+	(19, 'Chapter 1', '2023-01-21', 0, 7, b'0'),
+	(20, 'Chapter 2', '2023-01-21', 0, 7, b'0'),
+	(21, 'Chapter 3', '2023-01-21', 0, 7, b'0'),
+	(22, 'Chapter 1', '2023-01-19', 0, 8, b'0'),
+	(23, 'Chapter 2', '2023-01-19', 0, 8, b'0'),
+	(24, 'Chapter 3', '2023-01-19', 0, 8, b'0'),
+	(25, 'Chapter 1', '2023-02-12', 0, 9, b'0'),
+	(26, 'Chapter 2', '2023-02-12', 0, 9, b'0'),
+	(27, 'Chapter 3', '2023-02-12', 0, 9, b'0'),
+	(28, 'Chapter 1', '2023-03-30', 0, 10, b'0'),
+	(29, 'Chapter 2', '2023-03-30', 0, 10, b'0'),
+	(30, 'Chapter 3', '2023-04-01', 0, 10, b'0'),
+	(31, 'Chapter 1', '2023-01-21', 0, 11, b'0'),
+	(32, 'Chapter 2', '2023-01-28', 0, 11, b'0'),
+	(33, 'Chapter 3', '2023-01-28', 0, 11, b'0'),
+	(34, 'Chapter 1', '2023-03-03', 8, 12, b'0'),
+	(35, 'Chapter 2', '2023-03-04', 16, 12, b'0'),
+	(36, 'Chapter 1', '2023-03-23', 0, 13, b'0'),
+	(37, 'Chapter 2', '2023-03-24', 0, 13, b'0'),
+	(38, 'Chapter 3', '2023-03-26', 0, 13, b'0'),
+	(39, 'Chapter 1', '2023-01-09', 0, 14, b'0'),
+	(40, 'Chapter 2', '2023-01-09', 0, 14, b'0'),
+	(41, 'Chapter 3', '2023-01-11', 0, 14, b'0'),
+	(42, 'Chapter 1', '2023-03-16', 0, 15, b'0'),
+	(43, 'Chapter 2', '2023-03-24', 0, 15, b'0'),
+	(44, 'Chapter 3', '2023-03-24', 0, 15, b'0'),
+	(45, 'Chapter 1', '2023-03-09', 0, 16, b'0'),
+	(46, 'Chapter 2', '2023-03-09', 0, 16, b'0'),
+	(47, 'Chapter 3', '2023-03-09', 0, 16, b'0'),
+	(48, 'Chapter 1', '2023-01-23', 0, 17, b'0'),
+	(49, 'Chapter 2', '2023-01-23', 0, 17, b'0'),
+	(50, 'Chapter 3', '2023-01-23', 0, 17, b'0'),
+	(51, 'Chapter 1', '2023-02-17', 0, 18, b'0'),
+	(52, 'Chapter 2', '2023-02-19', 0, 18, b'0'),
+	(53, 'Chapter 3', '2023-02-19', 0, 18, b'0'),
+	(54, 'Chapter 1', '2023-04-29', 0, 19, b'0'),
+	(55, 'Chapter 2', '2023-04-30', 0, 19, b'0'),
+	(56, 'Chapter 3', '2023-05-01', 0, 19, b'0'),
+	(57, 'Chapter 1', '2023-05-03', 0, 20, b'0'),
+	(58, 'Chapter 2', '2023-05-03', 0, 20, b'0'),
+	(59, 'Chapter 3', '2023-05-03', 0, 20, b'0');
 /*!40000 ALTER TABLE `chapters` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.chapter_contents
@@ -2392,42 +2392,6 @@ INSERT INTO `reward_points` (`id`, `date`, `point`, `thu`, `user_id`) VALUES
 	(4, '2021-11-24', 5, 1, 1),
 	(5, '2021-11-25', 5, 2, 1);
 /*!40000 ALTER TABLE `reward_points` ENABLE KEYS */;
-
--- Dumping structure for table doctruyen.statisticals
-CREATE TABLE IF NOT EXISTS `statisticals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `avg_rate` float DEFAULT NULL,
-  `views` int(11) DEFAULT NULL,
-  `book_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK9qb7vlanbc2wevopg2jndcvkp` (`book_id`),
-  CONSTRAINT `FK9qb7vlanbc2wevopg2jndcvkp` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
-
--- Dumping data for table doctruyen.statisticals: ~20 rows (approximately)
-/*!40000 ALTER TABLE `statisticals` DISABLE KEYS */;
-INSERT INTO `statisticals` (`id`, `avg_rate`, `views`, `book_id`) VALUES
-	(1, 0, 17, 1),
-	(2, 0, 3, 2),
-	(3, 0, 2, 3),
-	(4, 0, 2, 4),
-	(5, 0, 0, 5),
-	(6, 0, 1, 6),
-	(7, 0, 0, 7),
-	(8, 0, 0, 8),
-	(9, 0, 0, 9),
-	(10, 0, 0, 10),
-	(11, 0, 0, 11),
-	(12, 0, 0, 12),
-	(13, 0, 0, 13),
-	(14, 0, 0, 14),
-	(15, 0, 0, 15),
-	(16, 0, 0, 16),
-	(17, 0, 0, 17),
-	(18, 0, 0, 18),
-	(19, 0, 0, 19),
-	(20, 0, 0, 20);
-/*!40000 ALTER TABLE `statisticals` ENABLE KEYS */;
 
 -- Dumping structure for table doctruyen.users
 CREATE TABLE IF NOT EXISTS `users` (

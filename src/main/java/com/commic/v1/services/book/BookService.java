@@ -37,6 +37,15 @@ public class BookService implements IBookService {
 
 
     @Override
+    public BookResponseDTO getBookByChapterId(Integer chapterId) {
+        Book book = bookRepository.findBookByChapterId(chapterId);
+        if (book != null) {
+            return bookMapper.toBookResponseDTO(book);
+        }
+        return null;
+    }
+
+    @Override
     public APIResponse<Void> deleteBook(Integer id) {
         // check exist book
         if (!bookRepository.existsById(id)) {

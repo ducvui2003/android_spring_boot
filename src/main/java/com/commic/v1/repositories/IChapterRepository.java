@@ -5,15 +5,18 @@ import com.commic.v1.entities.ChapterContent;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
 
     List<Chapter> findByBookId(Integer id, Sort sort);
+
     Integer countByBookId(Integer id);
 
     //Lấy ra số sao trung bình theo id book

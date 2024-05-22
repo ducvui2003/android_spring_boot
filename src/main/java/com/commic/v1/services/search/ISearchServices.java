@@ -25,4 +25,5 @@ public interface ISearchServices {
     List<BookResponseDTO> getAllBook(Sort pageable);
 
     BookResponseDTO getBookById(Integer id);
+
 }

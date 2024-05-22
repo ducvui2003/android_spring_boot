@@ -41,6 +41,15 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
+    @GetMapping("/chapter/{id}")
+    public ResponseEntity<BookResponseDTO> getBookByChapterId(@PathVariable(value = "id") Integer chapterId) {
+        BookResponseDTO book = bookService.getBookByChapterId(chapterId);
+        return ResponseEntity.ok(book);
+    }
+
+
+
+
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
                                                                  @RequestParam(name = "categoryId", required = false) String categoryId,

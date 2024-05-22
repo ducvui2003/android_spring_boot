@@ -42,6 +42,9 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT DISTINCT book FROM Category category JOIN category.books book JOIN book.chapters chapter WHERE category.id = :categoryId ORDER BY chapter.publishDate DESC")
     Page<Book> findByPublishDateOrderByNearestDate(Integer categoryId, Pageable pageable);
 
+    @Query("SELECT book FROM Book book JOIN book.chapters chapter WHERE chapter.id = :chapterId AND book.isDeleted = false")
+    Book findBookByChapterId(@Param("chapterId") Integer chapterId);
+
     Optional<Book> findById(Integer id);
 
 }

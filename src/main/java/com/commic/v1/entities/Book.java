@@ -31,7 +31,4 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters;
-
-    @OneToMany(mappedBy = "book")
-    private Set<Statistical> statisticals;
 }

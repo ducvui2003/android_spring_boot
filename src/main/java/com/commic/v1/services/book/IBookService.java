@@ -10,5 +10,6 @@ public interface IBookService {
     APIResponse<Void> addBook(BookRequest bookRequest);
     APIResponse<Void> updateBook(BookRequest bookRequest);
 
+    BookResponseDTO getBookByChapterId(Integer chapterId);
     APIResponse<Void> deleteBook(Integer id);
 }

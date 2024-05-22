@@ -1,6 +1,5 @@
 package com.commic.v1.dto.responses;
 
-import com.commic.v1.entities.Chapter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

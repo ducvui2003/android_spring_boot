@@ -24,4 +24,13 @@ public class ChapterController {
         List<ChapterResponse> chapters = chapterServices.getChaptersByBookId(bookId, sort);
         return ResponseEntity.ok(chapters);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ChapterResponse> getChapter(@PathVariable(value = "id") Integer id) {
+        if (id == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        ChapterResponse chapter = chapterServices.getChapterById(id);
+        return ResponseEntity.ok(chapter);
+    }
 }

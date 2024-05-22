@@ -3,6 +3,24 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<> 2024-05-22T172857.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-22T172855.200.json
+
+###
+
+GET http://localhost:8081/api/v1/notifications/count
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
 <> 2024-05-20T152010.200.json
 
 ###
@@ -427,24 +445,6 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2024-05-16T235629.200.json
-
-###
-
-GET http://localhost:8081/api/v1/notifications
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2024-05-16T235153.401.json
-
-###
-
-GET http://localhost:8081/api/v1/notifications
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2024-05-16T234956.401.json
 
 ###
 

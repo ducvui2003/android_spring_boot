@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IChapterContentService {
     List<ChapterContentRespone> getChapterContent(Integer id);
+
+    void deleteByChapterId(Integer id);
 }

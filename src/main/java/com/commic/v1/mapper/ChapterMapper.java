@@ -16,4 +16,7 @@ public interface ChapterMapper {
 
     // mapping from Chapter to ChapterResponse
     List<ChapterResponse> toChapterDTOs(List<Chapter> chapters);
+
+    // mapping from Chapter to ChapterResponse
+    ChapterResponse toChapterDTO(Chapter chapter);
 }

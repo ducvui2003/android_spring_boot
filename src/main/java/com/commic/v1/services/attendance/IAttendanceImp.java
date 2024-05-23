@@ -1,17 +1,20 @@
 package com.commic.v1.services.attendance;
 
+import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.AttendanceResponse;
+import com.commic.v1.dto.responses.RewardPointResponse;
 import com.commic.v1.entities.RewardPoint;
 import com.commic.v1.entities.User;
+import com.commic.v1.mapper.RewardPointMapper;
 import com.commic.v1.repositories.IRewardPointRepository;
 import com.commic.v1.repositories.IUserRepository;
-import com.commic.v1.repositories.custom.IRewardPointCustomRepository;
 import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 //monday +10d
 //friday +15d
@@ -20,9 +23,9 @@ public class IAttendanceImp implements IAttendanceServices {
     @Autowired
     IRewardPointRepository rewardPointRepository;
     @Autowired
-    IRewardPointCustomRepository rewardPointCustomRepository;
-    @Autowired
     IUserRepository userRepository;
+    @Autowired
+    RewardPointMapper rewardPointMapper;
 
     @Override
     public AttendanceResponse attendance() {
@@ -53,8 +56,50 @@ public class IAttendanceImp implements IAttendanceServices {
         attendanceResponse = new AttendanceResponse();
         attendanceResponse.setPoint((double) point);
         attendanceResponse.setDate(Date.valueOf(today));
-        attendanceResponse.setDateAttendanceContinuous(rewardPointCustomRepository.getDayAttendanceContinuous(user).orElse(0));
-        attendanceResponse.setTotalPoint(Double.valueOf(rewardPointRepository.sumPointByUserId(userId).orElse(0)));
+
         return attendanceResponse;
+    }
+
+    @Override
+    public DataListResponse<AttendanceResponse> getHistoryAttendance() {
+        DataListResponse<AttendanceResponse> historyAttendance = null;
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+        if (user == null) return historyAttendance;
+        Integer userId = user.getId();
+
+        List<RewardPoint> rewardPoints = rewardPointRepository.findAllByUserId(userId);
+        if (rewardPoints.isEmpty()) return historyAttendance;
+        historyAttendance = new DataListResponse<>();
+        List<AttendanceResponse> attendanceResponses = rewardPoints.stream().map(rewardPointMapper::toAttendanceResponse).toList();
+        historyAttendance.setData(attendanceResponses);
+        return historyAttendance;
+    }
+
+    @Override
+    public RewardPointResponse getRedeemReward() {
+        RewardPointResponse rewardPointResponse = new RewardPointResponse();
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+        if (user == null) return rewardPointResponse;
+        Integer userId = user.getId();
+        rewardPointResponse.setDateAttendanceContinuous(calculateDayAttendanceContinuous(userId));
+        rewardPointResponse.setTotalPoint(Double.valueOf(rewardPointRepository.sumPointByUserId(userId).orElse(0)));
+        return rewardPointResponse;
+    }
+
+    private Integer calculateDayAttendanceContinuous(Integer userId) {
+        List<RewardPoint> rewardPointList = rewardPointRepository.findAllByUserId(userId);
+        if (rewardPointList.isEmpty()) return 0;
+        int dayContinuous = 0;
+        LocalDate today = LocalDate.now();
+        for (RewardPoint rewardPoint : rewardPointList) {
+            LocalDate date = rewardPoint.getDate().toLocalDate();
+            if (date.isEqual(today.minusDays(1))) {
+                today = date;
+                dayContinuous++;
+            } else {
+                break;
+            }
+        }
+        return dayContinuous;
     }
 }

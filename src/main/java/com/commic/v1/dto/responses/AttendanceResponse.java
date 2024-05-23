@@ -6,6 +6,8 @@ import java.sql.Date;
 
 @Data
 public class AttendanceResponse {
-    private Double score;
+    private Double point;
     private Date date;
+    private Integer dateAttendanceContinuous;
+    private Double totalPoint;
 }

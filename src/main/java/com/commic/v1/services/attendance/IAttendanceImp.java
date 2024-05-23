@@ -5,6 +5,7 @@ import com.commic.v1.entities.RewardPoint;
 import com.commic.v1.entities.User;
 import com.commic.v1.repositories.IRewardPointRepository;
 import com.commic.v1.repositories.IUserRepository;
+import com.commic.v1.repositories.custom.IRewardPointCustomRepository;
 import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import java.time.LocalDate;
 public class IAttendanceImp implements IAttendanceServices {
     @Autowired
     IRewardPointRepository rewardPointRepository;
+    @Autowired
+    IRewardPointCustomRepository rewardPointCustomRepository;
     @Autowired
     IUserRepository userRepository;
 
@@ -48,8 +51,10 @@ public class IAttendanceImp implements IAttendanceServices {
         rewardPoint.setPoint(point);
         rewardPointRepository.save(rewardPoint);
         attendanceResponse = new AttendanceResponse();
-        attendanceResponse.setScore((double) point);
+        attendanceResponse.setPoint((double) point);
         attendanceResponse.setDate(Date.valueOf(today));
+        attendanceResponse.setDateAttendanceContinuous(rewardPointCustomRepository.getDayAttendanceContinuous(user).orElse(0));
+        attendanceResponse.setTotalPoint(Double.valueOf(rewardPointRepository.sumPointByUserId(userId).orElse(0)));
         return attendanceResponse;
     }
 }

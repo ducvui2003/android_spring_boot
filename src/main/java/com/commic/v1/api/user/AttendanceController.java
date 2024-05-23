@@ -34,9 +34,4 @@ public class AttendanceController {
         }
         return apiResponse;
     }
-
-    @GetMapping
-    public void getAttendance() {
-        attendanceServices.attendance();
-    }
 }

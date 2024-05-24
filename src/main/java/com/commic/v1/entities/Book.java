@@ -22,7 +22,6 @@ public class Book {
     private String author;
     private String description;
     private String status;
-    @ColumnDefault("false")
     private Boolean isDeleted = false;
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories;

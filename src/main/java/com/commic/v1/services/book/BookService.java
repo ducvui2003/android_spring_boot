@@ -79,7 +79,7 @@ public class BookService implements IBookService {
         try {
             Set<Category> categories = categoryRepository.findByNameIn(bookRequest.getCategoryNames());
             book.setCategories(categories);
-
+            book.setIsDeleted(false);
             book = bookRepository.save(book);
             // Add this book to each category's set of books
             for (Category category : categories) {

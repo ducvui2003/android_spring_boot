@@ -23,9 +23,8 @@ public class AdminCommentServicesImp implements IAdminCommentServices {
     public DataListResponse<CommentResponseDTO> getComments(Pageable pageable) {
         DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
         Page<Comment> page = commentRepository.findAll(pageable);
-        System.out.println(page.getContent());
         List<CommentResponseDTO> data = page.getContent().stream().map(item -> commentMapper.toCommentResponseDTO(item)).toList();
-        result.setCurrentPage(pageable.getPageNumber());
+        result.setCurrentPage(pageable.getPageNumber() + 1);
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
         return result;

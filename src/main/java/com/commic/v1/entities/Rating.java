@@ -3,6 +3,7 @@ package com.commic.v1.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Date;
 
@@ -22,4 +23,6 @@ public class Rating {
     private User user;
     private Float star;
     private Date createdAt;
+    @ColumnDefault("false")
+    private Boolean isDeleted = false;
 }

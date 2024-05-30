@@ -1,18 +1,18 @@
 package com.commic.v1.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "books")
+@EqualsAndHashCode(of = "id") // Chỉ dùng id cho equals và hashCode
 public class Book {
 
     @Id
@@ -22,7 +22,7 @@ public class Book {
     private String author;
     private String description;
     private String status;
-
+    private Boolean isDeleted = false;
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories;
 
@@ -30,7 +30,4 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private Set<Chapter> chapters;
-
-    @OneToMany(mappedBy = "book")
-    private Set<Statistical> statisticals;
 }

@@ -10,4 +10,6 @@ public interface ICommentServices {
     CommentCreationResponseDTO create(CommentCreationRequestDTO requestDTO);
 
     List<CommentDTO> getComment(Integer idChapter);
+
+    void deleteByChapterId(Integer id);
 }

@@ -2,7 +2,7 @@ package com.commic.v1.services.search;
 
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
-import com.commic.v1.dto.responses.CategoryResponseDTO;
+import com.commic.v1.dto.responses.CategoryResponse;
 import com.commic.v1.entities.Book;
 import com.commic.v1.entities.Category;
 import com.commic.v1.exception.AppException;
@@ -12,6 +12,7 @@ import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.ICategoryRepository;
 import com.commic.v1.repositories.IChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,33 +34,7 @@ public class SearchServiceImp implements ISearchServices {
     private ICategoryRepository categoryRepository;
 
     @Override
-    public DataListResponse<BookResponseDTO> getBook(Pageable pageable) {
-        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page = bookRepository.findAll(pageable);
-        List<Book> books = page.getContent();
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
-        List<BookResponseDTO> data = bookToResponseDTO(books);
-        result.setCurrentPage(pageable.getPageNumber() + 1);
-        result.setTotalPages(page.getTotalPages());
-        result.setData(data);
-        return getBook(null, pageable);
-    }
 
-    @Override
-    public DataListResponse<BookResponseDTO> getBook(String containName, Pageable pageable) {
-        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
-        Page<Book> page = bookRepository.findByNameContaining(containName, pageable);
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
-        List<Book> books = page.getContent();
-        List<BookResponseDTO> data = bookToResponseDTO(books);
-        result.setCurrentPage(pageable.getPageNumber() + 1);
-        result.setTotalPages(page.getTotalPages());
-        result.setData(data);
-        return result;
-    }
-
-
-    @Override
     public DataListResponse<BookResponseDTO> getBook(String containName, Integer categoryId, Pageable pageable) {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
@@ -67,7 +42,6 @@ public class SearchServiceImp implements ISearchServices {
             page = bookRepository.findByNameContaining(containName, pageable);
         else
             page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -103,9 +77,9 @@ public class SearchServiceImp implements ISearchServices {
 
             case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(pageable);
 
+            case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -115,17 +89,17 @@ public class SearchServiceImp implements ISearchServices {
     }
 
     @Override
-    public List<CategoryResponseDTO> getCategory() {
+    public List<CategoryResponse> getCategory() {
         List<Category> categories = categoryRepository.findAll();
-        List<CategoryResponseDTO> categoryResponseDTOS = new ArrayList<>();
+        List<CategoryResponse> categoryResponses = new ArrayList<>();
         if (categories.isEmpty()) throw new AppException(ErrorCode.CATEGORY_EMPTY);
         for (Category category : categories) {
-            CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
-            categoryResponseDTO.setId(category.getId());
-            categoryResponseDTO.setName(category.getName());
-            categoryResponseDTOS.add(categoryResponseDTO);
+            CategoryResponse categoryResponse = new CategoryResponse();
+            categoryResponse.setId(category.getId());
+            categoryResponse.setName(category.getName());
+            categoryResponses.add(categoryResponse);
         }
-        return categoryResponseDTOS;
+        return categoryResponses;
     }
 
     @Override
@@ -137,9 +111,9 @@ public class SearchServiceImp implements ISearchServices {
 
             case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(categoryId, pageable);
 
+            case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(categoryId, pageable);
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -153,7 +127,6 @@ public class SearchServiceImp implements ISearchServices {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
         page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
-        if (page.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -164,14 +137,17 @@ public class SearchServiceImp implements ISearchServices {
 
     @Override
     public List<BookResponseDTO> getAllBook(Sort sort) {
-        List<Book> books = bookRepository.findAll(sort);
-        if (books.isEmpty()) throw new AppException(ErrorCode.BOOK_EMPTY);
+        Example<Book> example = Example.of(Book.builder().isDeleted(false).build());
+        List<Book> books = bookRepository.findAll(example,sort);
+        if (books.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         return bookToResponseDTO(books);
     }
 
     @Override
     public BookResponseDTO getBookById(Integer id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Example<Book> example = Example.of(Book.builder().id(id).isDeleted(false).build());
+        Optional<Book> book = bookRepository.findOne(example);
         return book.map(value -> bookMapper.toBookResponseDTO(value)).orElse(null);
     }
+
 }

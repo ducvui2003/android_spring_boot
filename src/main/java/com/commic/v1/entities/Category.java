@@ -2,6 +2,7 @@ package com.commic.v1.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
+@EqualsAndHashCode(of = "id") // Chỉ dùng id cho equals và hashCode
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

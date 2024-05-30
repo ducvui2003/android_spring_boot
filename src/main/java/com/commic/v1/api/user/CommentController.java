@@ -5,6 +5,7 @@ import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
 import com.commic.v1.exception.ErrorCode;
+import com.commic.v1.services.comment.IAdminCommentServices;
 import com.commic.v1.services.comment.ICommentServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class CommentController {
     @Autowired
     ICommentServices commentServices;
 
+    @Autowired
+    IAdminCommentServices commentAdminServices;
+
+//    Comment chapter của 1 truyện
     @PostMapping
     @ResponseBody
     public APIResponse<CommentCreationResponseDTO> create(@RequestBody @Valid CommentCreationRequestDTO requestDTO) {
@@ -29,6 +34,7 @@ public class CommentController {
         return apiResponse;
     }
 
+//    Lấy ra tất cả comment của 1 chapter
     @GetMapping("/chapter/{idChapter}")
     public APIResponse<List<CommentDTO>> getComment(@PathVariable("idChapter") Integer idChapter) {
         APIResponse<List<CommentDTO>> apiResponse = new APIResponse<>();
@@ -38,6 +44,4 @@ public class CommentController {
         apiResponse.setResult(comments);
         return apiResponse;
     }
-
-
 }

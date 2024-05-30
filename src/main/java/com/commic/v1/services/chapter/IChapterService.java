@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface IChapterService {
     List<ChapterResponse> getChaptersByBookId(Integer bookId, Sort sort);
+
+    void deleteByBookId(Integer id);
+
+    ChapterResponse getChapterById(Integer id);
 }

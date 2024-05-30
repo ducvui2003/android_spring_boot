@@ -43,6 +43,7 @@ public class SecurityConfig {
             "/api/v1/users/forgot-password",
             "/api/v1/users/change-password",
             "/api/v1/users/register",
+            "/api/v1/users/verify-account",
             "/api/v1/comment/**",
             "/api/v1/admin/**",
             "/api/v1/notifications/**",
@@ -52,10 +53,6 @@ public class SecurityConfig {
             "/api/v1/comment/chapter/*",
             "/api/v1/chapter-*",
             "/api/v1/attendance/**",};
-
-    private static final String[] PUBLIC_ENDPOINS = { "/api/v1/auth/**", "/api/v1/users/forgot-password",
-            "/api/v1/users/change-password", "/api/v1/books/**","/api/v1/users/register", "/api/v1/users/verify-account", "/api/v1/comment", "/api/v1/comment/chapter/*",
-            "/api/v1/chapter-*", "/api/v1/chapters/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

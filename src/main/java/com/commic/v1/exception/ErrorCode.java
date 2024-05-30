@@ -20,10 +20,6 @@ public enum ErrorCode {
     FOUND(200, "Found"),
     NOT_FOUND(400, "Not found"),
     INVALID_PASSWORD(400, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
-    PARAMETER_IS_REQUIRED(400,"Parameter is required"),
-    ID_MUST_BE_GREATER_THAN_ZERO(400,"Id must be greater than zero"),
-    NOT_FOUND(400, "Not found");
-
 
     ErrorCode(int code, String message) {
         this.code = code;

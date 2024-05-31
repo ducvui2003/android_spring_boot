@@ -1,24 +1,22 @@
 package com.commic.v1.api.admin;
 
 import com.commic.v1.dto.DataListResponse;
+import com.commic.v1.dto.requests.CommentChangeDTO;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.CommentResponseDTO;
 import com.commic.v1.exception.ErrorCode;
-import com.commic.v1.services.comment.IAdminCommentServices;
+import com.commic.v1.services.comment.ICommentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("CommentControllerAdmin")
 @RequestMapping("/api/v1/admin/comment")
 public class CommentController {
     @Autowired
-    IAdminCommentServices commentAdminServices;
+    ICommentServices commentAdminServices;
 
     @GetMapping()
     public APIResponse<DataListResponse<CommentResponseDTO>> getListComment(
@@ -36,6 +34,38 @@ public class CommentController {
             apiResponse.setCode(ErrorCode.FOUND.getCode());
             apiResponse.setMessage(ErrorCode.FOUND.getMessage());
             apiResponse.setResult(items);
+        }
+        return apiResponse;
+    }
+
+
+    //    1: Hiện
+//    2: Ẩn
+    @PostMapping()
+    public APIResponse changeState(@RequestBody CommentChangeDTO commentChangeDTO) {
+        APIResponse apiResponse = new APIResponse();
+        boolean isSuccess = commentAdminServices.changeState(commentChangeDTO.getCommentId(), commentChangeDTO.getState());
+        if (isSuccess) {
+            apiResponse.setCode(ErrorCode.UPDATE_SUCCESS.getCode());
+            apiResponse.setMessage(ErrorCode.UPDATE_SUCCESS.getMessage());
+        } else {
+            apiResponse.setCode(ErrorCode.UPDATE_FAILED.getCode());
+            apiResponse.setMessage(ErrorCode.UPDATE_FAILED.getMessage());
+        }
+        return apiResponse;
+    }
+
+    @GetMapping("/detail/{commentId}")
+    public APIResponse getDetailComment(@PathVariable Integer commentId) {
+        APIResponse<CommentResponseDTO> apiResponse = new APIResponse();
+        CommentResponseDTO commentDTO = commentAdminServices.getCommentDetail(commentId);
+        if (commentDTO != null) {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setResult(commentDTO);
+        } else {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
         }
         return apiResponse;
     }

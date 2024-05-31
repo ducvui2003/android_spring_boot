@@ -8,7 +8,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum CommentConst {
-    HIDE(1),
-    UN_HIDE(0);
+    SHOW(1),
+    HIDE(2);
     private Integer value;
+
+    public static CommentConst fromValue(Integer value) {
+        for (CommentConst commentConst : CommentConst.values()) {
+            if (commentConst.getValue().equals(value)) {
+                return commentConst;
+            }
+        }
+        return null;
+    }
 }

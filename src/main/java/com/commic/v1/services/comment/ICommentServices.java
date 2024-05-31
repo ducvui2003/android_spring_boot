@@ -1,8 +1,11 @@
 package com.commic.v1.services.comment;
 
 import com.commic.v1.dto.CommentDTO;
+import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
+import com.commic.v1.dto.responses.CommentResponseDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,4 +15,10 @@ public interface ICommentServices {
     List<CommentDTO> getComment(Integer idChapter);
 
     void deleteByChapterId(Integer id);
+
+    DataListResponse<CommentResponseDTO> getComments(Pageable pageable);
+
+    boolean changeState(Integer commentId, Integer state);
+
+    CommentResponseDTO getCommentDetail(Integer commentId);
 }

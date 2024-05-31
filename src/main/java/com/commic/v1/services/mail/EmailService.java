@@ -40,7 +40,6 @@ public class EmailService implements IEmailService {
         content.append("<p>Vui lòng nhập mã này vào ứng dụng để tiếp tục quá trình lấy lại mật khẩu.</p>");
         content.append("<p>Nếu bạn không yêu cầu lấy lại mật khẩu, vui lòng bỏ qua email này.</p>");
         content.append("<p>Trân trọng,</p>");
-
         sendMail(to, subject, content.toString());
     }
 

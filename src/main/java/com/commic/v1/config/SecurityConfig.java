@@ -51,7 +51,8 @@ public class SecurityConfig {
             "/api/v1/chapters/**",
             "/api/v1/comment/chapter/*",
             "/api/v1/chapter-*",
-            "/api/v1/attendance/**",};
+            "/api/v1/attendance/**",
+            "/api/v1/ratings/**",};
 
 
     @Bean

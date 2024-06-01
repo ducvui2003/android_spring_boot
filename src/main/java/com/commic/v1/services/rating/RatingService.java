@@ -1,6 +1,8 @@
 package com.commic.v1.services.rating;
 
+import com.commic.v1.dto.RatingDTO;
 import com.commic.v1.entities.Rating;
+import com.commic.v1.mapper.RatingMapper;
 import com.commic.v1.repositories.IRatingRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,8 @@ import java.util.List;
 public class RatingService implements IRatingService {
     @Autowired
     IRatingRepository ratingRepository;
+
+    private final RatingMapper ratingMapper;
     @Override
     public void deleteByChapterId(Integer id) {
         List<Rating> list = ratingRepository.findByChapterId(id);
@@ -28,5 +33,12 @@ public class RatingService implements IRatingService {
     @Override
     public List<Rating> findByChapterId(Integer id) {
         return ratingRepository.findByChapterId(id);
+    }
+
+    @Override
+    public List<RatingDTO> findAllByUserId(Integer userId) {
+        return ratingRepository.findAllByUserId(userId).stream()
+                .map(ratingMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

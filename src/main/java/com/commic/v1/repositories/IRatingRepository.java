@@ -14,4 +14,8 @@ public interface IRatingRepository extends JpaRepository<Rating, Long> {
     Optional<Integer> countByUser(User user);
 
     List<Rating> findByChapterId(Integer chapterId);
+
+    List<Rating> findAllByUserId(Integer userId);
+
+
 }

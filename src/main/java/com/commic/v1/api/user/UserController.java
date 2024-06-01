@@ -1,6 +1,7 @@
 package com.commic.v1.api.user;
 
 import com.commic.v1.dto.UserDTO;
+import com.commic.v1.dto.requests.AccountVerifyRequest;
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.requests.ForgotPasswordRequest;
 import com.commic.v1.dto.requests.UserRequest;
@@ -12,7 +13,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,10 +48,15 @@ public class UserController {
         APIResponse<Void> response = userService.changePassword(passwordRequest);
         return ResponseEntity.status(response.getCode()).body(response);
     }
-
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
-            userService.register(userDTO);
-        return ResponseEntity.ok("Success");
+    public ResponseEntity<APIResponse<Void>> register(@RequestBody @Valid UserDTO userDTO) {
+        APIResponse<Void> response = userService.register(userDTO);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PostMapping("/verify-account")
+    public ResponseEntity<APIResponse<Void>> verifyAccount(@RequestBody AccountVerifyRequest accountVerifyRequest) {
+        APIResponse<Void> response = userService.verifyAccount(accountVerifyRequest);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }

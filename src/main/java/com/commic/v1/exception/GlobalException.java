@@ -37,6 +37,7 @@ public class GlobalException {
         APIResponse apiResponse = new APIResponse();
         String enumKey = e.getFieldError().getDefaultMessage();
         ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+        System.out.println(errorCode.getCode() + " " + errorCode.getMessage());
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);
@@ -47,12 +48,11 @@ public class GlobalException {
         ProblemDetail errorDetail = null;
 
         // TODO send this stack trace to an observability tool
-        exception.printStackTrace();
 
+        exception.printStackTrace();
         if (exception instanceof BadCredentialsException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
             errorDetail.setProperty("description", "The username or password is incorrect");
-
             return errorDetail;
         }
 

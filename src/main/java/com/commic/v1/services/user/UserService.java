@@ -1,6 +1,7 @@
 package com.commic.v1.services.user;
 
 import com.commic.v1.dto.UserDTO;
+import com.commic.v1.dto.requests.AccountVerifyRequest;
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.requests.UserRequest;
 import com.commic.v1.dto.responses.APIResponse;
@@ -13,6 +14,7 @@ import com.commic.v1.repositories.*;
 
 import com.commic.v1.services.mail.IEmailService;
 import com.commic.v1.util.SecurityUtils;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +28,6 @@ import java.util.Random;
 public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
-
     @Autowired
     private IEmailService emailService;
     @Autowired
@@ -42,17 +43,15 @@ public class UserService implements IUserService {
     @Autowired
     private IRatingRepository ratingRepository;
 
+
     @Override
     public APIResponse<Void> forgotPassword(String email) {
         // Generate OTP
         String otp = generateOTP();
-
         // Create a response object
         APIResponse<Void> response = new APIResponse<>();
-
         // Find the user by email
         User user = userRepository.findByEmail(email).orElse(null);
-
         // If user is not found, set appropriate response message and code
         if (user == null) {
             response.setMessage("Email not found");
@@ -121,14 +120,17 @@ public class UserService implements IUserService {
     public APIResponse<Void> register(UserDTO userDTO) {
         APIResponse<Void> response = new APIResponse<>();
         try {
-            /*Kiểm tra xem có tên người dùng hoặc email đã có người đăng ký hay chưa
-            * Nếu chưa có thì mới cho phép đăng ký
-            * */
+                /*
+                Kiểm tra xem có tên người dùng hoặc email đã có người đăng ký hay chưa
+                * Nếu chưa có thì mới cho phép đăng ký
+                * */
             Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
-            Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
-            if (userByName.isEmpty() && userByEmail.isEmpty()) {
+//                Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
+            if (userByName.isEmpty()) {
                 userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
                 User user = userMapper.toUserResponseEntity(userDTO);
+                user.setOtp(generateOTP());
+                emailService.sendMailOTP(user.getEmail(), user.getOtp());
                 userRepository.save(user);
                 response.setMessage("Register success");
                 response.setCode(HttpStatus.OK.value());
@@ -138,9 +140,28 @@ public class UserService implements IUserService {
                 response.setCode(ErrorCode.CREATE_FAILED.getCode());
                 return response;
             }
-        } catch(Exception ex){
+        } catch (Exception ex) {
             response.setMessage("Register failed, check your registration information again");
             response.setCode(ErrorCode.CREATE_FAILED.getCode());
+            return response;
+        }
+    }
+
+    @Override
+    public APIResponse<Void> verifyAccount(AccountVerifyRequest accountVerifyRequest) {
+        APIResponse<Void> response = new APIResponse<>();
+        User user = userRepository.findByEmailAndOtp(accountVerifyRequest.getEmail(), accountVerifyRequest.getOtp()).orElse(null);
+        if (user == null) {
+            Optional<User> userByEmail = userRepository.findByEmail(accountVerifyRequest.getEmail());
+            userRepository.deleteById(userByEmail.get().getId());
+            response.setMessage("Email or OTP is incorrect");
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            return response;
+        } else {
+            user.setOtp(null);
+            userRepository.save(user);
+            response.setMessage("Account verified successfully");
+            response.setCode(HttpStatus.OK.value());
             return response;
         }
     }
@@ -169,6 +190,7 @@ public class UserService implements IUserService {
         // Return the result
         return result;
     }
+
 
     @Override
     public boolean updateInfo(UserRequest userRequest) {

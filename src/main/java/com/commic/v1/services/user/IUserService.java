@@ -1,6 +1,7 @@
 package com.commic.v1.services.user;
 
 import com.commic.v1.dto.UserDTO;
+import com.commic.v1.dto.requests.AccountVerifyRequest;
 import com.commic.v1.dto.requests.ChangePasswordRequest;
 import com.commic.v1.dto.requests.UserRequest;
 import com.commic.v1.dto.responses.APIResponse;
@@ -16,9 +17,8 @@ public interface IUserService {
     APIResponse<Void> forgotPassword(String email);
     APIResponse<Void> changePassword(ChangePasswordRequest passwordRequest);
     APIResponse<Void> register(UserDTO userDTO);
-
+    APIResponse<Void> verifyAccount(AccountVerifyRequest accountVerifyRequest);
     UserResponse getUserInfo(String username);
-
     boolean updateInfo(UserRequest userRequest);
 
 }

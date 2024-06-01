@@ -56,7 +56,7 @@ public class CommentController {
     }
 
     @GetMapping("/detail/{commentId}")
-    public APIResponse getDetailComment(@PathVariable Integer commentId) {
+    public APIResponse<CommentResponseDTO> getDetailComment(@PathVariable Integer commentId) {
         APIResponse<CommentResponseDTO> apiResponse = new APIResponse();
         CommentResponseDTO commentDTO = commentAdminServices.getCommentDetail(commentId);
         if (commentDTO != null) {

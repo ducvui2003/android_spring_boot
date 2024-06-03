@@ -48,8 +48,6 @@ public class BookController {
     }
 
 
-
-
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
                                                                  @RequestParam(name = "categoryId", required = false) String categoryId,
@@ -83,13 +81,13 @@ public class BookController {
 
 
     @GetMapping("/rank")
-    public APIResponse<DataListResponse<BookResponseDTO>> rank(@RequestParam(name = "page", defaultValue = "0") int page,
+    public APIResponse<DataListResponse<BookResponseDTO>> rank(@RequestParam(name = "page", defaultValue = "1") int page,
                                                                @RequestParam(name = "size", defaultValue = "10") int size,
                                                                @RequestParam(name = "type", defaultValue = "") String type,
                                                                @RequestParam(name = "categoryId", required = false) Integer categoryId) {
 
         Pageable pageable;
-        pageable = PageRequest.of(page, size);
+        pageable = PageRequest.of(page - 1, size);
         DataListResponse<BookResponseDTO> items = searchServices.getRankBy(type, pageable);
         if (categoryId == null)
             items = searchServices.getRankBy(type, pageable);

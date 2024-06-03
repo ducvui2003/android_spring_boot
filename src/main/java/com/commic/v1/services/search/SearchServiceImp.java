@@ -75,16 +75,20 @@ public class SearchServiceImp implements ISearchServices {
         switch (type.toUpperCase()) {
             case "RATING" -> page = bookRepository.findAllOrderByRatingDesc(pageable);
 
+
             case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(pageable);
 
             case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
-        result.setCurrentPage(pageable.getPageNumber() + 1);
-        result.setTotalPages(page.getTotalPages());
-        result.setData(data);
+        if (!data.isEmpty()){
+            result.setCurrentPage(pageable.getPageNumber() + 1);
+            result.setTotalPages(page.getTotalPages());
+            result.setData(data);
+        }
         return result;
     }
 

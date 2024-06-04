@@ -127,11 +127,16 @@ public class BookController {
     }
 
     @GetMapping("/newComic")
-    public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
+    public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "1") int page,
+                                                                                        @RequestParam(name = "size", defaultValue = "10") int size,
+                                                                                        @RequestParam(name = "categoryId", required = false) Integer categoryId) {
         Pageable pageable;
-        pageable = PageRequest.of(page, size);
-        DataListResponse<BookResponseDTO> items = searchServices.getComicByPublishDate(pageable);
+        pageable = PageRequest.of(page - 1, size);
+        DataListResponse<BookResponseDTO> items;
+        if (categoryId == null)
+            items = searchServices.getComicByPublishDate(pageable);
+        else
+            items = searchServices.getComicByPublishDate(pageable, categoryId);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
         if (items.getData().isEmpty()) {
             apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());

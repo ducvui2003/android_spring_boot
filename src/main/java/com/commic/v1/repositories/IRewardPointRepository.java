@@ -19,7 +19,8 @@ public interface IRewardPointRepository extends JpaRepository<RewardPoint, Integ
     Optional<Integer> countByUser(User user);
 
     @Query("SELECT SUM(r.point) FROM RewardPoint r WHERE r.user.id = :userId")
-    Optional<Integer> sumPointByUserId(@Param("userId") Integer userId);
+    Optional<Double> sumPointByUserId(@Param("userId") Integer userId);
 
     List<RewardPoint> findAllByUserId(Integer userId);
+
 }

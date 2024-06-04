@@ -6,6 +6,7 @@ import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
 import com.commic.v1.dto.responses.CommentResponseDTO;
 import com.commic.v1.entities.Comment;
+import com.commic.v1.entities.User;
 import com.commic.v1.exception.AppException;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.CommentMapper;
@@ -13,6 +14,7 @@ import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.IChapterRepository;
 import com.commic.v1.repositories.ICommentRepository;
 import com.commic.v1.repositories.IUserRepository;
+import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +41,8 @@ public class CommentServiceImp implements ICommentServices {
 
     @Override
     public CommentCreationResponseDTO create(CommentCreationRequestDTO requestDTO) {
-        if (!userRepository.existsUserById(requestDTO.getUserId())) {
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+        if (user == null) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
         if (!chapterRepository.existsChapterById(requestDTO.getChapterId())) {
@@ -49,8 +52,7 @@ public class CommentServiceImp implements ICommentServices {
         comment.setCreatedAt(new Date(System.currentTimeMillis()));
         comment.setState(CommentConst.HIDE.getValue());
         comment = commentRepository.save(comment);
-        CommentCreationResponseDTO responseDTO = commentMapper.toCommentCreationRequestDTO(comment);
-        return responseDTO;
+        return commentMapper.toCommentCreationRequestDTO(comment);
     }
 
     @Override

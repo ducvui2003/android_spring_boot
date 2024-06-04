@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
-    @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "chapterId", target = "chapter.id")
     Comment toComment(CommentCreationRequestDTO comment);
 

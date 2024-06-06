@@ -4,11 +4,10 @@ import com.commic.v1.dto.RatingDTO;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.entities.Rating;
 import com.commic.v1.services.rating.IRatingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +20,21 @@ public class RatingController {
     @Autowired
     public RatingController(IRatingService ratingService) {
         this.ratingService = ratingService;
+    }
+
+    @PostMapping
+    public ResponseEntity<APIResponse<Void>> createRating(@RequestBody @Valid RatingDTO ratingDTO) {
+        APIResponse<Void> response = ratingService.createRating(ratingDTO);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<APIResponse<Void>> updateRating(@RequestBody @Valid RatingDTO ratingDTO) {
+        if (ratingDTO.getId() == null) {
+            return ResponseEntity.status(400).body(new APIResponse<>(400, "Id is required", null));
+        }
+        APIResponse<Void> response = ratingService.updateRating(ratingDTO);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @GetMapping("/user/{userId}")

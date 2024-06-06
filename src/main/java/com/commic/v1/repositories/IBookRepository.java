@@ -47,4 +47,6 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     Optional<Book> findById(Integer id);
 
+    @Query("SELECT book.thumbnail FROM Book book WHERE book.id = :bookId")
+    Optional<String> findThumbnailBookId(Integer bookId);
 }

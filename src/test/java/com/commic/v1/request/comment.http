@@ -14,3 +14,15 @@ GET http://localhost:8081/api/v1/comment/chapter/35
 
 ### (Admin) Lấy ra danh sách comment
 GET http://localhost:8081/api/v1/admin/comment
+
+### (Admin) Lấy ra thông tin comment theo id
+GET http://localhost:8081/api/v1/admin/comment/detail/1
+
+### Đổi trạng thái comment cho 1 chapter
+POST http://localhost:8081/api/v1/admin/comment
+Content-Type: application/json
+
+{
+  "commentId": 1,
+  "state": 2
+}

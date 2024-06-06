@@ -19,9 +19,11 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
     Page<Comment> findAll(Pageable pageable);
 
     List<Comment> findByChapterId(Integer id);
-  
+
     @Query("SELECT c FROM Comment c WHERE c.chapter.id = :idChapter")
     List<Comment> findAllByChapterId(Integer idChapter);
+
+    Optional<Comment> findById(Integer id);
 
     Optional<Integer> countByUser(User user);
 }

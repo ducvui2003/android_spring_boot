@@ -1,29 +1,23 @@
 package com.commic.v1.services.comment;
 
 import com.commic.v1.dto.CommentDTO;
-import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
-import com.commic.v1.dto.responses.CommentResponseDTO;
 import com.commic.v1.entities.Comment;
-import com.commic.v1.entities.User;
 import com.commic.v1.exception.AppException;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.CommentMapper;
-import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.IChapterRepository;
 import com.commic.v1.repositories.ICommentRepository;
 import com.commic.v1.repositories.IUserRepository;
-import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,13 +30,10 @@ public class CommentServiceImp implements ICommentServices {
     ICommentRepository commentRepository;
     @Autowired
     CommentMapper commentMapper;
-    @Autowired
-    IBookRepository bookRepository;
 
     @Override
     public CommentCreationResponseDTO create(CommentCreationRequestDTO requestDTO) {
-        User user = SecurityUtils.getUserFromPrincipal(userRepository);
-        if (user == null) {
+        if (!userRepository.existsUserById(requestDTO.getUserId())) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
         if (!chapterRepository.existsChapterById(requestDTO.getChapterId())) {
@@ -50,9 +41,10 @@ public class CommentServiceImp implements ICommentServices {
         }
         Comment comment = commentMapper.toComment(requestDTO);
         comment.setCreatedAt(new Date(System.currentTimeMillis()));
-        comment.setState(CommentConst.HIDE.getValue());
+        comment.setState(CommentConst.UN_HIDE.getValue());
         comment = commentRepository.save(comment);
-        return commentMapper.toCommentCreationRequestDTO(comment);
+        CommentCreationResponseDTO responseDTO = commentMapper.toCommentCreationRequestDTO(comment);
+        return responseDTO;
     }
 
     @Override

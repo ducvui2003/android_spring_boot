@@ -19,7 +19,7 @@ import java.util.List;
 //monday +10d
 //friday +15d
 @Service
-public class AttendanceImp implements IAttendanceServices {
+public class AttendanceServiceImp implements IAttendanceServices {
     @Autowired
     IRewardPointRepository rewardPointRepository;
     @Autowired

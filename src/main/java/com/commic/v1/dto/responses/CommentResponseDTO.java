@@ -13,10 +13,21 @@ import java.sql.Date;
 @Builder
 public class CommentResponseDTO {
     private Integer id;
-    private Integer userId;
+    private UserCommentDTO user;
     private String bookName;
-    private String chapterNumber;
+    private String thumbnail;
+    private String chapterName;
     private String content;
     private Date createdAt;
     private Integer state;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UserCommentDTO {
+        private String username;
+        private String email;
+        private String avatar;
+    }
 }

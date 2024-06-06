@@ -13,6 +13,8 @@ public enum ErrorCode {
     PARAMETER_MISSING(400, "Parameter missing"),
     CREATE_SUCCESS(200, "Create success"),
     CREATE_FAILED(400, "Create failed"),
+    UPDATE_SUCCESS(200, "Update success"),
+    UPDATE_FAILED(400, "Update failed"),
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED.value(), "Unauthenticated"),
     UNAUTHORIZED(HttpStatus.FORBIDDEN.value(), "You do not have permission"),
     CATEGORY_EMPTY(204, "Category empty"),

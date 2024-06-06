@@ -14,9 +14,8 @@ public interface CommentMapper {
     @Mapping(source = "chapterId", target = "chapter.id")
     Comment toComment(CommentCreationRequestDTO comment);
 
-    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "chapter.book.name", target = "bookName")
-    @Mapping(source = "chapter.name", target = "chapterNumber")
+    @Mapping(source = "chapter.name", target = "chapterName")
     CommentResponseDTO toCommentResponseDTO(Comment comment);
 
     CommentCreationResponseDTO toCommentCreationRequestDTO(Comment comment);

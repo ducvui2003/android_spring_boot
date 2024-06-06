@@ -5,6 +5,7 @@ import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
 import com.commic.v1.dto.responses.CommentResponseDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 

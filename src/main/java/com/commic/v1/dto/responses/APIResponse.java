@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class APIResponse <T> {
+public class APIResponse<T> {
     private Integer code;
     private String message;
     private T result;

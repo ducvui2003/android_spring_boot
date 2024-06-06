@@ -119,4 +119,36 @@ public class CommentServiceImp implements ICommentServices {
         commentRepository.save(comment);
         return true;
     }
+
+    @Override
+    public DataListResponse<CommentResponseDTO> getComments(CommentGetType commentGetType, Integer id, Pageable pageable) {
+        DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
+        Page<Comment> page = null;
+        List<CommentResponseDTO> data;
+        switch (commentGetType) {
+            case BY_CHAPTER -> {
+                page = commentRepository.getCommentByChapterId(id, pageable);
+            }
+            case BY_BOOK -> {
+                page = commentRepository.getCommentByBookId(id, pageable);
+            }
+        }
+        if (page == null || page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
+        data = page.getContent().stream().map(comment -> {
+            CommentResponseDTO commentResponseDTO = commentMapper.toCommentResponseDTO(comment);
+            CommentResponseDTO.UserCommentDTO userCommentDTO = CommentResponseDTO.UserCommentDTO.builder()
+                    .username(comment.getUser().getUsername())
+                    .email(comment.getUser().getEmail())
+                    .avatar(comment.getUser().getAvatar())
+                    .build();
+            commentResponseDTO.setUser(userCommentDTO);
+            Optional<String> thumbnail = bookRepository.findThumbnailBookId(comment.getChapter().getBook().getId());
+            commentResponseDTO.setThumbnail(thumbnail.orElse(null));
+            return commentResponseDTO;
+        }).toList();
+        result.setData(data);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        return result;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -26,4 +27,10 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
     Optional<Comment> findById(Integer id);
 
     Optional<Integer> countByUser(User user);
+
+    @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :chapterId AND c.state = 2")
+    Page<Comment> getCommentByChapterId(@Param("chapterId") Integer idChapter, Pageable pageable);
+
+    @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :bookId AND c.state = 2")
+    Page<Comment> getCommentByBookId(@Param("bookId") Integer idBook, Pageable pageable);
 }

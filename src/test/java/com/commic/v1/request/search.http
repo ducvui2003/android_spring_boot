@@ -2,7 +2,7 @@
 GET http://localhost:8081/api/v1/books/search?keyword=t&sortField_name=desc&categoryId=1
 
 ### Lấy danh sách truyện theo keword
-GET http://localhost:8081/api/v1/books/search?keyword=main
+GET http://localhost:8081/api/v1/books/search?keyword=a&page=1&size=10
 
 ### Tìm kiếm truyện dựa theo tên
 GET http://localhost:8081/api/v1/books/search?keyword=t&sortField_name=desc

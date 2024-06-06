@@ -6,6 +6,7 @@ import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.CommentCreationResponseDTO;
 import com.commic.v1.dto.responses.CommentResponseDTO;
 import com.commic.v1.entities.Comment;
+import com.commic.v1.entities.User;
 import com.commic.v1.exception.AppException;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.CommentMapper;
@@ -13,6 +14,7 @@ import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.IChapterRepository;
 import com.commic.v1.repositories.ICommentRepository;
 import com.commic.v1.repositories.IUserRepository;
+import com.commic.v1.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,15 +41,13 @@ public class CommentServiceImp implements ICommentServices {
 
     @Override
     public CommentCreationResponseDTO create(CommentCreationRequestDTO requestDTO) {
-        if (!userRepository.existsUserById(requestDTO.getUserId())) {
-            throw new AppException(ErrorCode.USER_NOT_FOUND);
-        }
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
         if (!chapterRepository.existsChapterById(requestDTO.getChapterId())) {
             throw new AppException(ErrorCode.CHAPTER_NOT_FOUND);
         }
         Comment comment = commentMapper.toComment(requestDTO);
         comment.setCreatedAt(new Date(System.currentTimeMillis()));
-        comment.setState(CommentConst.HIDE.getValue());
+        comment.setState(CommentConst.SHOW.getValue());
         comment = commentRepository.save(comment);
         CommentCreationResponseDTO responseDTO = commentMapper.toCommentCreationRequestDTO(comment);
         return responseDTO;
@@ -116,5 +116,37 @@ public class CommentServiceImp implements ICommentServices {
 
         commentRepository.save(comment);
         return true;
+    }
+
+    @Override
+    public DataListResponse<CommentResponseDTO> getComments(CommentGetType commentGetType, Integer id, Pageable pageable) {
+        DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
+        Page<Comment> page = null;
+        List<CommentResponseDTO> data;
+        switch (commentGetType) {
+            case BY_CHAPTER -> {
+                page = commentRepository.getCommentByChapterId(id, pageable);
+            }
+            case BY_BOOK -> {
+                page = commentRepository.getCommentByBookId(id, pageable);
+            }
+        }
+        if (page == null || page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
+        data = page.getContent().stream().map(comment -> {
+            CommentResponseDTO commentResponseDTO = commentMapper.toCommentResponseDTO(comment);
+            CommentResponseDTO.UserCommentDTO userCommentDTO = CommentResponseDTO.UserCommentDTO.builder()
+                    .username(comment.getUser().getUsername())
+                    .email(comment.getUser().getEmail())
+                    .avatar(comment.getUser().getAvatar())
+                    .build();
+            commentResponseDTO.setUser(userCommentDTO);
+            Optional<String> thumbnail = bookRepository.findThumbnailBookId(comment.getChapter().getBook().getId());
+            commentResponseDTO.setThumbnail(thumbnail.orElse(null));
+            return commentResponseDTO;
+        }).toList();
+        result.setData(data);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        return result;
     }
 }

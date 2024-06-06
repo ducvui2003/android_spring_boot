@@ -16,14 +16,17 @@ public interface ISearchServices {
 
     DataListResponse<BookResponseDTO> getRankBy(String type, Integer categoryId, Pageable pageable);
 
-//    Lấy danh sách thể loại
+    //    Lấy danh sách thể loại
     List<CategoryResponse> getCategory();
 
-//    Lấy danh sách truyện theo ngày ra mắt mới nhất của chapter đầu tiên
+    //    Lấy danh sách truyện theo ngày ra mắt mới nhất của chapter đầu tiên
     DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable);
+
+    DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable, Integer categoryId);
 
     List<BookResponseDTO> getAllBook(Sort pageable);
 
     BookResponseDTO getBookById(Integer id);
+
 
 }

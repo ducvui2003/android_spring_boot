@@ -21,4 +21,6 @@ public interface ICommentServices {
     boolean changeState(Integer commentId, Integer state);
 
     CommentResponseDTO getCommentDetail(Integer commentId);
+
+    DataListResponse<CommentResponseDTO> getComments(CommentGetType commentGetType , Integer id, Pageable pageable);
 }

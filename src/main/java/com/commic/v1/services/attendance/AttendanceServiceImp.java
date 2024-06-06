@@ -19,7 +19,7 @@ import java.util.List;
 //monday +10d
 //friday +15d
 @Service
-public class IAttendanceImp implements IAttendanceServices {
+public class AttendanceServiceImp implements IAttendanceServices {
     @Autowired
     IRewardPointRepository rewardPointRepository;
     @Autowired
@@ -82,7 +82,7 @@ public class IAttendanceImp implements IAttendanceServices {
         if (user == null) return rewardPointResponse;
         Integer userId = user.getId();
         rewardPointResponse.setDateAttendanceContinuous(calculateDayAttendanceContinuous(userId));
-        rewardPointResponse.setTotalPoint(Double.valueOf(rewardPointRepository.sumPointByUserId(userId).orElse(0)));
+        rewardPointResponse.setTotalPoint(Double.valueOf(rewardPointRepository.sumPointByUserId(userId).orElse(0.0)));
         return rewardPointResponse;
     }
 

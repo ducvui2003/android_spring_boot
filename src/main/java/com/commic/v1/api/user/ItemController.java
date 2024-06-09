@@ -5,7 +5,6 @@ import com.commic.v1.dto.requests.ExchangeRequest;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.RedeemRewardResponse;
 import com.commic.v1.entities.Item;
-import com.commic.v1.entities.RewardPoint;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.attendance.ExchangeStatus;
 import com.commic.v1.services.attendance.ItemServices;
@@ -40,7 +39,7 @@ public class ItemController {
     }
 
     @PostMapping()
-    public APIResponse<ExchangeStatus> createItem(@RequestBody ExchangeRequest request) {
+    public APIResponse<ExchangeStatus> exchangeItem(@RequestBody ExchangeRequest request) {
         APIResponse<ExchangeStatus> apiResponse = new APIResponse<>();
         ExchangeStatus isCreated = itemServices.exchangeItem(request.getItemId());
         apiResponse.setCode(ErrorCode.CREATE_SUCCESS.getCode());

@@ -19,6 +19,9 @@ import java.util.Optional;
 public interface ICommentRepository extends JpaRepository<Comment, Integer> {
     Page<Comment> findAll(Pageable pageable);
 
+    @Query("SELECT c FROM Comment c WHERE c.user.id = :userId AND c.isDeleted = false")
+    Page<Comment> findAllByUserIdAndIsDeletedFalse(Integer userId,Pageable pageable);
+
     List<Comment> findByChapterId(Integer id);
 
     @Query("SELECT c FROM Comment c WHERE c.chapter.id = :idChapter")
@@ -28,9 +31,10 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
 
     Optional<Integer> countByUser(User user);
 
-    @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :chapterId AND c.state = 2")
+    @Query("SELECT c FROM Comment c WHERE c.chapter.id = :chapterId AND c.state = 1 AND c.isDeleted = false ")
     Page<Comment> getCommentByChapterId(@Param("chapterId") Integer idChapter, Pageable pageable);
 
-    @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :bookId AND c.state = 2")
+    @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :bookId AND c.state = 1 AND c.isDeleted = false ")
     Page<Comment> getCommentByBookId(@Param("bookId") Integer idBook, Pageable pageable);
+
 }

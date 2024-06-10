@@ -74,18 +74,20 @@ public class ItemServices implements IItemServices {
     public DataListResponse<RedeemRewardResponse> getItemsByUser(Pageable pageable) {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
         DataListResponse<RedeemRewardResponse> response = new DataListResponse();
-        Page<Item> page = redeemRewardRepository.getByUserId(user.getId(), pageable);
+        Page<Item> page = itemRepository.findAll(pageable);
         if (page.isEmpty()) {
             throw new AppException(ErrorCode.NOT_FOUND);
         }
         List<RedeemRewardResponse> data = new ArrayList<>();
         for (Item item : page.getContent()) {
+            boolean isExchange = redeemRewardRepository.existsByUserIdAndItemId(user.getId(), item.getId());
             data.add(RedeemRewardResponse.builder()
                     .id(item.getId())
                     .name(item.getName())
                     .point(item.getPoint())
                     .image(item.getImage())
                     .date(redeemRewardRepository.findDateByUserIdAndItemId(user.getId(), item.getId()))
+                    .isExchange(isExchange)
                     .build());
         }
         response.setData(data);

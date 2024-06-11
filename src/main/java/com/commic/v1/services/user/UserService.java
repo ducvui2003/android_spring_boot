@@ -21,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -211,6 +213,21 @@ public class UserService implements IUserService {
 
         // If the operation reaches this point without any exceptions, return true indicating success
         return true;
+    }
+
+    @Override
+    public APIResponse<List<UserResponse>> findAll() {
+        APIResponse<List<UserResponse>> response = new APIResponse<>();
+        List<User> users = userRepository.findAll();
+        List<UserResponse> userResponses = new ArrayList<>();
+        for(User user : users) {
+            UserResponse userResponse = userMapper.toDTO(user);
+            userResponses.add(userResponse);
+        }
+        response.setResult(userResponses);
+        response.setCode(ErrorCode.FOUND.getCode());
+        response.setMessage(ErrorCode.FOUND.getMessage());
+        return response;
     }
 
 

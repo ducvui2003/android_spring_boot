@@ -62,4 +62,14 @@ public class CommentController {
         apiResponse.setResult(comments);
         return apiResponse;
     }
+
+//    @GetMapping(value = "/book/{id}")
+//    public APIResponse<List<CommentDTO>> getAllComment(@PathVariable("id") Integer id) {
+//        APIResponse<List<CommentDTO>> apiResponse = new APIResponse<>();
+//        List<CommentDTO> comments = commentServices.getAllComment(id);
+//        apiResponse.setCode(ErrorCode.FOUND.getCode());
+//        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+//        apiResponse.setResult(comments);
+//        return apiResponse;
+//    }
 }

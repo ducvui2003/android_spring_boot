@@ -14,5 +14,5 @@ public class ChapterResponse {
     private Date publishDate;
     private Integer view;
     private Float rating;
-    private List<ChapterContentRespone> chapterContent;
+    private List<ChapterContentResponse> chapterContent;
 }

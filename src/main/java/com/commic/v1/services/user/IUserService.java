@@ -7,6 +7,8 @@ import com.commic.v1.dto.requests.UserRequest;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.UserResponse;
 
+import java.util.List;
+
 public interface IUserService {
     /**
      * Generates an OTP (One-Time Password) and sends it to the provided email address.
@@ -20,5 +22,5 @@ public interface IUserService {
     APIResponse<Void> verifyAccount(AccountVerifyRequest accountVerifyRequest);
     UserResponse getUserInfo(String username);
     boolean updateInfo(UserRequest userRequest);
-
+    APIResponse<List<UserResponse>> findAll();
 }

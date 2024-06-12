@@ -2,7 +2,6 @@ package com.commic.v1.api.user;
 
 import com.commic.v1.dto.RatingDTO;
 import com.commic.v1.dto.responses.APIResponse;
-import com.commic.v1.entities.Rating;
 import com.commic.v1.services.rating.IRatingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

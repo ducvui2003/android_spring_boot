@@ -42,4 +42,14 @@ public class RatingController {
         List<RatingDTO> ratings = ratingService.findAllByUserId(userId);
         return new APIResponse<>(200, "Success", ratings);
     }
+
+    @GetMapping("/chapter/{chapterId}")
+    public APIResponse<RatingDTO> getRatingsByChapterId(@PathVariable Integer chapterId) {
+        RatingDTO rating = ratingService.findRatingByChapterId(chapterId).getResult();
+        if (rating == null) {
+            return new APIResponse<>(404, "Not found", null);
+        } else {
+            return new APIResponse<>(200, "Success", rating);
+        }
+    }
 }

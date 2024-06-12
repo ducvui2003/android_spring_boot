@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,7 +86,7 @@ public class RatingService implements IRatingService {
     public APIResponse<Void> updateRating(RatingDTO ratingDTO) {
         try {
             // Tìm đối tượng Rating tương ứng trong cơ sở dữ liệu dựa trên id
-            Rating rating = ratingRepository.findById(ratingDTO.getId()).orElse(null);
+            Rating rating = ratingRepository.findById(Long.valueOf(ratingDTO.getId())).orElse(null);
 
             // Kiểm tra xem đối tượng Rating có tồn tại không
             if (rating == null) {
@@ -110,4 +109,24 @@ public class RatingService implements IRatingService {
         }
     }
 
+    @Override
+    public APIResponse<RatingDTO> findRatingByChapterId(Integer id) {
+        try {
+            // Tìm đối tượng Rating tương ứng trong cơ sở dữ liệu dựa trên id
+            Rating rating = ratingRepository.findRatingByChapterId(id).orElse(null);
+
+            // Kiểm tra xem đối tượng Rating có tồn tại không
+            if (rating == null) {
+                // Nếu không tìm thấy, trả về thông báo lỗi
+                return new APIResponse<>(HttpStatus.NOT_FOUND.value(), "Rating not found", null);
+            }
+
+            // Chuyển đối tượng Rating thành đối tượng DTO và trả về thông báo thành công
+            return new APIResponse<>(HttpStatus.OK.value(), "Success", ratingMapper.toDTO(rating));
+        } catch (Exception ex) {
+            // Nếu xảy ra ngoại lệ, in thông báo lỗi và trả về mã lỗi 500 (INTERNAL_SERVER_ERROR)
+            ex.printStackTrace();
+            return new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get rate failed", null);
+        }
+    }
 }

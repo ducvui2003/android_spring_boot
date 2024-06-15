@@ -84,7 +84,7 @@ public class SearchServiceImp implements ISearchServices {
         }
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
-        if (!data.isEmpty()){
+        if (!data.isEmpty()) {
             result.setCurrentPage(pageable.getPageNumber() + 1);
             result.setTotalPages(page.getTotalPages());
             result.setData(data);
@@ -140,9 +140,23 @@ public class SearchServiceImp implements ISearchServices {
     }
 
     @Override
+    public DataListResponse<BookResponseDTO> getComicByPublishDate(Pageable pageable, Integer categoryId) {
+        DataListResponse<BookResponseDTO> result = new DataListResponse<>();
+        Page<Book> page;
+        page = bookRepository.findByPublishDateOrderByNearestDate(pageable, categoryId);
+        List<Book> books = page.getContent();
+        if (books.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
+        List<BookResponseDTO> data = bookToResponseDTO(books);
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
+        return result;
+    }
+
+    @Override
     public List<BookResponseDTO> getAllBook(Sort sort) {
         Example<Book> example = Example.of(Book.builder().isDeleted(false).build());
-        List<Book> books = bookRepository.findAll(example,sort);
+        List<Book> books = bookRepository.findAll(example, sort);
         if (books.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         return bookToResponseDTO(books);
     }

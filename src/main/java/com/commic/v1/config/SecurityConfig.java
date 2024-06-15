@@ -53,7 +53,9 @@ public class SecurityConfig {
             "/api/v1/comment/chapter/*",
             "/api/v1/chapter-*",
             "/api/v1/attendance/**",
-            "/api/v1/ratings/**",};
+            "/api/v1/ratings/**",
+            "/api/v1/items"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

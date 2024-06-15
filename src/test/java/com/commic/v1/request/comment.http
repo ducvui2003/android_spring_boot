@@ -26,3 +26,8 @@ Content-Type: application/json
   "commentId": 1,
   "state": 2
 }
+
+###
+GET http://localhost:8081/api/v1/comment/chapter?
+    type=BY_BOOK&
+    id=1

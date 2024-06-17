@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/ratings")
 public class RatingController {
-
-    private final IRatingService ratingService;
+    @Autowired
+    private IRatingService ratingService;
 
     @Autowired
     public RatingController(IRatingService ratingService) {

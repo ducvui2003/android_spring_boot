@@ -8,5 +8,6 @@ public interface IAttendanceServices {
     AttendanceResponse attendance();
 
     DataListResponse<AttendanceResponse> getHistoryAttendance();
-    public RewardPointResponse getRedeemReward();
+
+    RewardPointResponse getRedeemReward();
 }

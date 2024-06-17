@@ -19,26 +19,7 @@ public class ItemController {
     @Autowired
     ItemServices itemServices;
 
-    @GetMapping()
-    public APIResponse<DataListResponse<Item>> getItems(
-            @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size
-    ) {
-        APIResponse<DataListResponse<Item>> apiResponse = new APIResponse<>();
-        Pageable pageable = PageRequest.of(page - 1, size);
-        DataListResponse<Item> items = itemServices.getItems(pageable);
-        if (items.getData().isEmpty()) {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        } else {
-            apiResponse.setCode(ErrorCode.FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-        }
-        apiResponse.setResult(items);
-        return apiResponse;
-    }
-
-    @PostMapping()
+    @PostMapping("/exchange")
     public APIResponse<ExchangeStatus> exchangeItem(@RequestBody ExchangeRequest request) {
         APIResponse<ExchangeStatus> apiResponse = new APIResponse<>();
         ExchangeStatus isCreated = itemServices.exchangeItem(request.getItemId());

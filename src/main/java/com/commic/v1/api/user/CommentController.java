@@ -1,6 +1,5 @@
 package com.commic.v1.api.user;
 
-import com.commic.v1.dto.CommentDTO;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
 import com.commic.v1.dto.responses.APIResponse;
@@ -25,7 +24,7 @@ public class CommentController {
     ICommentServices commentServices;
 
     //    Comment chapter của 1 truyện
-    @PostMapping
+    @PostMapping("/create")
     @ResponseBody
     public APIResponse<CommentResponse> create(@RequestBody @Valid CommentCreationRequestDTO requestDTO) {
         APIResponse<CommentResponse> apiResponse = new APIResponse<>();
@@ -37,15 +36,15 @@ public class CommentController {
     }
 
     //    Lấy ra tất cả comment của 1 chapter
-    @GetMapping("/chapter/{idChapter}")
-    public APIResponse<List<CommentDTO>> getComment(@PathVariable("idChapter") Integer idChapter) {
-        APIResponse<List<CommentDTO>> apiResponse = new APIResponse<>();
-        List<CommentDTO> comments = commentServices.getComment(idChapter);
-        apiResponse.setCode(ErrorCode.FOUND.getCode());
-        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-        apiResponse.setResult(comments);
-        return apiResponse;
-    }
+//    @GetMapping("/chapter/{idChapter}")
+//    public APIResponse<List<CommentDTO>> getComment(@PathVariable("idChapter") Integer idChapter) {
+//        APIResponse<List<CommentDTO>> apiResponse = new APIResponse<>();
+//        List<CommentDTO> comments = commentServices.getComment(idChapter);
+//        apiResponse.setCode(ErrorCode.FOUND.getCode());
+//        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+//        apiResponse.setResult(comments);
+//        return apiResponse;
+//    }
 
     @GetMapping("/chapter")
     public APIResponse<DataListResponse<CommentResponse>> getComment(

@@ -58,7 +58,7 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT COUNT(book) FROM Book book")
     Integer countAllBooks();
-    @Query("SELECT COUNT(chapter.view) FROM Book b JOIN b.chapters chapter WHERE b.id = :bookId")
+    @Query("SELECT SUM(chapter.view) FROM Book b JOIN b.chapters chapter WHERE b.id = :bookId")
     Integer countAllViewsByBookId(@Param("bookId") Integer bookId);
     @Query("SELECT COUNT(chapter) FROM Book b JOIN b.chapters chapter WHERE b.id = :bookId")
     Integer countAllChapterByBookId(@Param("bookId") Integer bookId);

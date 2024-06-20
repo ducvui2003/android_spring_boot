@@ -128,12 +128,13 @@ public class UserService implements IUserService {
                 * Nếu chưa có thì mới cho phép đăng ký
                 * */
             Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
-//                Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
+            Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
             if (userByName.isEmpty()) {
                 userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
                 User user = userMapper.toUserResponseEntity(userDTO);
                 user.setOtp(generateOTP());
                 emailService.sendMailOTP(user.getEmail(), user.getOtp());
+                user.setRole("USER");
                 userRepository.save(user);
                 response.setMessage("Register success");
                 response.setCode(HttpStatus.OK.value());
@@ -221,7 +222,7 @@ public class UserService implements IUserService {
         APIResponse<List<UserResponse>> response = new APIResponse<>();
         List<User> users = userRepository.findAll();
         List<UserResponse> userResponses = new ArrayList<>();
-        for(User user : users) {
+        for (User user : users) {
             UserResponse userResponse = userMapper.toDTO(user);
             userResponses.add(userResponse);
         }
@@ -251,7 +252,7 @@ public class UserService implements IUserService {
             user.setStatus(0);
             userRepository.save(user);
             return new APIResponse<Void>(ErrorCode.UPDATE_SUCCESS.getCode(), ErrorCode.UPDATE_SUCCESS.getMessage(), null);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             return new APIResponse<Void>(ErrorCode.UPDATE_FAILED.getCode(), ErrorCode.UPDATE_FAILED.getMessage(), null);
         }
     }

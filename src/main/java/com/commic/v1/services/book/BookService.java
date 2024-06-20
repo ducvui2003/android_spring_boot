@@ -199,5 +199,67 @@ public class BookService implements IBookService {
         }
     }
 
+    @Override
+    public Integer countAllBooks() {
+        try {
+            return bookRepository.countAllBooks();
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
+    @Override
+    public Integer countAllViews() {
+        try {
+            return bookRepository.countAllViews();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public String getBookThumbnailByBookId(Integer bookId) {
+       try {
+            return bookRepository.findThumbnailBookId(bookId).orElse(null);
+        } catch (Exception e) {
+            return null;
+       }
+    }
+
+    @Override
+    public Integer countAllViewsByBookId(Integer bookId) {
+        try {
+            return bookRepository.countAllViewsByBookId(bookId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer countAllChapterByBookId(Integer bookId) {
+        try {
+            return bookRepository.countAllChapterByBookId(bookId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer countAllCommentByBookId(Integer bookId) {
+        try {
+            return bookRepository.countAllCommentByBookId(bookId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public Float avaRatingByBookId(Integer chapterId) {
+        try {
+            return chapterRepository.countStarAvgByBookId(chapterId).floatValue();
+        } catch (Exception e) {
+            return 0f;
+        }
+    }
 }

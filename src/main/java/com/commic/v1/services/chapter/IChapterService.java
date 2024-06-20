@@ -11,4 +11,6 @@ public interface IChapterService {
     void deleteByBookId(Integer id);
 
     ChapterResponse getChapterById(Integer id);
+
+    Integer countAllChapter();
 }

@@ -19,6 +19,5 @@ public class CommentCreationRequestDTO {
     @NotNull(message = "PARAMETER_MISSING")
     Integer chapterId;
     @NotNull(message = "PARAMETER_MISSING")
-    @Size(min = 20, max = 200, message = "Content must be between 20 and 200 characters")
     String content;
 }

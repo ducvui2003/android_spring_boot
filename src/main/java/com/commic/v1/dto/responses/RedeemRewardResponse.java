@@ -17,4 +17,5 @@ public class RedeemRewardResponse {
     private Integer point;
     private String image;
     private Date date;
+    private Boolean isExchange;
 }

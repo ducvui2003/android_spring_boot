@@ -3,8 +3,9 @@ package com.commic.v1.services.comment;
 import com.commic.v1.dto.CommentDTO;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.CommentCreationRequestDTO;
-import com.commic.v1.dto.responses.CommentCreationResponseDTO;
-import com.commic.v1.dto.responses.CommentResponseDTO;
+import com.commic.v1.dto.responses.CommentCreationResponse;
+import com.commic.v1.dto.responses.CommentOverallResponse;
+import com.commic.v1.dto.responses.CommentResponse;
 import com.commic.v1.entities.Comment;
 import com.commic.v1.entities.User;
 import com.commic.v1.exception.AppException;
@@ -40,7 +41,7 @@ public class CommentServiceImp implements ICommentServices {
     IBookRepository bookRepository;
 
     @Override
-    public CommentCreationResponseDTO create(CommentCreationRequestDTO requestDTO) {
+    public CommentResponse create(CommentCreationRequestDTO requestDTO) {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
         if (!chapterRepository.existsChapterById(requestDTO.getChapterId())) {
             throw new AppException(ErrorCode.CHAPTER_NOT_FOUND);
@@ -48,9 +49,16 @@ public class CommentServiceImp implements ICommentServices {
         Comment comment = commentMapper.toComment(requestDTO);
         comment.setCreatedAt(new Date(System.currentTimeMillis()));
         comment.setState(CommentConst.SHOW.getValue());
+        comment.setUser(user);
         comment = commentRepository.save(comment);
-        CommentCreationResponseDTO responseDTO = commentMapper.toCommentCreationRequestDTO(comment);
-        return responseDTO;
+        CommentCreationResponse commentDTO = commentMapper.toCommentCreationRequestDTO(comment);
+        CommentResponse response = commentMapper.toCommentResponseDTO(comment);
+        response.setUser(CommentResponse.UserCommentDTO.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .avatar(user.getAvatar())
+                .build());
+        return response;
     }
 
     @Override
@@ -76,10 +84,10 @@ public class CommentServiceImp implements ICommentServices {
     }
 
     //    ADMIN
-    public DataListResponse<CommentResponseDTO> getComments(Pageable pageable) {
-        DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
+    public DataListResponse<CommentResponse> getComments(Pageable pageable) {
+        DataListResponse<CommentResponse> result = new DataListResponse<>();
         Page<Comment> page = commentRepository.findAll(pageable);
-        List<CommentResponseDTO> data = page.getContent().stream().map(item -> commentMapper.toCommentResponseDTO(item)).toList();
+        List<CommentResponse> data = page.getContent().stream().map(item -> commentMapper.toCommentResponseDTO(item)).toList();
         result.setCurrentPage(pageable.getPageNumber() + 1);
         result.setTotalPages(page.getTotalPages());
         result.setData(data);
@@ -87,19 +95,19 @@ public class CommentServiceImp implements ICommentServices {
     }
 
     @Override
-    public CommentResponseDTO getCommentDetail(Integer commentId) {
+    public CommentResponse getCommentDetail(Integer commentId) {
         Comment comment = commentRepository.findById(commentId).orElse(null);
         if (comment == null) return null;
-        CommentResponseDTO commentResponseDTO = commentMapper.toCommentResponseDTO(comment);
-        CommentResponseDTO.UserCommentDTO userCommentDTO = CommentResponseDTO.UserCommentDTO.builder()
+        CommentResponse commentResponse = commentMapper.toCommentResponseDTO(comment);
+        CommentResponse.UserCommentDTO userCommentDTO = CommentResponse.UserCommentDTO.builder()
                 .username(comment.getUser().getUsername())
                 .email(comment.getUser().getEmail())
                 .avatar(comment.getUser().getAvatar())
                 .build();
-        commentResponseDTO.setUser(userCommentDTO);
+        commentResponse.setUser(userCommentDTO);
         Optional<String> thumbnail = bookRepository.findThumbnailBookId(comment.getChapter().getBook().getId());
-        commentResponseDTO.setThumbnail(thumbnail.orElse(null));
-        return commentResponseDTO;
+        commentResponse.setThumbnail(thumbnail.orElse(null));
+        return commentResponse;
     }
 
 //    @Override
@@ -127,10 +135,10 @@ public class CommentServiceImp implements ICommentServices {
     }
 
     @Override
-    public DataListResponse<CommentResponseDTO> getComments(CommentGetType commentGetType, Integer id, Pageable pageable) {
-        DataListResponse<CommentResponseDTO> result = new DataListResponse<>();
+    public DataListResponse<CommentResponse> getComments(CommentGetType commentGetType, Integer id, Pageable pageable) {
+        DataListResponse<CommentResponse> result = new DataListResponse<>();
         Page<Comment> page = null;
-        List<CommentResponseDTO> data;
+        List<CommentResponse> data;
         switch (commentGetType) {
             case BY_CHAPTER -> {
                 page = commentRepository.getCommentByChapterId(id, pageable);
@@ -141,20 +149,56 @@ public class CommentServiceImp implements ICommentServices {
         }
         if (page == null || page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         data = page.getContent().stream().map(comment -> {
-            CommentResponseDTO commentResponseDTO = commentMapper.toCommentResponseDTO(comment);
-            CommentResponseDTO.UserCommentDTO userCommentDTO = CommentResponseDTO.UserCommentDTO.builder()
+            CommentResponse commentResponse = commentMapper.toCommentResponseDTO(comment);
+            CommentResponse.UserCommentDTO userCommentDTO = CommentResponse.UserCommentDTO.builder()
                     .username(comment.getUser().getUsername())
                     .email(comment.getUser().getEmail())
                     .avatar(comment.getUser().getAvatar())
                     .build();
-            commentResponseDTO.setUser(userCommentDTO);
+            commentResponse.setUser(userCommentDTO);
             Optional<String> thumbnail = bookRepository.findThumbnailBookId(comment.getChapter().getBook().getId());
-            commentResponseDTO.setThumbnail(thumbnail.orElse(null));
-            return commentResponseDTO;
+            commentResponse.setThumbnail(thumbnail.orElse(null));
+            return commentResponse;
         }).toList();
         result.setData(data);
         result.setCurrentPage(pageable.getPageNumber() + 1);
         result.setTotalPages(page.getTotalPages());
         return result;
+    }
+
+    @Override
+    public CommentOverallResponse getCommentOverall(Pageable pageable) {
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+        Long totalComment = commentRepository.count();
+        CommentOverallResponse commentOverallResponse = new CommentOverallResponse();
+        commentOverallResponse.setTotalComment(totalComment.intValue());
+        Page<Comment> page = commentRepository.findAllByUserIdAndIsDeletedFalse(user.getId(), pageable);
+        if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
+        List<CommentResponse> data = page.getContent().stream().map(comment -> {
+            CommentResponse commentResponse = commentMapper.toCommentResponseDTO(comment);
+            CommentResponse.UserCommentDTO userCommentDTO = CommentResponse.UserCommentDTO.builder()
+                    .username(user.getUsername())
+                    .email(user.getEmail())
+                    .avatar(user.getAvatar())
+                    .build();
+            commentResponse.setUser(userCommentDTO);
+            return commentResponse;
+        }).toList();
+        DataListResponse<CommentResponse> dataListResponse = new DataListResponse<>();
+        dataListResponse.setData(data);
+        dataListResponse.setCurrentPage(pageable.getPageNumber() + 1);
+        dataListResponse.setTotalPages(page.getTotalPages());
+        commentOverallResponse.setData(dataListResponse);
+        return commentOverallResponse;
+    }
+
+    @Override
+    public Integer countAllComment() {
+        try {
+            return commentRepository.countAllComment();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
     }
 }

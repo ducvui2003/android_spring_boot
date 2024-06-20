@@ -7,6 +7,7 @@ import com.commic.v1.dto.responses.CategoryResponse;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.book.IBookService;
 import com.commic.v1.services.search.ISearchServices;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -153,9 +154,29 @@ public class BookController {
     public APIResponse<BookResponseDTO> getDescription(@PathVariable("idBook") Integer id) {
         APIResponse<BookResponseDTO> apiResponse = new APIResponse<>();
         BookResponseDTO bookResponseDTO = bookService.getDescription(id);
-        apiResponse.setCode(ErrorCode.FOUND.getCode());
-        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        if (bookResponseDTO != null) {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        } else {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        }
         apiResponse.setResult(bookResponseDTO);
+        return apiResponse;
+    }
+
+    @GetMapping(value = "/{id}/comment")
+    public APIResponse<Integer> getAllComment(@PathVariable("id") Integer id) {
+        APIResponse<Integer> apiResponse = new APIResponse<>();
+        APIResponse<Integer> commentResponse = bookService.getAllComment(id);
+        if (commentResponse.getCode() == ErrorCode.FOUND.getCode()) {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setResult(commentResponse.getResult());
+        } else {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        }
         return apiResponse;
     }
 }

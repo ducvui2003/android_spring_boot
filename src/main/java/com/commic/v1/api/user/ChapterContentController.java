@@ -1,8 +1,7 @@
 package com.commic.v1.api.user;
 
-import com.commic.v1.dto.CommentDTO;
 import com.commic.v1.dto.responses.APIResponse;
-import com.commic.v1.dto.responses.ChapterContentRespone;
+import com.commic.v1.dto.responses.ChapterContentResponse;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.chapter.IChapterContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,12 @@ public class ChapterContentController {
     private IChapterContentService chapterContentService;
 
     @GetMapping(value = "/chapter-{id}")
-    public APIResponse<List<ChapterContentRespone>> getChapterContent(@PathVariable Integer id) {
-        APIResponse<List<ChapterContentRespone>> apiResponse = new APIResponse<>();
-        List<ChapterContentRespone> chapterContentRespones = chapterContentService.getChapterContent(id);
+    public APIResponse<List<ChapterContentResponse>> getChapterContent(@PathVariable Integer id) {
+        APIResponse<List<ChapterContentResponse>> apiResponse = new APIResponse<>();
+        List<ChapterContentResponse> chapterContentResponses = chapterContentService.getChapterContent(id);
         apiResponse.setCode(ErrorCode.FOUND.getCode());
-        apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        apiResponse.setResult(chapterContentRespones);
+        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        apiResponse.setResult(chapterContentResponses);
         return apiResponse;
     }
 }

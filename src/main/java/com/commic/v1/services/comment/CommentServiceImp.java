@@ -110,6 +110,14 @@ public class CommentServiceImp implements ICommentServices {
         return commentResponse;
     }
 
+//    @Override
+//    public List<CommentDTO> getAllComment(Integer id) {
+//        List<Comment> comments = commentRepository.findByBookId(id);
+//        return comments.stream()
+//                .map(commentMapper::toCommentDTOs)
+//                .collect(Collectors.toList());
+//    }
+
     @Override
     public boolean changeState(Integer commentId, Integer state) {
         if (CommentConst.fromValue(state) == null) return false;

@@ -21,7 +21,6 @@ public class AttendanceController {
     private IUserService userService;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
-
     @PostMapping
     public APIResponse<AttendanceResponse> attendance() {
         APIResponse<AttendanceResponse> apiResponse = new APIResponse();

@@ -1,6 +1,6 @@
 package com.commic.v1.services.chapter;
 
-import com.commic.v1.dto.responses.ChapterContentRespone;
+import com.commic.v1.dto.responses.ChapterContentResponse;
 import com.commic.v1.dto.responses.ChapterResponse;
 import com.commic.v1.entities.Chapter;
 import com.commic.v1.entities.Rating;
@@ -65,7 +65,7 @@ public class ChapterService implements IChapterService {
             List<Rating> ratings = ratingService.findByChapterId(chapter.getId());
             float rating = (float) ratings.stream().mapToDouble(Rating::getStar).average().orElse(0);
 
-            List<ChapterContentRespone> content = contentService.getChapterContent(chapter.getId());
+            List<ChapterContentResponse> content = contentService.getChapterContent(chapter.getId());
 
             ChapterResponse response = chapterMapper.toChapterDTO(chapter);
             response.setChapterContent(content);

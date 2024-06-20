@@ -37,4 +37,6 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
     @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :bookId AND c.state = 1 AND c.isDeleted = false ")
     Page<Comment> getCommentByBookId(@Param("bookId") Integer idBook, Pageable pageable);
 
+    @Query("SELECT COUNT(comment) FROM Comment comment")
+    Integer countAllComment();
 }

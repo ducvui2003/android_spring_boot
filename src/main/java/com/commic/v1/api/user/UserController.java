@@ -63,12 +63,5 @@ public class UserController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @GetMapping()
-    public ResponseEntity<APIResponse<List<UserResponse>>> findAll() {
-        APIResponse<List<UserResponse>> response = new APIResponse<>();
-        response.setResult(userService.findAll().getResult());
-        response.setCode(ErrorCode.FOUND.getCode());
-        response.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        return ResponseEntity.status(response.getCode()).body(response);
-    }
+
 }

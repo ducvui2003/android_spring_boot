@@ -23,4 +23,6 @@ public interface IUserService {
     UserResponse getUserInfo(String username);
     boolean updateInfo(UserRequest userRequest);
     APIResponse<List<UserResponse>> findAll();
+    APIResponse<Void> blockUser(Integer id);
+    APIResponse<Void> unblockUser(Integer id);
 }

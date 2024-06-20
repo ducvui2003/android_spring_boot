@@ -54,7 +54,8 @@ public class SecurityConfig {
             "/api/v1/chapter-*",
             "/api/v1/attendance/**",
             "/api/v1/ratings/**",
-            "/api/v1/items"
+            "/api/v1/items",
+            "/api/v1/users"
     };
 
     @Bean
@@ -63,7 +64,6 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(config -> {
                 config.requestMatchers(PUBLIC_ENDPOINS).permitAll().anyRequest().authenticated();
         });
-
         httpSecurity.exceptionHandling(exp -> exp.authenticationEntryPoint(jwtAuthenticationEntryPoint));
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -71,6 +71,7 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();
     }
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

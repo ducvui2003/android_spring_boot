@@ -14,6 +14,7 @@ import com.commic.v1.repositories.*;
 
 import com.commic.v1.services.mail.IEmailService;
 import com.commic.v1.util.SecurityUtils;
+import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -228,6 +229,31 @@ public class UserService implements IUserService {
         response.setCode(ErrorCode.FOUND.getCode());
         response.setMessage(ErrorCode.FOUND.getMessage());
         return response;
+    }
+
+    @Override
+    public APIResponse<Void> blockUser(Integer id) {
+        try {
+            APIResponse<Void> apiResponse = new APIResponse<>();
+            User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+            user.setStatus(1);
+            userRepository.save(user);
+            return new APIResponse<Void>(ErrorCode.UPDATE_SUCCESS.getCode(), ErrorCode.UPDATE_SUCCESS.getMessage(), null);
+        } catch (EntityNotFoundException e) {
+            return new APIResponse<Void>(ErrorCode.UPDATE_FAILED.getCode(), ErrorCode.UPDATE_FAILED.getMessage(), null);
+        }
+    }
+
+    @Override
+    public APIResponse<Void> unblockUser(Integer id) {
+        try {
+            User user = userRepository.findById(id).get();
+            user.setStatus(0);
+            userRepository.save(user);
+            return new APIResponse<Void>(ErrorCode.UPDATE_SUCCESS.getCode(), ErrorCode.UPDATE_SUCCESS.getMessage(), null);
+        } catch (Exception ex){
+            return new APIResponse<Void>(ErrorCode.UPDATE_FAILED.getCode(), ErrorCode.UPDATE_FAILED.getMessage(), null);
+        }
     }
 
 

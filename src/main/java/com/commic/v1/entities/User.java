@@ -28,6 +28,7 @@ public class User {
     private String role;
     private String avatar;
     private String otp;
+    private Integer status;
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
     @OneToMany(mappedBy = "user")

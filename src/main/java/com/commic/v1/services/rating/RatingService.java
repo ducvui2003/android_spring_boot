@@ -3,8 +3,11 @@ package com.commic.v1.services.rating;
 import com.commic.v1.dto.RatingDTO;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.entities.Rating;
+import com.commic.v1.entities.User;
 import com.commic.v1.mapper.RatingMapper;
 import com.commic.v1.repositories.IRatingRepository;
+import com.commic.v1.repositories.IUserRepository;
+import com.commic.v1.util.SecurityUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,10 +26,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RatingService implements IRatingService {
+
+    @Autowired
+    IUserRepository userRepository;
     @Autowired
     IRatingRepository ratingRepository;
-
-    private final RatingMapper ratingMapper;
+    @Autowired
+    RatingMapper ratingMapper;
 
     @Override
     public void deleteByChapterId(Integer id) {
@@ -42,13 +48,16 @@ public class RatingService implements IRatingService {
 
     @Override
     public List<RatingDTO> findAllByUserId(Integer userId) {
-        return ratingRepository.findAllByUserId(userId).stream()
+        return ratingRepository.findAllByUserIdOrderByCreatedAtDesc(userId).stream()
                 .map(ratingMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public APIResponse<Void> createRating(RatingDTO ratingDTO) {
+
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+
         // Validate the input
         if (ratingDTO == null) {
             return new APIResponse<>(HttpStatus.BAD_REQUEST.value(), "Rating data is null", null);
@@ -63,8 +72,9 @@ public class RatingService implements IRatingService {
         }
 
         try {
-            // Transaction management can be applied via annotations or programmatically if needed
-            ratingRepository.save(ratingMapper.toEntity(ratingDTO));
+            Rating rating = ratingMapper.toEntity(ratingDTO);
+            rating.setUser(user);
+            ratingRepository.save(rating);
             return new APIResponse<>(HttpStatus.NO_CONTENT.value(), "Create rate successfully", null);
         } catch (DataIntegrityViolationException ex) {
             // Handle specific exception related to data integrity
@@ -84,6 +94,7 @@ public class RatingService implements IRatingService {
 
     @Override
     public APIResponse<Void> updateRating(RatingDTO ratingDTO) {
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
         try {
             // Tìm đối tượng Rating tương ứng trong cơ sở dữ liệu dựa trên id
             Rating rating = ratingRepository.findById(Long.valueOf(ratingDTO.getId())).orElse(null);
@@ -94,9 +105,11 @@ public class RatingService implements IRatingService {
                 return new APIResponse<>(HttpStatus.NOT_FOUND.value(), "Rating not found", null);
             }
 
-            // Cập nhật giá trị đánh giá (star) của đối tượng Rating
+            rating = ratingMapper.toEntity(ratingDTO);
+            rating.setUser(user);
             rating.setStar(ratingDTO.getStar());
             rating.setCreatedAt(ratingDTO.getCreatedAt());
+
             // Lưu thay đổi vào cơ sở dữ liệu
             ratingRepository.save(rating);
 
@@ -127,6 +140,26 @@ public class RatingService implements IRatingService {
             // Nếu xảy ra ngoại lệ, in thông báo lỗi và trả về mã lỗi 500 (INTERNAL_SERVER_ERROR)
             ex.printStackTrace();
             return new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get rate failed", null);
+        }
+    }
+
+    @Override
+    public Integer countAllRating() {
+        try {
+            return ratingRepository.countAllRating();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer countAllRatingByBookId(Integer chapterId) {
+        try {
+            return ratingRepository.countAllRatingByBookId(chapterId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
         }
     }
 }

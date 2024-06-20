@@ -75,4 +75,13 @@ public class ChapterService implements IChapterService {
 
         return null;
     }
+
+    @Override
+    public Integer countAllChapter() {
+        try {
+            return chapterRepository.countAllChapter();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }

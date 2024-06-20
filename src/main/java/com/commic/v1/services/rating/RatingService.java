@@ -142,4 +142,24 @@ public class RatingService implements IRatingService {
             return new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get rate failed", null);
         }
     }
+
+    @Override
+    public Integer countAllRating() {
+        try {
+            return ratingRepository.countAllRating();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer countAllRatingByBookId(Integer chapterId) {
+        try {
+            return ratingRepository.countAllRatingByBookId(chapterId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
 }

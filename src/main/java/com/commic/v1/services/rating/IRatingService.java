@@ -17,4 +17,6 @@ public interface IRatingService {
     APIResponse<Void> updateRating(RatingDTO ratingDTO);
 
     APIResponse<RatingDTO> findRatingByChapterId(Integer id);
+    Integer countAllRating();
+    Integer countAllRatingByBookId(Integer chapterId);
 }

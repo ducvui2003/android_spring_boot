@@ -183,4 +183,14 @@ public class CommentServiceImp implements ICommentServices {
         commentOverallResponse.setData(dataListResponse);
         return commentOverallResponse;
     }
+
+    @Override
+    public Integer countAllComment() {
+        try {
+            return commentRepository.countAllComment();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
 }

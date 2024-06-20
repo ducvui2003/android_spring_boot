@@ -25,4 +25,6 @@ public interface ICommentServices {
     DataListResponse<CommentResponse> getComments(CommentGetType commentGetType , Integer id, Pageable pageable);
 
     CommentOverallResponse getCommentOverall(Pageable pageable);
+
+    Integer countAllComment();
 }

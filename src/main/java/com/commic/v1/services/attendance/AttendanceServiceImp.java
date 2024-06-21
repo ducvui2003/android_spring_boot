@@ -6,6 +6,7 @@ import com.commic.v1.dto.responses.RewardPointResponse;
 import com.commic.v1.entities.RewardPoint;
 import com.commic.v1.entities.User;
 import com.commic.v1.mapper.RewardPointMapper;
+import com.commic.v1.repositories.IRedeemRewardRepository;
 import com.commic.v1.repositories.IRewardPointRepository;
 import com.commic.v1.repositories.IUserRepository;
 import com.commic.v1.util.SecurityUtils;
@@ -26,6 +27,8 @@ public class AttendanceServiceImp implements IAttendanceServices {
     IUserRepository userRepository;
     @Autowired
     RewardPointMapper rewardPointMapper;
+    @Autowired
+    IRedeemRewardRepository redeemRewardRepository;
 
     @Override
     public AttendanceResponse attendance() {
@@ -82,7 +85,7 @@ public class AttendanceServiceImp implements IAttendanceServices {
         if (user == null) return rewardPointResponse;
         Integer userId = user.getId();
         rewardPointResponse.setDateAttendanceContinuous(calculateDayAttendanceContinuous(userId));
-        rewardPointResponse.setTotalPoint(Double.valueOf(rewardPointRepository.sumPointByUserId(userId).orElse(0.0)));
+        rewardPointResponse.setTotalPoint(getPoint());
         return rewardPointResponse;
     }
 
@@ -101,5 +104,14 @@ public class AttendanceServiceImp implements IAttendanceServices {
             }
         }
         return dayContinuous;
+    }
+
+    @Override
+    public Double getPoint() {
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+        if (user == null) return 0.0;
+        double totalScore = rewardPointRepository.sumPointByUserId(user.getId()).orElse(0.0);
+        double totalScoreExchange = redeemRewardRepository.sumPointByUserId(user.getId()).orElse(0.0);
+        return totalScore - totalScoreExchange;
     }
 }

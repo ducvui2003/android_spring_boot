@@ -3,6 +3,7 @@ package com.commic.v1.api.user;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.ExchangeRequest;
 import com.commic.v1.dto.responses.APIResponse;
+import com.commic.v1.dto.responses.ExchangeResponse;
 import com.commic.v1.dto.responses.RedeemRewardResponse;
 import com.commic.v1.entities.Item;
 import com.commic.v1.exception.ErrorCode;
@@ -19,29 +20,10 @@ public class ItemController {
     @Autowired
     ItemServices itemServices;
 
-    @GetMapping()
-    public APIResponse<DataListResponse<Item>> getItems(
-            @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size
-    ) {
-        APIResponse<DataListResponse<Item>> apiResponse = new APIResponse<>();
-        Pageable pageable = PageRequest.of(page - 1, size);
-        DataListResponse<Item> items = itemServices.getItems(pageable);
-        if (items.getData().isEmpty()) {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        } else {
-            apiResponse.setCode(ErrorCode.FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-        }
-        apiResponse.setResult(items);
-        return apiResponse;
-    }
-
-    @PostMapping()
-    public APIResponse<ExchangeStatus> exchangeItem(@RequestBody ExchangeRequest request) {
-        APIResponse<ExchangeStatus> apiResponse = new APIResponse<>();
-        ExchangeStatus isCreated = itemServices.exchangeItem(request.getItemId());
+    @PostMapping("/exchange")
+    public APIResponse<ExchangeResponse> exchangeItem(@RequestBody ExchangeRequest request) {
+        APIResponse<ExchangeResponse> apiResponse = new APIResponse<>();
+        ExchangeResponse isCreated = itemServices.exchangeItem(request.getItemId());
         apiResponse.setCode(ErrorCode.CREATE_SUCCESS.getCode());
         apiResponse.setMessage(ErrorCode.CREATE_SUCCESS.getMessage());
         apiResponse.setResult(isCreated);

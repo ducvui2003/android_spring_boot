@@ -29,6 +29,7 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
 
     Optional<Comment> findById(Integer id);
 
+    @Query("SELECT COUNT(comment) FROM Comment comment WHERE comment.isDeleted = false")
     Optional<Integer> countByUser(User user);
 
     @Query("SELECT c FROM Comment c WHERE c.chapter.id = :chapterId AND c.state = 1 AND c.isDeleted = false ")
@@ -37,6 +38,6 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
     @Query("SELECT c FROM Comment c WHERE c.chapter.book.id = :bookId AND c.state = 1 AND c.isDeleted = false ")
     Page<Comment> getCommentByBookId(@Param("bookId") Integer idBook, Pageable pageable);
 
-    @Query("SELECT COUNT(comment) FROM Comment comment")
+    @Query("SELECT COUNT(comment) FROM Comment comment WHERE comment.isDeleted = false")
     Integer countAllComment();
 }

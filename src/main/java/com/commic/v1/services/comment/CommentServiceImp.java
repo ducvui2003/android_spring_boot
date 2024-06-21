@@ -169,12 +169,14 @@ public class CommentServiceImp implements ICommentServices {
     @Override
     public CommentOverallResponse getCommentOverall(Pageable pageable) {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
-        Long totalComment = commentRepository.count();
+        Integer totalComment = commentRepository.countAllComment();
         CommentOverallResponse commentOverallResponse = new CommentOverallResponse();
         commentOverallResponse.setTotalComment(totalComment.intValue());
         Page<Comment> page = commentRepository.findAllByUserIdAndIsDeletedFalse(user.getId(), pageable);
         if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<CommentResponse> data = page.getContent().stream().map(comment -> {
+
+            
             CommentResponse commentResponse = commentMapper.toCommentResponseDTO(comment);
             CommentResponse.UserCommentDTO userCommentDTO = CommentResponse.UserCommentDTO.builder()
                     .username(user.getUsername())

@@ -44,7 +44,9 @@ public class SecurityConfig {
             "/api/v1/users/change-password",
             "/api/v1/users/register",
             "/api/v1/users/verify-account",
-            "/api/v1/comment/**",
+//            CommentController
+            "/api/v1/comment/chapter",
+            "/api/v1/",
             "/api/v1/admin/**",
             "/api/v1/notifications/**",
             "/api/v1/books/**",
@@ -52,7 +54,6 @@ public class SecurityConfig {
             "/api/v1/chapters/**",
             "/api/v1/comment/chapter/*",
             "/api/v1/chapter-*",
-            "/api/v1/attendance/**",
             "/api/v1/ratings/**",
             "/api/v1/items",
             "/api/v1/users"
@@ -62,7 +63,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.authorizeHttpRequests(config -> {
-                config.requestMatchers(PUBLIC_ENDPOINS).permitAll().anyRequest().authenticated();
+            config.requestMatchers(PUBLIC_ENDPOINS).permitAll().anyRequest().authenticated();
         });
         httpSecurity.exceptionHandling(exp -> exp.authenticationEntryPoint(jwtAuthenticationEntryPoint));
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -81,6 +82,7 @@ public class SecurityConfig {
 
         return authProvider;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -101,7 +103,7 @@ public class SecurityConfig {
 
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
 }

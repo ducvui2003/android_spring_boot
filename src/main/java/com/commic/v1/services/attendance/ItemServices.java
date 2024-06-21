@@ -1,6 +1,7 @@
 package com.commic.v1.services.attendance;
 
 import com.commic.v1.dto.DataListResponse;
+import com.commic.v1.dto.responses.ExchangeResponse;
 import com.commic.v1.dto.responses.RedeemRewardResponse;
 import com.commic.v1.entities.Item;
 import com.commic.v1.entities.RedeemReward;
@@ -44,22 +45,25 @@ public class ItemServices implements IItemServices {
     }
 
     @Override
-    public ExchangeStatus exchangeItem(Integer itemId) {
+    public ExchangeResponse exchangeItem(Integer itemId) {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
         redeemRewardRepository.existsByUserIdAndItemId(user.getId(), itemId);
+        ExchangeResponse response = new ExchangeResponse();
         if (redeemRewardRepository.existsByUserIdAndItemId(user.getId(), itemId)) {
-            return ExchangeStatus.EXIST_IN_REPO;
+            response.setStatus(ExchangeStatus.EXIST_IN_REPO);
+            return response;
         }
         //     Check point enough
         Double totalScore = rewardPointRepository.sumPointByUserId(user.getId()).orElse(null);
         Double totalScoreExchange = redeemRewardRepository.sumPointByUserId(user.getId()).orElse(0.0);
         if (totalScore == null) {
-            return ExchangeStatus.EXCHANGE_FAIL;
+            response.setStatus(ExchangeStatus.EXCHANGE_FAIL);
+            return response;
         }
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
         Double score = totalScore - totalScoreExchange;
         if (score < item.getPoint()) {
-            return ExchangeStatus.POINT_NOT_ENOUGH;
+            response.setStatus(ExchangeStatus.POINT_NOT_ENOUGH);
         }
         RedeemReward redeemReward = RedeemReward.builder()
                 .date(new Date(System.currentTimeMillis()))
@@ -67,7 +71,9 @@ public class ItemServices implements IItemServices {
                 .user(user)
                 .build();
         redeemRewardRepository.save(redeemReward);
-        return ExchangeStatus.EXCHANGE_SUCCESS;
+        response.setStatus(ExchangeStatus.EXCHANGE_SUCCESS);
+        response.setTotalScore(score - item.getPoint());
+        return response;
     }
 
     @Override

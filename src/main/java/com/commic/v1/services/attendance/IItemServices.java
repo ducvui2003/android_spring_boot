@@ -1,6 +1,7 @@
 package com.commic.v1.services.attendance;
 
 import com.commic.v1.dto.DataListResponse;
+import com.commic.v1.dto.responses.ExchangeResponse;
 import com.commic.v1.dto.responses.RedeemRewardResponse;
 import com.commic.v1.entities.Item;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ public interface IItemServices {
 
     DataListResponse<RedeemRewardResponse> getItemsByUser(Pageable pageable);
 
-    ExchangeStatus exchangeItem(Integer itemId);
+    ExchangeResponse exchangeItem(Integer itemId);
 
     boolean useItem(Integer itemId);
 }

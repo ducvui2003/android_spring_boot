@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChapterContentRespone {
+public class ChapterContentResponse {
     private Integer id;
     private Integer chapterId;
     private String linkImage;

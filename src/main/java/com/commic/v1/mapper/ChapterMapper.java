@@ -1,6 +1,6 @@
 package com.commic.v1.mapper;
 
-import com.commic.v1.dto.responses.ChapterContentRespone;
+import com.commic.v1.dto.responses.ChapterContentResponse;
 import com.commic.v1.dto.responses.ChapterResponse;
 import com.commic.v1.entities.Chapter;
 import com.commic.v1.entities.ChapterContent;
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ChapterMapper {
     @Mapping(source = "chapter.id", target = "chapterId")
-    ChapterContentRespone convertToDTO(ChapterContent chapter);
+    ChapterContentResponse convertToDTO(ChapterContent chapter);
 
     // mapping from Chapter to ChapterResponse
     List<ChapterResponse> toChapterDTOs(List<Chapter> chapters);

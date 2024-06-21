@@ -12,6 +12,7 @@ import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.UserMapper;
 import com.commic.v1.repositories.*;
 
+import com.commic.v1.services.attendance.IAttendanceServices;
 import com.commic.v1.services.mail.IEmailService;
 import com.commic.v1.util.SecurityUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -45,7 +46,8 @@ public class UserService implements IUserService {
     private IHistoryRepository historyRepository;
     @Autowired
     private IRatingRepository ratingRepository;
-
+    @Autowired
+    private IAttendanceServices attendanceServices;
 
     @Override
     public APIResponse<Void> forgotPassword(String email) {
@@ -181,7 +183,7 @@ public class UserService implements IUserService {
         UserResponse result = userMapper.toDTO(user);
 
         // Calculate the total reward points of the user by summing up all the points
-        result.setRewardPoint(rewardPointRepository.sumPointByUser(user).orElse(0));
+        result.setRewardPoint(attendanceServices.getPoint().intValue());
         // Set the total attendance dates of the user by counting the size of the reward points
         result.setTotalAttendanceDates(rewardPointRepository.countByUser(user).orElse(0));
         // Set the total books read by the user by counting the size of the histories

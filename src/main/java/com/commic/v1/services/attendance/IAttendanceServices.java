@@ -10,4 +10,5 @@ public interface IAttendanceServices {
     DataListResponse<AttendanceResponse> getHistoryAttendance();
 
     RewardPointResponse getRedeemReward();
+    Double getPoint();
 }

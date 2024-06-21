@@ -84,11 +84,8 @@ public class AttendanceServiceImp implements IAttendanceServices {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
         if (user == null) return rewardPointResponse;
         Integer userId = user.getId();
-        double totalScore = rewardPointRepository.sumPointByUserId(user.getId()).orElse(0.0);
-        double totalScoreExchange = redeemRewardRepository.sumPointByUserId(user.getId()).orElse(0.0);
-        double score = totalScore - totalScoreExchange;
         rewardPointResponse.setDateAttendanceContinuous(calculateDayAttendanceContinuous(userId));
-        rewardPointResponse.setTotalPoint(score);
+        rewardPointResponse.setTotalPoint(getPoint());
         return rewardPointResponse;
     }
 
@@ -107,5 +104,14 @@ public class AttendanceServiceImp implements IAttendanceServices {
             }
         }
         return dayContinuous;
+    }
+
+    @Override
+    public Double getPoint() {
+        User user = SecurityUtils.getUserFromPrincipal(userRepository);
+        if (user == null) return 0.0;
+        double totalScore = rewardPointRepository.sumPointByUserId(user.getId()).orElse(0.0);
+        double totalScoreExchange = redeemRewardRepository.sumPointByUserId(user.getId()).orElse(0.0);
+        return totalScore - totalScoreExchange;
     }
 }

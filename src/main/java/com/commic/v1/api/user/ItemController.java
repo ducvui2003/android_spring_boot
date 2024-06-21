@@ -3,6 +3,7 @@ package com.commic.v1.api.user;
 import com.commic.v1.dto.DataListResponse;
 import com.commic.v1.dto.requests.ExchangeRequest;
 import com.commic.v1.dto.responses.APIResponse;
+import com.commic.v1.dto.responses.ExchangeResponse;
 import com.commic.v1.dto.responses.RedeemRewardResponse;
 import com.commic.v1.entities.Item;
 import com.commic.v1.exception.ErrorCode;
@@ -20,9 +21,9 @@ public class ItemController {
     ItemServices itemServices;
 
     @PostMapping("/exchange")
-    public APIResponse<ExchangeStatus> exchangeItem(@RequestBody ExchangeRequest request) {
-        APIResponse<ExchangeStatus> apiResponse = new APIResponse<>();
-        ExchangeStatus isCreated = itemServices.exchangeItem(request.getItemId());
+    public APIResponse<ExchangeResponse> exchangeItem(@RequestBody ExchangeRequest request) {
+        APIResponse<ExchangeResponse> apiResponse = new APIResponse<>();
+        ExchangeResponse isCreated = itemServices.exchangeItem(request.getItemId());
         apiResponse.setCode(ErrorCode.CREATE_SUCCESS.getCode());
         apiResponse.setMessage(ErrorCode.CREATE_SUCCESS.getMessage());
         apiResponse.setResult(isCreated);

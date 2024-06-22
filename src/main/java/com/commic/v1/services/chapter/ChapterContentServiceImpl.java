@@ -1,6 +1,6 @@
 package com.commic.v1.services.chapter;
 
-import com.commic.v1.dto.responses.ChapterContentRespone;
+import com.commic.v1.dto.responses.ChapterContentResponse;
 import com.commic.v1.entities.ChapterContent;
 import com.commic.v1.mapper.ChapterMapper;
 import com.commic.v1.repositories.IChapterContentRepository;
@@ -23,7 +23,7 @@ public class ChapterContentServiceImpl implements IChapterContentService {
     private IChapterContentRepository contentRepository;
 
     @Override
-    public List<ChapterContentRespone> getChapterContent(Integer id) {
+    public List<ChapterContentResponse> getChapterContent(Integer id) {
         List<ChapterContent> chapters = chapterRepository.findByChapterId(id);
 
         if (chapters.isEmpty()) {

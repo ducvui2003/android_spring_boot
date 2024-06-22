@@ -7,6 +7,7 @@ import com.commic.v1.dto.requests.ForgotPasswordRequest;
 import com.commic.v1.dto.requests.UserRequest;
 import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.UserResponse;
+import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.jwt.JwtTokenUtil;
 import com.commic.v1.services.user.IUserService;
 import jakarta.validation.Valid;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -22,14 +25,16 @@ public class UserController {
     private IUserService userService;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
+
     @GetMapping("/info")
-    public ResponseEntity<UserResponse> getUserInfo(@RequestParam("token")  String token) {
+    public ResponseEntity<UserResponse> getUserInfo(@RequestParam("token") String token) {
         UserResponse user = userService.getUserInfo(jwtTokenUtil.extractUsername(token));
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(user);
     }
+
 
     @PostMapping("/forgot-password")
     public ResponseEntity<APIResponse<Void>> forgotPassword(@RequestBody @Valid ForgotPasswordRequest passwordRequest) {
@@ -52,10 +57,11 @@ public class UserController {
         APIResponse<Void> response = userService.register(userDTO);
         return ResponseEntity.status(response.getCode()).body(response);
     }
-
     @PostMapping("/verify-account")
     public ResponseEntity<APIResponse<Void>> verifyAccount(@RequestBody AccountVerifyRequest accountVerifyRequest) {
         APIResponse<Void> response = userService.verifyAccount(accountVerifyRequest);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+
 }

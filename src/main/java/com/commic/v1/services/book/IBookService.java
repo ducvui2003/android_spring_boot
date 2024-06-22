@@ -8,8 +8,20 @@ public interface IBookService {
     BookResponseDTO getDescription(Integer id);
 
     APIResponse<Void> addBook(BookRequest bookRequest);
+
     APIResponse<Void> updateBook(BookRequest bookRequest);
 
     BookResponseDTO getBookByChapterId(Integer chapterId);
+
     APIResponse<Void> deleteBook(Integer id);
+
+    Integer countAllBooks();
+    Integer countAllViews();
+    String getBookThumbnailByBookId(Integer bookId);
+    Integer countAllViewsByBookId(Integer bookId);
+    Integer countAllChapterByBookId(Integer bookId);
+    Integer countAllCommentByBookId(Integer bookId);
+    Float avaRatingByBookId(Integer bookId);
+
+    APIResponse<Integer> getAllComment(Integer id);
 }

@@ -13,6 +13,6 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private int point;
+    private Integer point;
     private String image;
 }

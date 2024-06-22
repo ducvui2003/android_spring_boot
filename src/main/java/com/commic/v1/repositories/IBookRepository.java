@@ -39,6 +39,9 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT DISTINCT b FROM Book b JOIN FETCH b.chapters c ORDER BY c.publishDate DESC")
     Page<Book> findByPublishDateOrderByNearestDate(Pageable pageable);
 
+    @Query("SELECT DISTINCT b FROM Category category JOIN category.books b JOIN FETCH b.chapters c WHERE category.id = :categoryId ORDER BY c.publishDate DESC")
+    Page<Book> findByPublishDateOrderByNearestDate(Pageable pageable,@Param("categoryId") Integer categoryId);
+
     @Query("SELECT DISTINCT book FROM Category category JOIN category.books book JOIN book.chapters chapter WHERE category.id = :categoryId ORDER BY chapter.publishDate DESC")
     Page<Book> findByPublishDateOrderByNearestDate(Integer categoryId, Pageable pageable);
 
@@ -49,4 +52,16 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT book.thumbnail FROM Book book WHERE book.id = :bookId")
     Optional<String> findThumbnailBookId(Integer bookId);
+
+    @Query("SELECT SUM(chapter.view) FROM Book book JOIN book.chapters chapter")
+    Integer countAllViews();
+
+    @Query("SELECT COUNT(book) FROM Book book")
+    Integer countAllBooks();
+    @Query("SELECT SUM(chapter.view) FROM Book b JOIN b.chapters chapter WHERE b.id = :bookId")
+    Integer countAllViewsByBookId(@Param("bookId") Integer bookId);
+    @Query("SELECT COUNT(chapter) FROM Book b JOIN b.chapters chapter WHERE b.id = :bookId")
+    Integer countAllChapterByBookId(@Param("bookId") Integer bookId);
+    @Query("SELECT COUNT(comment) FROM Book b JOIN b.chapters chapter JOIN chapter.comments comment WHERE b.id = :bookId")
+    Integer countAllCommentByBookId(Integer bookId);
 }

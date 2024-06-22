@@ -7,6 +7,7 @@ import com.commic.v1.dto.responses.CategoryResponse;
 import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.book.IBookService;
 import com.commic.v1.services.search.ISearchServices;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +52,7 @@ public class BookController {
     @GetMapping("/search")
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
                                                                  @RequestParam(name = "categoryId", required = false) String categoryId,
-                                                                 @RequestParam(name = "page", defaultValue = "0") int page,
+                                                                 @RequestParam(name = "page", defaultValue = "1") int page,
                                                                  @RequestParam(name = "size", defaultValue = "10") int size,
                                                                  @RequestParam Map<String, String> mapSort) {
         Pageable pageable;
@@ -63,7 +64,7 @@ public class BookController {
             categoryIdNumber = null;
         }
         if (sort.isEmpty())
-            pageable = PageRequest.of(page, size);
+            pageable = PageRequest.of(page - 1, size);
         else
             pageable = PageRequest.of(page, size, sort);
         DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryIdNumber, pageable);
@@ -127,11 +128,16 @@ public class BookController {
     }
 
     @GetMapping("/newComic")
-    public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
+    public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "1") int page,
+                                                                                        @RequestParam(name = "size", defaultValue = "10") int size,
+                                                                                        @RequestParam(name = "categoryId", required = false) Integer categoryId) {
         Pageable pageable;
-        pageable = PageRequest.of(page, size);
-        DataListResponse<BookResponseDTO> items = searchServices.getComicByPublishDate(pageable);
+        pageable = PageRequest.of(page - 1, size);
+        DataListResponse<BookResponseDTO> items;
+        if (categoryId == null)
+            items = searchServices.getComicByPublishDate(pageable);
+        else
+            items = searchServices.getComicByPublishDate(pageable, categoryId);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
         if (items.getData().isEmpty()) {
             apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
@@ -148,9 +154,29 @@ public class BookController {
     public APIResponse<BookResponseDTO> getDescription(@PathVariable("idBook") Integer id) {
         APIResponse<BookResponseDTO> apiResponse = new APIResponse<>();
         BookResponseDTO bookResponseDTO = bookService.getDescription(id);
-        apiResponse.setCode(ErrorCode.FOUND.getCode());
-        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        if (bookResponseDTO != null) {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+        } else {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        }
         apiResponse.setResult(bookResponseDTO);
+        return apiResponse;
+    }
+
+    @GetMapping(value = "/{id}/comment")
+    public APIResponse<Integer> getAllComment(@PathVariable("id") Integer id) {
+        APIResponse<Integer> apiResponse = new APIResponse<>();
+        APIResponse<Integer> commentResponse = bookService.getAllComment(id);
+        if (commentResponse.getCode() == ErrorCode.FOUND.getCode()) {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setResult(commentResponse.getResult());
+        } else {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        }
         return apiResponse;
     }
 }

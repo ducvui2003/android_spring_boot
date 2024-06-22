@@ -5,6 +5,8 @@ import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.BookResponseDTO;
 import com.commic.v1.entities.Book;
 import com.commic.v1.entities.Category;
+import com.commic.v1.entities.Chapter;
+import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.BookMapper;
 import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.ICategoryRepository;
@@ -65,6 +67,27 @@ public class BookService implements IBookService {
             return new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Delete book failed", null);
         }
 
+    }
+
+    @Override
+    public APIResponse<Integer> getAllComment(Integer id) {
+        APIResponse<Integer> apiResponse = new APIResponse<>();
+        int totalComment = 0;
+        Book book = bookRepository.findById(id).orElse(null);
+        Set<Chapter> chapters = book.getChapters();
+        for (Chapter chapter : chapters) {
+            totalComment += chapter.getComments().size();
+        }
+        if (totalComment >= 0){
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setResult(totalComment);
+        }
+        else {
+            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+        }
+        return apiResponse;
     }
 
     @Override
@@ -176,5 +199,67 @@ public class BookService implements IBookService {
         }
     }
 
+    @Override
+    public Integer countAllBooks() {
+        try {
+            return bookRepository.countAllBooks();
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
+    @Override
+    public Integer countAllViews() {
+        try {
+            return bookRepository.countAllViews();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public String getBookThumbnailByBookId(Integer bookId) {
+       try {
+            return bookRepository.findThumbnailBookId(bookId).orElse(null);
+        } catch (Exception e) {
+            return null;
+       }
+    }
+
+    @Override
+    public Integer countAllViewsByBookId(Integer bookId) {
+        try {
+            return bookRepository.countAllViewsByBookId(bookId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer countAllChapterByBookId(Integer bookId) {
+        try {
+            return bookRepository.countAllChapterByBookId(bookId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer countAllCommentByBookId(Integer bookId) {
+        try {
+            return bookRepository.countAllCommentByBookId(bookId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public Float avaRatingByBookId(Integer chapterId) {
+        try {
+            return chapterRepository.countStarAvgByBookId(chapterId).floatValue();
+        } catch (Exception e) {
+            return 0f;
+        }
+    }
 }

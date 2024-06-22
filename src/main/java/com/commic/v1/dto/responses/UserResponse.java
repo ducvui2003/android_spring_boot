@@ -24,4 +24,5 @@ public class UserResponse {
     private int totalComments;
     private int totalBookReads;
     private int numberOfRatings;
+    private int status;
 }

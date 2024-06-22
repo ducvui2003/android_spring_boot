@@ -12,8 +12,10 @@ import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.mapper.UserMapper;
 import com.commic.v1.repositories.*;
 
+import com.commic.v1.services.attendance.IAttendanceServices;
 import com.commic.v1.services.mail.IEmailService;
 import com.commic.v1.util.SecurityUtils;
+import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -42,7 +46,8 @@ public class UserService implements IUserService {
     private IHistoryRepository historyRepository;
     @Autowired
     private IRatingRepository ratingRepository;
-
+    @Autowired
+    private IAttendanceServices attendanceServices;
 
     @Override
     public APIResponse<Void> forgotPassword(String email) {
@@ -125,12 +130,13 @@ public class UserService implements IUserService {
                 * Nếu chưa có thì mới cho phép đăng ký
                 * */
             Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
-//                Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
+            Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
             if (userByName.isEmpty()) {
                 userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
                 User user = userMapper.toUserResponseEntity(userDTO);
                 user.setOtp(generateOTP());
                 emailService.sendMailOTP(user.getEmail(), user.getOtp());
+                user.setRole("USER");
                 userRepository.save(user);
                 response.setMessage("Register success");
                 response.setCode(HttpStatus.OK.value());
@@ -177,7 +183,7 @@ public class UserService implements IUserService {
         UserResponse result = userMapper.toDTO(user);
 
         // Calculate the total reward points of the user by summing up all the points
-        result.setRewardPoint(rewardPointRepository.sumPointByUser(user).orElse(0));
+        result.setRewardPoint(attendanceServices.getPoint().intValue());
         // Set the total attendance dates of the user by counting the size of the reward points
         result.setTotalAttendanceDates(rewardPointRepository.countByUser(user).orElse(0));
         // Set the total books read by the user by counting the size of the histories
@@ -211,6 +217,46 @@ public class UserService implements IUserService {
 
         // If the operation reaches this point without any exceptions, return true indicating success
         return true;
+    }
+
+    @Override
+    public APIResponse<List<UserResponse>> findAll() {
+        APIResponse<List<UserResponse>> response = new APIResponse<>();
+        List<User> users = userRepository.findAll();
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user : users) {
+            UserResponse userResponse = userMapper.toDTO(user);
+            userResponses.add(userResponse);
+        }
+        response.setResult(userResponses);
+        response.setCode(ErrorCode.FOUND.getCode());
+        response.setMessage(ErrorCode.FOUND.getMessage());
+        return response;
+    }
+
+    @Override
+    public APIResponse<Void> blockUser(Integer id) {
+        try {
+            APIResponse<Void> apiResponse = new APIResponse<>();
+            User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+            user.setStatus(1);
+            userRepository.save(user);
+            return new APIResponse<Void>(ErrorCode.UPDATE_SUCCESS.getCode(), ErrorCode.UPDATE_SUCCESS.getMessage(), null);
+        } catch (EntityNotFoundException e) {
+            return new APIResponse<Void>(ErrorCode.UPDATE_FAILED.getCode(), ErrorCode.UPDATE_FAILED.getMessage(), null);
+        }
+    }
+
+    @Override
+    public APIResponse<Void> unblockUser(Integer id) {
+        try {
+            User user = userRepository.findById(id).get();
+            user.setStatus(0);
+            userRepository.save(user);
+            return new APIResponse<Void>(ErrorCode.UPDATE_SUCCESS.getCode(), ErrorCode.UPDATE_SUCCESS.getMessage(), null);
+        } catch (Exception ex) {
+            return new APIResponse<Void>(ErrorCode.UPDATE_FAILED.getCode(), ErrorCode.UPDATE_FAILED.getMessage(), null);
+        }
     }
 
 

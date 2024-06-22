@@ -35,4 +35,6 @@ public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
     @Query("SELECT cc FROM ChapterContent cc WHERE cc.chapter.id = :id ORDER BY cc.chapter.id")
     List<ChapterContent> findByChapterId(Integer id);
 
+    @Query("SELECT COUNT(chapter) FROM Chapter chapter")
+    Integer countAllChapter();
 }

@@ -11,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CommentResponseDTO {
+public class CommentResponse {
     private Integer id;
     private UserCommentDTO user;
     private String bookName;

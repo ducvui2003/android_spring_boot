@@ -13,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class CommentCreationResponseDTO {
+public class CommentCreationResponse {
     private String content;
     private Date createdAt;
 }

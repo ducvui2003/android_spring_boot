@@ -69,7 +69,6 @@ public class AttendanceServiceImp implements IAttendanceServices {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
         if (user == null) return historyAttendance;
         Integer userId = user.getId();
-
         List<RewardPoint> rewardPoints = rewardPointRepository.findAllByUserId(userId);
         if (rewardPoints.isEmpty()) return historyAttendance;
         historyAttendance = new DataListResponse<>();

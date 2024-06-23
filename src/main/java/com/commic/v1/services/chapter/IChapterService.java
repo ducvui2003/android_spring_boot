@@ -13,4 +13,5 @@ public interface IChapterService {
     ChapterResponse getChapterById(Integer id);
 
     Integer countAllChapter();
+    Integer totalViewOfEachChapter(Integer id);
 }

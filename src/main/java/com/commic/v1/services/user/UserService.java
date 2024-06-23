@@ -131,12 +131,13 @@ public class UserService implements IUserService {
                 * */
             Optional<User> userByName = userRepository.findByUsername(userDTO.getUsername());
             Optional<User> userByEmail = userRepository.findByEmail(userDTO.getEmail());
-            if (userByName.isEmpty()) {
+            if (userByName.isEmpty() && userByEmail.isEmpty()) {
                 userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
                 User user = userMapper.toUserResponseEntity(userDTO);
                 user.setOtp(generateOTP());
                 emailService.sendMailOTP(user.getEmail(), user.getOtp());
                 user.setRole("USER");
+                user.setStatus(0);
                 userRepository.save(user);
                 response.setMessage("Register success");
                 response.setCode(HttpStatus.OK.value());

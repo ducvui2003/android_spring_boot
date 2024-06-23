@@ -1,6 +1,8 @@
 package com.commic.v1.api.user;
 
+import com.commic.v1.dto.responses.APIResponse;
 import com.commic.v1.dto.responses.ChapterResponse;
+import com.commic.v1.exception.ErrorCode;
 import com.commic.v1.services.chapter.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -32,5 +34,20 @@ public class ChapterController {
         }
         ChapterResponse chapter = chapterServices.getChapterById(id);
         return ResponseEntity.ok(chapter);
+    }
+    @GetMapping("/total-view/{id}")
+    public APIResponse<Integer> getTotalView(@PathVariable(value = "id") Integer id) {
+        APIResponse<Integer> apiResponse = new APIResponse<>();
+        int view = chapterServices.totalViewOfEachChapter(id);
+        if (view > 0) {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setResult(view);
+        } else {
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setResult(0);
+        }
+        return apiResponse;
     }
 }

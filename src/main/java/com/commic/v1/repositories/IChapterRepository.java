@@ -37,4 +37,7 @@ public interface IChapterRepository extends JpaRepository<Chapter, Integer> {
 
     @Query("SELECT COUNT(chapter) FROM Chapter chapter")
     Integer countAllChapter();
+
+    @Query("SELECT c.view FROM Chapter c WHERE c.id = :id")
+    Integer findViewByChapterId(Integer id);
 }

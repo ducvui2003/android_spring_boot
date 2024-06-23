@@ -11,6 +11,7 @@ import com.commic.v1.mapper.BookMapper;
 import com.commic.v1.repositories.IBookRepository;
 import com.commic.v1.repositories.ICategoryRepository;
 import com.commic.v1.repositories.IChapterRepository;
+import com.commic.v1.repositories.ICommentRepository;
 import com.commic.v1.services.chapter.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -36,7 +37,8 @@ public class BookService implements IBookService {
     private IChapterRepository chapterRepository;
     @Autowired
     private ICategoryRepository categoryRepository;
-
+    @Autowired
+    private ICommentRepository commentRepository;
 
     @Override
     public BookResponseDTO getBookByChapterId(Integer chapterId) {
@@ -70,24 +72,12 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public APIResponse<Integer> getAllComment(Integer id) {
+    public Integer getAllComment(Integer id) {
         APIResponse<Integer> apiResponse = new APIResponse<>();
-        int totalComment = 0;
-        Book book = bookRepository.findById(id).orElse(null);
-        Set<Chapter> chapters = book.getChapters();
-        for (Chapter chapter : chapters) {
-            totalComment += chapter.getComments().size();
-        }
-        if (totalComment >= 0){
-            apiResponse.setCode(ErrorCode.FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-            apiResponse.setResult(totalComment);
-        }
-        else {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        }
-        return apiResponse;
+        int  totalComment = 0;
+        totalComment = commentRepository.countCommentsByBookId(id);
+
+        return totalComment;
     }
 
     @Override

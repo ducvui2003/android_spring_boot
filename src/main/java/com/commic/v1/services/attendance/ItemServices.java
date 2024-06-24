@@ -64,6 +64,7 @@ public class ItemServices implements IItemServices {
         Double score = totalScore - totalScoreExchange;
         if (score < item.getPoint()) {
             response.setStatus(ExchangeStatus.POINT_NOT_ENOUGH);
+            return response;
         }
         RedeemReward redeemReward = RedeemReward.builder()
                 .date(new Date(System.currentTimeMillis()))

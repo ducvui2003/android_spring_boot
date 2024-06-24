@@ -85,12 +85,12 @@ public class BookController {
     public APIResponse<DataListResponse<BookResponseDTO>> rank(@RequestParam(name = "page", defaultValue = "1") int page,
                                                                @RequestParam(name = "size", defaultValue = "10") int size,
                                                                @RequestParam(name = "type", defaultValue = "") String type,
-                                                               @RequestParam(name = "categoryId", required = false) Integer categoryId) {
+                                                               @RequestParam(name = "categoryId", defaultValue = "0") Integer categoryId) {
 
         Pageable pageable;
         pageable = PageRequest.of(page - 1, size);
         DataListResponse<BookResponseDTO> items = searchServices.getRankBy(type, pageable);
-        if (categoryId == null)
+        if (categoryId == 0)
             items = searchServices.getRankBy(type, pageable);
         else items = searchServices.getRankBy(type, categoryId, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
@@ -130,11 +130,11 @@ public class BookController {
     @GetMapping("/newComic")
     public APIResponse<DataListResponse<BookResponseDTO>> getNewComicOrderByPublishDate(@RequestParam(name = "page", defaultValue = "1") int page,
                                                                                         @RequestParam(name = "size", defaultValue = "10") int size,
-                                                                                        @RequestParam(name = "categoryId", required = false) Integer categoryId) {
+                                                                                        @RequestParam(name = "categoryId", defaultValue = "0") Integer categoryId) {
         Pageable pageable;
         pageable = PageRequest.of(page - 1, size);
         DataListResponse<BookResponseDTO> items;
-        if (categoryId == null)
+        if (categoryId == 0)
             items = searchServices.getComicByPublishDate(pageable);
         else
             items = searchServices.getComicByPublishDate(pageable, categoryId);

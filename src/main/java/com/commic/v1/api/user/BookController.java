@@ -53,29 +53,21 @@ public class BookController {
     public APIResponse<DataListResponse<BookResponseDTO>> search(@RequestParam(name = "keyword", defaultValue = "") String keyword,
                                                                  @RequestParam(name = "categoryId", required = false) String categoryId,
                                                                  @RequestParam(name = "page", defaultValue = "1") int page,
-                                                                 @RequestParam(name = "size", defaultValue = "10") int size,
-                                                                 @RequestParam Map<String, String> mapSort) {
-        Pageable pageable;
-        Sort sort = exportSort(mapSort);
+                                                                 @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
         Integer categoryIdNumber;
         try {
             categoryIdNumber = Integer.parseInt(categoryId);
         } catch (NumberFormatException e) {
             categoryIdNumber = null;
         }
-        if (sort.isEmpty())
-            pageable = PageRequest.of(page - 1, size);
-        else
-            pageable = PageRequest.of(page, size, sort);
+
         DataListResponse<BookResponseDTO> items = searchServices.getBook(keyword, categoryIdNumber, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
-        if (items.getData().isEmpty()) {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        } else {
-            apiResponse.setCode(ErrorCode.FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-        }
+
+        apiResponse.setCode(ErrorCode.FOUND.getCode());
+        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+
         apiResponse.setResult(items);
         return apiResponse;
     }
@@ -94,13 +86,8 @@ public class BookController {
             items = searchServices.getRankBy(type, pageable);
         else items = searchServices.getRankBy(type, categoryId, pageable);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
-        if (items.getData().isEmpty()) {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        } else {
-            apiResponse.setCode(ErrorCode.FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-        }
+        apiResponse.setCode(ErrorCode.FOUND.getCode());
+        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
         apiResponse.setResult(items);
         return apiResponse;
     }
@@ -139,13 +126,8 @@ public class BookController {
         else
             items = searchServices.getComicByPublishDate(pageable, categoryId);
         APIResponse<DataListResponse<BookResponseDTO>> apiResponse = new APIResponse<>();
-        if (items.getData().isEmpty()) {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
-        } else {
-            apiResponse.setCode(ErrorCode.FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-        }
+        apiResponse.setCode(ErrorCode.FOUND.getCode());
+        apiResponse.setMessage(ErrorCode.FOUND.getMessage());
         apiResponse.setResult(items);
         return apiResponse;
     }

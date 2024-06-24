@@ -42,6 +42,8 @@ public class SearchServiceImp implements ISearchServices {
             page = bookRepository.findByNameContaining(containName, pageable);
         else
             page = bookRepository.findByNameContainingAndCategoriesId(containName, categoryId, pageable);
+
+        if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -82,13 +84,12 @@ public class SearchServiceImp implements ISearchServices {
 
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
+        if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
-        if (!data.isEmpty()) {
-            result.setCurrentPage(pageable.getPageNumber() + 1);
-            result.setTotalPages(page.getTotalPages());
-            result.setData(data);
-        }
+        result.setCurrentPage(pageable.getPageNumber() + 1);
+        result.setTotalPages(page.getTotalPages());
+        result.setData(data);
         return result;
     }
 
@@ -118,6 +119,7 @@ public class SearchServiceImp implements ISearchServices {
             case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(categoryId, pageable);
             default -> throw new AppException(ErrorCode.PARAMETER_NOT_VALID);
         }
+        if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);
@@ -131,6 +133,7 @@ public class SearchServiceImp implements ISearchServices {
         DataListResponse<BookResponseDTO> result = new DataListResponse<>();
         Page<Book> page;
         page = bookRepository.findByPublishDateOrderByNearestDate(pageable);
+        if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<Book> books = page.getContent();
         List<BookResponseDTO> data = bookToResponseDTO(books);
         result.setCurrentPage(pageable.getPageNumber() + 1);

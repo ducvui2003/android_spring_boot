@@ -10,8 +10,8 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
-COPY --from=build /app/target/doctruyen-0.0.1-SNAPSHOT.war doctruyen.war
-ENV SPRING_PROFILES_ACTIVE=dev
+COPY --from=build /app/target/commic-0.0.1-SNAPSHOT.jar /app/commic.jar
+ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8081
 
-ENTRYPOINT ["java","-jar","doctruyen.war"]
+ENTRYPOINT ["java","-jar","/app/commic.jar"]

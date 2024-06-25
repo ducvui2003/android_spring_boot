@@ -169,13 +169,14 @@ public class BookController {
     public APIResponse<Integer> getAllComment(@PathVariable("id") Integer id) {
         APIResponse<Integer> apiResponse = new APIResponse<>();
      Integer totalCommentResponse = bookService.getAllComment(id);
-        if (totalCommentResponse > 0) {
+        if (totalCommentResponse != null) {
             apiResponse.setCode(ErrorCode.FOUND.getCode());
             apiResponse.setMessage(ErrorCode.FOUND.getMessage());
             apiResponse.setResult(totalCommentResponse);
         } else {
-            apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
-            apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());
+            apiResponse.setCode(ErrorCode.FOUND.getCode());
+            apiResponse.setMessage(ErrorCode.FOUND.getMessage());
+            apiResponse.setMessage("0");
         }
         return apiResponse;
     }

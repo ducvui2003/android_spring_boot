@@ -176,6 +176,7 @@ public class CommentServiceImp implements ICommentServices {
         if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<CommentResponse> data = page.getContent().stream().map(comment -> {
             CommentResponse commentResponse = commentMapper.toCommentResponseDTO(comment);
+            commentResponse.setThumbnail(comment.getChapter().getBook().getThumbnail());
             CommentResponse.UserCommentDTO userCommentDTO = CommentResponse.UserCommentDTO.builder()
                     .username(user.getUsername())
                     .email(user.getEmail())

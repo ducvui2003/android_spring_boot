@@ -175,8 +175,6 @@ public class CommentServiceImp implements ICommentServices {
         Page<Comment> page = commentRepository.findAllByUserIdAndIsDeletedFalse(user.getId(), pageable);
         if (page.isEmpty()) throw new AppException(ErrorCode.NOT_FOUND);
         List<CommentResponse> data = page.getContent().stream().map(comment -> {
-
-            
             CommentResponse commentResponse = commentMapper.toCommentResponseDTO(comment);
             CommentResponse.UserCommentDTO userCommentDTO = CommentResponse.UserCommentDTO.builder()
                     .username(user.getUsername())

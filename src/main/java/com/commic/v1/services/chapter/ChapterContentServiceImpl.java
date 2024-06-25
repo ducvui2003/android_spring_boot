@@ -1,6 +1,7 @@
 package com.commic.v1.services.chapter;
 
 import com.commic.v1.dto.responses.ChapterContentResponse;
+import com.commic.v1.entities.Chapter;
 import com.commic.v1.entities.ChapterContent;
 import com.commic.v1.mapper.ChapterMapper;
 import com.commic.v1.repositories.IChapterContentRepository;
@@ -24,12 +25,17 @@ public class ChapterContentServiceImpl implements IChapterContentService {
 
     @Override
     public List<ChapterContentResponse> getChapterContent(Integer id) {
+        //Cái này dùng để lấy hình ảnh của chapter đó
         List<ChapterContent> chapters = chapterRepository.findByChapterId(id);
-
+        // Cái này là gọi chapter đó ra lưu thêm view vào
+        Chapter chapter = chapterRepository.findById(id).get();
+        if(chapter != null) {
+            chapter.setView(chapter.getView() + 1);
+            chapterRepository.save(chapter);
+        }
         if (chapters.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No chapters found for id: " + id);
         }
-
         return chapters.stream()
                 .map(chapterMapper::convertToDTO)
                 .collect(Collectors.toList());

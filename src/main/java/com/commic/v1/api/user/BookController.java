@@ -150,11 +150,11 @@ public class BookController {
     @GetMapping(value = "/{id}/comment")
     public APIResponse<Integer> getAllComment(@PathVariable("id") Integer id) {
         APIResponse<Integer> apiResponse = new APIResponse<>();
-        APIResponse<Integer> commentResponse = bookService.getAllComment(id);
-        if (commentResponse.getCode() == ErrorCode.FOUND.getCode()) {
+     Integer totalCommentResponse = bookService.getAllComment(id);
+        if (totalCommentResponse > 0) {
             apiResponse.setCode(ErrorCode.FOUND.getCode());
             apiResponse.setMessage(ErrorCode.FOUND.getMessage());
-            apiResponse.setResult(commentResponse.getResult());
+            apiResponse.setResult(totalCommentResponse);
         } else {
             apiResponse.setCode(ErrorCode.NOT_FOUND.getCode());
             apiResponse.setMessage(ErrorCode.NOT_FOUND.getMessage());

@@ -13,6 +13,9 @@ GET http://localhost:8081/api/v1/books/rank?type=view&categoryId=1
 ### Lấy thông tin 10 truện có lượt đánh gía cao nhất
 GET http://localhost:8081/api/v1/books/rank?type=rating
 
+### Lấy thông tin 10 truện có lượt xem cao nhất
+GET http://localhost:8081/api/v1/books/rank?type=view
+
 ### Lấy danh sách category
 GET http://localhost:8081/api/v1/books/category
 

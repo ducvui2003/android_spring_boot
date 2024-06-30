@@ -41,9 +41,12 @@ public interface ICommentRepository extends JpaRepository<Comment, Integer> {
     @Query("SELECT COUNT(comment) FROM Comment comment WHERE comment.isDeleted = false")
     Integer countAllComment();
 
+    @Query("SELECT COUNT(c) FROM Comment c WHERE c.user.id = :userId AND c.state = 1 AND c.isDeleted = false")
+    Optional<Integer> countAllCommentByUserId(Integer userId);
+
     @Query("SELECT COUNT(c.id) FROM Comment c " +
             "JOIN c.chapter ch " +
             "JOIN ch.book b " +
-            "WHERE b.id = :bookId")
+            "WHERE b.id = :bookId AND c.state = 1 AND c.isDeleted = false")
     Integer countCommentsByBookId(@Param("bookId") int bookId);
 }

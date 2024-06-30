@@ -169,7 +169,7 @@ public class CommentServiceImp implements ICommentServices {
     @Override
     public CommentOverallResponse getCommentOverall(Pageable pageable) {
         User user = SecurityUtils.getUserFromPrincipal(userRepository);
-        Integer totalComment = commentRepository.countAllComment();
+        Integer totalComment = commentRepository.countAllCommentByUserId(user.getId()).orElse(0);
         CommentOverallResponse commentOverallResponse = new CommentOverallResponse();
         commentOverallResponse.setTotalComment(totalComment.intValue());
         Page<Comment> page = commentRepository.findAllByUserIdAndIsDeletedFalse(user.getId(), pageable);

@@ -73,7 +73,6 @@ public class BookService implements IBookService {
 
     @Override
     public Integer getAllComment(Integer id) {
-        APIResponse<Integer> apiResponse = new APIResponse<>();
         int  totalComment = 0;
         totalComment = commentRepository.countCommentsByBookId(id);
 

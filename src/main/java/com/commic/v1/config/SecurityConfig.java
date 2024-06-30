@@ -63,6 +63,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.authorizeHttpRequests(config -> {
+            // Requests to "/api/v1/admin/**" require the user to have the "ADMIN" authority.
+//            config.requestMatchers( "/api/v1/admin/**").hasAuthority("ADMIN");
             config.requestMatchers(PUBLIC_ENDPOINS).permitAll().anyRequest().authenticated();
         });
         httpSecurity.exceptionHandling(exp -> exp.authenticationEntryPoint(jwtAuthenticationEntryPoint));

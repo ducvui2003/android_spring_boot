@@ -8,6 +8,7 @@ import com.commic.v1.services.chapter.ChapterService;
 import com.commic.v1.services.comment.CommentServiceImp;
 import com.commic.v1.services.rating.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import java.math.RoundingMode;
 
 @RestController(value = "StatisticalControllerAdmin")
 @RequestMapping("/api/v1/admin/statistical")
-//@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class StatisticalController {
     @Autowired
     IBookService bookService;

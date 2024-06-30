@@ -77,7 +77,6 @@ public class SearchServiceImp implements ISearchServices {
         switch (type.toUpperCase()) {
             case "RATING" -> page = bookRepository.findAllOrderByRatingDesc(pageable);
 
-
             case "VIEW" -> page = bookRepository.findAllOrderByViewDesc(pageable);
 
             case "NEW" -> page = bookRepository.findByPublishDateOrderByNearestDate(pageable);

@@ -190,7 +190,7 @@ public class UserService implements IUserService {
         // Set the total books read by the user by counting the size of the histories
         result.setTotalBookReads(historyRepository.countDistinctByUser(user).orElse(0));
         // Set the total comments made by the user by counting the size of the comments
-        result.setTotalComments(commentRepository.countByUser(user).orElse(0));
+        result.setTotalComments(commentRepository.countAllCommentByUserId(user.getId()).orElse(0));
         // Set the total ratings made by the user by counting the size of the ratings
         result.setNumberOfRatings(ratingRepository.countByUser(user).orElse(0));
 

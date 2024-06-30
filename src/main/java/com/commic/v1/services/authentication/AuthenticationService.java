@@ -23,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
@@ -44,14 +43,13 @@ public class AuthenticationService implements IAuthenticationService {
     UserDetailServiceImpl userDetailsService;
 
     @Override
-        public JwtResponse login(AuthenticationRequest request) {
-        Authentication authentication = authenticate(request.getUsername(), request.getPassword());
-
+    public JwtResponse login(AuthenticationRequest request) {
         UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
         if (user == null) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
 
+        Authentication authentication = authenticate(request.getUsername(), request.getPassword());
         boolean isAuthenticated = authentication.isAuthenticated();
         String token = isAuthenticated ? jwtTokenUtil.generateToken(user) : null;
 

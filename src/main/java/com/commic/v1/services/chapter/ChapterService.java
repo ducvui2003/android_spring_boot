@@ -84,4 +84,10 @@ public class ChapterService implements IChapterService {
             return 0;
         }
     }
+
+    @Override
+    public Integer totalViewOfEachChapter(Integer id) {
+        Integer totalViewOfEachChapter = chapterRepository.findViewByChapterId(id);
+        return totalViewOfEachChapter;
+    }
 }

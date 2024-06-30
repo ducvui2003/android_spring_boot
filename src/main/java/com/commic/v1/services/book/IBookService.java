@@ -22,6 +22,5 @@ public interface IBookService {
     Integer countAllChapterByBookId(Integer bookId);
     Integer countAllCommentByBookId(Integer bookId);
     Float avaRatingByBookId(Integer bookId);
-
-    APIResponse<Integer> getAllComment(Integer id);
+    Integer getAllComment(Integer id);
 }
